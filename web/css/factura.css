@@ -1,0 +1,28 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 20-oct-2015, 15:10:47
+    Author     : ernesto
+*/
+
+.border{
+    border-style: solid;
+    border-width: 1px;
+}
+
+
+/*
+Css para la vista factura/index
+*/
+
+.factura-index{
+    font-size: 12px;
+}
+
+.border-bottom{
+    border-bottom-style: solid;
+    border-width: 1px;
+}

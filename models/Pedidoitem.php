@@ -1,0 +1,72 @@
+<?php
+
+namespace app\models;
+
+use Yii;
+
+/**
+ * This is the model class for table "pedidoitem".
+ *
+ * @property string $pedido_id
+ * @property string $pedido_num
+ * @property string $item_cantidad
+ * @property string $item_precio
+ * @property string $item_descripcion
+ *
+ * @property Pedido $pedidoNum
+ */
+class Pedidoitem extends \yii\db\ActiveRecord
+{
+   
+    /**
+     * @inheritdoc
+     */
+    public static function tableName()
+    {
+        return 'pedidoitem';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['pedido_num', 'item_cantidad', 'item_precio', 'item_descripcion'], 'required'],
+            [['item_cantidad', 'item_precio'], 'number'],
+            [['pedido_num'], 'string', 'max' => 20],
+            [['item_descripcion'], 'string', 'max' => 250]
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'pedido_id' => 'Pedido ID',
+            'pedido_num' => 'Pedido Num',
+            'item_cantidad' => 'Item Cantidad',
+            'item_precio' => 'Item Precio',
+            'item_descripcion' => 'Item Descripcion',
+        ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPedidoNum()
+    {
+        return $this->hasOne(Pedido::className(), ['pedido_num' => 'pedido_num']);
+    }
+
+    /**
+     * @inheritdoc
+     * @return PedidoitemQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new PedidoitemQuery(get_called_class());
+    }
+}
