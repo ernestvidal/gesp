@@ -160,6 +160,7 @@ class PedidoController extends Controller
 
         $model = $this->findModel($id);
         $models = $model['pedidoitems'];
+        $counter_models = count($models);
 
 
 
@@ -171,16 +172,20 @@ class PedidoController extends Controller
              * $data['PedidoItem'][0] = ['pedido_num'=>'12ab', 'item_cantidad'=>10,00, 'item_descripcion'=>'holaa', 'item_precio'=>100,00];
              */
 
+            /**
+             * Cuando queremos añadir un nuevo registro en el escenario de edición o update.
+             * Calculamos la diferencia entre los modelos guardados y los modelos editados y la diferencia nos permite saber
+             * cuantos modelos nuevos tenemos que crear
+             */
             $count = count($data['PedidoItem']);
-
-          
-            //$models = [new PedidoItem()];
-
-            /*
-            for($i = 1; $i < $count; $i++) {
-                $models[$i] = new PedidoItem();
+            $diferencia = $count - $counter_models;
+            if ($diferencia >0){
+                for($i= $counter_models; $i < $diferencia+$counter_models; $i++){
+                     $models[$i] = new PedidoItem();
+                }
             }
-            */
+          
+          
             if ( Model::loadMultiple($models, $data, $formName = 'PedidoItem' ) && Model::validateMultiple($models) ) {
                 foreach ($models as $modelo) {
                     // populate and save records for each model
@@ -332,5 +337,15 @@ class PedidoController extends Controller
         } else {
             $model->getErrors();
         }        
+    }
+    
+     public function actionReportfacturasproveedor($id) {
+        $model = Pedido::find()
+                ->where (['cliente_id'=> $id])
+                ->orderBy('pedido_factura_num, pedido_num ASC')
+                ->all();
+        return $this->render('reportFacturasProveedor', [
+                    'model' => $model
+        ]);
     }
 }
