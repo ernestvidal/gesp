@@ -135,13 +135,13 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="row">
             <div class="col-md-5 col-md-offset-7">
                 <div class="col-md-4">
-                    <label for="factura_base_imponible">Base imponible</label>
+                    <label for="factura_subtotal">Total</label>
                 </div>
                 <div class="col-md-8">
-                    <input type="text" name="factura_base_imponible" id="factura_base_imponible" class="form-control text-right" readonly>
+                    <input type="text" name="factura_subtotal" id="factura_subtotal" class="form-control text-right" readonly>
                 </div>
             </div>
-
+           
             <div class="col-md-5 col-md-offset-7">
                 <div class="col-md-4">
                     <label for="factura_rate_descuento">Descuento %</label>
@@ -151,6 +151,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <div class="col-md-5">
                     <input type="text" name="factura_importe_descuento" id="factura_importe_descuento" class="form-control text-right" value="0.00" readonly>
+                </div>
+            </div>
+             <div class="col-md-5 col-md-offset-7">
+                <div class="col-md-4">
+                    <label for="factura_base_imponible">Base imponible</label>
+                </div>
+                <div class="col-md-8">
+                    <input type="text" name="factura_base_imponible" id="factura_base_imponible" class="form-control text-right" readonly>
                 </div>
             </div>
             <div class="col-md-5 col-md-offset-7">

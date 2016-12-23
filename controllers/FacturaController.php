@@ -37,7 +37,7 @@ class FacturaController extends Controller {
      */
     public function actionIndex() {
         $model = Factura::find()
-                ->orderBy('facturador_id, factura_fecha DESC')
+                ->orderBy('facturador_id, factura_num DESC')
                 ->all();
         return $this->render('index', [
                     'model' => $model

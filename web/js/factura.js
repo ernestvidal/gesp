@@ -49,27 +49,29 @@ function borrar(item){
 
             var base_imponible = 0;
             var subtotal = 0;
+            var importe_dto = 0;
+            var importe_iva = 0;
             var fila = $('#item_line .factura_line');
                 fila.each(function(i, el) {
 
                     var cantidad = parseFloat($("#item_cantidad_" + i).val());
                     var precio = parseFloat($("#item_precio_" + i).val());
-                    var total_linea = cantidad * precio;
+                    var total_linea = parseFloat(cantidad * precio);
                     var factura_num = $('#factura_num').val();
                     $("#item_total_" + i).val(total_linea.toFixed(2));
                     //$('#item_cantidad_' + i).val(cantidad);
                     //$('#item_precio_' + i).val(precio);
                     $('#factura_item_num_' + i).val(factura_num);
-
-                    base_imponible += parseFloat($("#item_total_" + i).val());
+                    subtotal += (total_linea);
+                    $('#factura_subtotal').val(subtotal.toFixed(2));
+                    importe_dto = ((parseFloat($('#factura_subtotal').val()) * (parseFloat($('#factura_rate_descuento').val()) / 100))).toFixed(2);
+                    base_imponible = subtotal - importe_dto;
+                    importe_iva = parseFloat(base_imponible * ($('#factura_rate_iva').val() / 100).toFixed(2));
                     $('#factura_base_imponible').val(base_imponible.toFixed(2));
-
-                    $('#factura_importe_descuento').val(((parseFloat($('#factura_base_imponible').val()) * (parseFloat($('#factura_rate_descuento').val()) / 100)) * -1).toFixed(2) );
-                    $('#factura_importe_iva').val((parseFloat($('#factura_base_imponible').val()) * (parseFloat($('#factura_rate_iva').val()) / 100)).toFixed(2));
+                    $('#factura_importe_descuento').val(importe_dto);
+                    $('#factura_importe_iva').val(parseFloat(importe_iva).toFixed(2));
                     $('#factura_importe_irpf').val(((parseFloat($('#factura_base_imponible').val()) * (parseFloat($('#factura_rate_irpf').val()) / 100)) * -1).toFixed(2));
-                    $('#factura_total').val((parseFloat($('#factura_base_imponible').val()) + parseFloat($('#factura_importe_descuento').val()) + parseFloat($('#factura_importe_iva').val()) +
-                            parseFloat($('#factura_importe_irpf').val())).toFixed(2));
-
+                    $('#factura_total').val(parseFloat((base_imponible) + parseFloat($('#factura_importe_iva').val()) + parseFloat($('#factura_importe_irpf').val())).toFixed(2));
             });
         //});
     });
