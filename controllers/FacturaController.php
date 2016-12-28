@@ -138,7 +138,7 @@ class FacturaController extends Controller {
 
         $model = $this->findModel($id);
         $models = $model['facturaitems'];
-
+        $counter_models = count($models);
 
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -148,17 +148,20 @@ class FacturaController extends Controller {
              *
              * $data['FacturaItem'][0] = ['factura_num'=>'12ab', 'item_cantidad'=>10,00, 'item_descripcion'=>'holaa', 'item_precio'=>100,00];
              */
-
-            $count = count($data['FacturaItem']);
-
-
-            //$models = [new FacturaItem()];
-
-            /*
-              for($i = 1; $i < $count; $i++) {
-              $models[$i] = new FacturaItem();
-              }
+            
+             /**
+             * Cuando queremos añadir un nuevo registro en el escenario de edición o update.
+             * Calculamos la diferencia entre los modelos guardados y los modelos editados y la diferencia nos permite saber
+             * cuantos modelos nuevos tenemos que crear
              */
+            $count = count($data['FacturaItem']);
+            $diferencia = $count - $counter_models;
+            if ($diferencia >0){
+                for($i= $counter_models; $i < $diferencia+$counter_models; $i++){
+                     $models[$i] = new FacturaItem();
+                }
+            }
+
             if (Model::loadMultiple($models, $data, $formName = 'FacturaItem') && Model::validateMultiple($models)) {
                 foreach ($models as $modelo) {
                     // populate and save records for each model
