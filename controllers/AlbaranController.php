@@ -268,14 +268,11 @@ class AlbaranController extends Controller {
         if ($model->albaran_factura_num <> NULL) {
             echo 'this albarán is factured';
         } else {
-            $this->redirect('@web/factura/index');
-            /*
+           
             return $this->renderAjax('modalFacturarAlbaran', [
                         //'model' => $model,
                         'numAlbaran' => $id,
             ]);
-             * 
-             */
         }
     }
 
