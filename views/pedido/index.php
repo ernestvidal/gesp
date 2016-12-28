@@ -76,7 +76,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                                         <td class="text-right"><?= Yii::$app->formatter->asDate($model[$i]->pedido_fecha, 'php:d-m-Y') ?>
                                         <td class="text-right"><?= Html::a($model[$i]->pedido_num, ['view', 'id' => $model[$i]->pedido_id]) ?></td>
-                                        <td><?= $model[$i]->cliente->identidad_nombre; ?></td>
+                                        <td><?= Html::a($model[$i]->cliente->identidad_nombre, ['reportfacturasproveedor', 'id' => $model[$i]->cliente->identidad_id]) ?></td>
                                         <td class="text-right"><?= Yii::$app->formatter->asDecimal($baseImponible, 2); ?></td>
                                         <td class="text-right"><?= $model[$i]->pedido_rate_iva ?></td>
                                         <td class="text-right"><?= Yii::$app->formatter->asDecimal($totalIva, 2) ?>
