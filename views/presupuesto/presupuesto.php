@@ -115,7 +115,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 
-    <div id="presupuesto_calculs" class="well">
+    <div id="presupuesto_calculs">
         <div class="row">
             <div class="col-md-5 col-md-offset-7">
                 <div class="col-md-4">

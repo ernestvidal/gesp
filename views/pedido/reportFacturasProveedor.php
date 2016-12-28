@@ -14,77 +14,68 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="factura-index">
 
-    <?php $facturador = $model[0]->facturador->identidad_nombre; ?>
-    <?php $año_factura = substr($model[0]->factura_fecha, 0,4); ?>
-    <?php $currentMonth = date("m", strtotime($model[0]->factura_fecha)); ?>
-    <?php $currentQuarter = ceil($currentMonth/3); ?>
+    <?php $pedido = $model[0]->pedido_num ?>
+    <?php $factura = $model[0]->pedido_factura_num ?>
     <h3 class="page-header"><?= $model[0]->cliente->identidad_nombre ?></h3>
-    <?php for ($i = 0; $i < count($model); $i++) {
-        
-
-        if ($facturador <> $model[$i]->facturador->identidad_nombre || $año_factura <> substr($model[$i]->factura_fecha, 0,4)
-                || $currentQuarter <> ceil(date("m", strtotime($model[$i]->factura_fecha))/3))
-        {
-            $facturador = $model[$i]->facturador->identidad_nombre;
-            $año_factura = substr($model[$i]->factura_fecha, 0,4);
-            $currentQuarter = ceil(date("m", strtotime($model[$i]->factura_fecha))/3);
-            //echo '<h3>'. $año_factura . '-'. $facturador . '</h3>';
-        }
-        $baseImponible = 0;
-        $totalIva = 0;
-        $totalFactura = 0;
-        foreach ($model[$i]->facturaitems as $facturaDetalle) {
-           $totalLinea = $facturaDetalle->item_cantidad * $facturaDetalle->item_precio;
-           $baseImponible += $totalLinea;
-           $totalDto = $baseImponible * $model[$i]->factura_rate_descuento/100;
-           $totalIva = $baseImponible * $model[$i]->factura_rate_iva/100;
-           $totalIrpf = $baseImponible * $model[$i]->factura_rate_irpf/100;
-           $totalFactura = $baseImponible + $totalIva - $totalIrpf - $totalDto;
-        } ?>
-        <div class="row">
-            <div class="col-lg-3"><h5><strong> Factura núm.: <?= $model[$i]->factura_num; ?></strong></h5></div>
-            <div class="col-lg-2"><h5><strong><?= Yii::$app->formatter->asDate($model[$i]->factura_fecha, 'php:d-m-Y') ?></strong></h5></div>
-            
-            
-            <!--<div class="col-md-3"><?= Yii::$app->formatter->asDecimal($baseImponible, 2); ?></div> -->
-            <!--<div class="col-md-3"><?= Yii::$app->formatter->asDecimal($totalFactura, 2); ?></div> -->           
-        </div>
-         <?php     foreach ($model[$i]['facturaitems'] as $itemfactura) { ?>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-1"><?= $itemfactura->item_cantidad ?></div>
-                        <div class="col-lg-9"><?= Yii::$app->formatter->asNtext($itemfactura->item_descripcion) ?></div>
-                        <div class="col-lg-2"><?= $itemfactura->item_precio ?></div>
-                    </div>
-                    <hr>
-                </div>
-            <?php } ?>
-   
-    <?php
-
-    $this->registerJs(
-
-        "$(document).on('click', '#enviar-factura', (function() {
-            $.get(
-                $(this).data('url'),
-                function (data) {
-                    $('.modal-body').html(data);
-                    $('#modalSendFactura').modal();
-                }
-            );
-        }));"
-
-    ); ?>
 
     <?php
-        // Ventana modal donde mostramos la vista modalSendFactura.php
-        Modal::begin([
-            'header' => '<h2>Enviar Factura</h2>',
-            'id'     => 'modalSendFactura',
+    $i = 0;
+    
+    while ($i < count($model)) {
+        $factura_total = 0;
+        echo '<div class="row">';
+        echo '<div class="col-lg-3"><h5><strong> Factura núm.: ' . $model[$i]->pedido_factura_num . '</strong></h5></div>';
+        echo '</div>';
 
-        ]);
-        echo "<div id='modalContent'></div>";
+        while ($factura == $model[$i]->pedido_factura_num && $i<count($model)) {
+           
 
-        Modal::end();
-        } ?>
+     $pedido_total_linea = 0;
+            $pedido_total_pedido = 0;
+            while ($pedido == $model[$i]->pedido_num && $i<count($model)) {
+                echo '<div class = "container">';
+                echo '<div class = "row">';
+                echo '<div class = "col-lg-2"><h5><strong>PEDIDO NUM.:' . $model[$i]->pedido_num . '</strong></h5></div>';
+                echo'<div class="col-lg-2"><h5><strong>' . Yii::$app->formatter->asDate($model[$i]->pedido_fecha, "php:d-m-Y") . '</strong></h5></div>';
+                echo'</div>';
+
+                foreach ($model[$i]['pedidoitems'] as $itempedido) {
+
+                    $pedido_total_linea = $itempedido->item_cantidad * $itempedido->item_precio;
+                    $pedido_total_pedido += $pedido_total_linea;
+
+
+                    echo'<div class="row">';
+                    echo'<div class="col-lg-1">' . $itempedido->item_cantidad . '</div>';
+                    echo'<div class="col-lg-9">' . Yii::$app->formatter->asNtext($itempedido->item_descripcion) . '</div>';
+                    echo'<div class="col-lg-2">' . $itempedido->item_precio . '</div>';
+                    echo'</div>';
+                    echo'<hr>';
+                    echo'</div>';
+                }
+
+                $factura_total += $pedido_total_pedido;
+                $pedido_total_linea = 0;
+                $pedido_total_pedido = 0;
+
+                if ($i >= count($model)) {
+                    
+                } else {
+                    $i++;
+                    $pedido = $model[$i]->pedido_num;
+                }
+            }
+
+
+            $factura_total = 0;
+            if ($i >= count($model)) {
+                
+            } else {
+                $i++;
+                $factura = $model[$i]->pedido_factura_num;
+            }
+        }
+    }
+    ?>
+
 </div>

@@ -40,6 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'identidad_poblacion',
                     'identidad_nif',
                     'identidad_mail',
+                    'identidad_persona_contacto',
                     'identidad_phone',
                     'identidad_role',
                     ['class' => 'yii\grid\ActionColumn'],

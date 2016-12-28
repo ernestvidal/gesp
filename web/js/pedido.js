@@ -73,6 +73,8 @@ function borrar(item){
             });
         //});
     });
+    
+    
 
 
     $('#print').click(function() {
@@ -176,5 +178,7 @@ function borrar(item){
         $(new_div_delete_line).append(new_delete_line);
 
     });
+    
+    $('#item_cantidad_0').trigger('keyup');
 
 });

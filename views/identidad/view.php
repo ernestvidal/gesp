@@ -39,9 +39,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     'identidad_poblacion',
                     'identidad_nif',
                     'identidad_mail',
+                    'identidad_persona_contacto',
                     'identidad_cp',
                     'identidad_provincia',
-                    'identidad_web'
+                    'identidad_web',
+                    'identidad_forma_pago',
+                    'identidad_cta'
                 ],
             ])
             ?>

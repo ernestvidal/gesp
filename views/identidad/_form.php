@@ -42,6 +42,14 @@ use app\models\Identidad;
         </div>
 
     </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <?= $form->field($model, 'identidad_mail')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-lg-6">
+            <?= $form->field($model, 'identidad_persona_contacto')->textInput(['maxlength' => true]) ?>
+        </div>
+    </div>
 
     <?= $form->field($model, 'identidad_mail')->textInput(['maxlength' => true]) ?>
 
@@ -56,7 +64,7 @@ use app\models\Identidad;
 
     <div class="row">
         <div class="col-lg-6">
-            <?= $form->field($model, 'identidad_role')->dropDownList(['CLIENTE'=>'CLIENTE', 'CAPTACION'=>'CAPTACION']) ?>
+            <?= $form->field($model, 'identidad_role')->dropDownList(['CLIENTE'=>'CLIENTE', 'CAPTACION'=>'CAPTACION'],['prompt'=>'Seleccionar ...']) ?>
                         
         </div>
         <div class="col-lg-6">
