@@ -91,7 +91,7 @@ $form->field($model, 'cliente_id')->dropDownList(
                     <input type="text" name="FacturaItem[0][item_cantidad]" id="item_cantidad_0" class="form-control text-right" value="0.00" required>
                 </div>
                 <div class="col-md-5">
-                    <textarea name="FacturaItem[0][item_descripcion]" id="item_descripcion_0" class="form-control"></textarea>
+                    <textarea name="FacturaItem[0][item_descripcion]" id="item_descripcion_0" class="form-control" data-autoresize rows="2"></textarea>
                 </div>
                 <div class="col-md-2">
                     <input type="text" name="FacturaItem[0][item_precio]" id="item_precio_0" class="form-control text-right" value="0.00">

@@ -4,6 +4,12 @@ body {
     height: 100%;
     font: normal 10pt Open Sans, sans-serif;
 }
+
+textarea {
+    box-sizing: border-box;
+    resize: none;
+}
+
   .form-control, .well{
          border-radius: 0;
   }
