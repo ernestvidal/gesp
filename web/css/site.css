@@ -1,8 +1,14 @@
 #html,
+
 body {
     height: 100%;
     font: normal 10pt Open Sans, sans-serif;
 }
+  .form-control, .well{
+         border-radius: 0;
+  }
+  
+
 #sidebar{
     background-color: #ddd;
     position: fixed;
