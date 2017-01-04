@@ -181,6 +181,8 @@ function borrar(item){
     
     $('#item_cantidad_0').trigger('keyup');
     
+    // Implementa autoresize vertical en textarea.
+    
     $('textarea').each(function(){
         var offset = this.offsetHeight - this.clientHeight;
         var resizeTextarea = function(el) {

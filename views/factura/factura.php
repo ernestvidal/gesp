@@ -55,13 +55,18 @@ $form->field($model, 'cliente_id')->dropDownList(
         </div>
         <div class="well">
             <div class="row">
-                <div class="col-md-3 col-md-offset-9">
-<?= $form->field($model, 'factura_num')->textInput(['maxlength' => true, 'id' => 'factura_num']) ?>
-                </div>
+                <div class="col-lg-2">
+                <span class="form-control text-center label-default">Factura num.</span>
             </div>
-            <div class="row">
-                <div class="col-md-3 col-md-offset-9">
-<?= $form->field($model, 'factura_fecha')->textInput(['maxlength' => true, 'type' => 'date', 'value' => Yii::$app->formatter->asDate('now', 'yyyy-MM-dd')]) ?>
+                <div class="col-md-4">
+                    <?= $form->field($model, 'factura_num')->textInput(['maxlength' => true, 'id' => 'factura_num'])->label(false) ?>
+                </div>
+            <div class="col-lg-2">
+                <span class="form-control text-center label-default">Fecha</span>
+            </div>
+            
+                <div class="col-md-4">
+                    <?= $form->field($model, 'factura_fecha')->textInput(['maxlength' => true, 'type' => 'date', 'value' => Yii::$app->formatter->asDate('now', 'yyyy-MM-dd')])->label(false) ?>
                 </div>
             </div>
         </div>
@@ -69,20 +74,20 @@ $form->field($model, 'cliente_id')->dropDownList(
     </div>
     <div id="factura_cos" class="well">
         <div class="row">
-            <div class="col-md-2">
-                <label for="item_cantidad">Cantidad</label>
+            <div class="col-lg-2">
+                <span class="form-control text-center label-info">Cantidad</span>
             </div>
-            <div class="col-md-5">
-                <label for="item_descripcion">Descripción</label>
+            <div class="col-lg-5">
+                <span class="form-control text-center label-default">Descripción</span>
             </div>
-            <div class="col-md-2">
-                <label for="item_precio">Precio</label>
+           <div class="col-lg-2">
+                <span class="form-control text-center label-default">Precio</span>
             </div>
-            <div class="col-md-2">
-                <label for="item_total">Total</label>
+           <div class="col-lg-2">
+                <span class="form-control text-center label-default">Total</span>
             </div>
-            <div class="col-md-1">
-                <p>#</p>
+           <div class="col-lg-1">
+                <span class="form-control text-center label-default">#</span>
             </div>
         </div>
         <div id="item_line">
@@ -235,15 +240,21 @@ $form->field($model, 'cliente_id')->dropDownList(
    
    
         <div class="row">
-            <div class="col-lg-6"><?=
-                $form->field($model, 'factura_vto')->textInput(
+            <div class="col-lg-2">
+                <span class="form-control text-center label-default">vto.factura</span>
+            </div>
+            <div class="col-lg-4">
+                
+                    <?=
+                    $form->field($model, 'factura_vto')->textInput(
                         [
                             'maxlength' => true,
                             'id' => 'factura-vto',
-                            'placeholder' => 'vencimiento factura'
-                ])->label(false)
-                ?>
+                            'type'=> 'date'
+                    ])->label(false)
+                    ?>
             </div>
+            
             <div class="col-lg-6"><?=
                 $form->field($model, 'factura_vto_importe')->textInput(
                         [
@@ -256,12 +267,15 @@ $form->field($model, 'cliente_id')->dropDownList(
    
     
         <div class="row">
-            <div class="col-lg-6"><?=
+            <div class="col-lg-2">
+                 <span class="form-control text-center label-default">vto.factura</span>
+            </div>
+            <div class="col-lg-4"><?=
                 $form->field($model, 'factura_vto_dos')->textInput(
                         [
                             'maxlength' => true,
                             'id' => 'factura-vto-dos',
-                            'placeholder' => 'vencimiento factura',
+                            'type' => 'date'
                 ])->label(false)
                 ?></div>
             <div class="col-lg-6"><?=

@@ -38,9 +38,14 @@ class PresupuestoController extends Controller
      * Lists all Presupuesto models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($year=NULL)
     {
-        $currentYear = Yii::$app->formatter->asDate('now', 'yyyy');
+        if($year == NULL){
+            $currentYear = Yii::$app->formatter->asDate('now', 'yyyy');
+        } else{
+            $currentYear = $year;
+        }
+        
         $model = Presupuesto::find()
                 ->where(['Year(presupuesto_fecha)' => $currentYear])
                 ->orderBy('facturador_id, presupuesto_num DESC')
