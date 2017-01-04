@@ -40,9 +40,21 @@ class PresupuestoController extends Controller
      */
     public function actionIndex()
     {
+        $currentYear = Yii::$app->formatter->asDate('now', 'yyyy');
         $model = Presupuesto::find()
+                ->where(['Year(presupuesto_fecha)' => $currentYear])
                 ->orderBy('facturador_id, presupuesto_num DESC')
                 ->all();
+        
+        if(count($model)<=0){
+            
+            $currentYear --;
+        
+            $model = Presupuesto::find()
+                ->where(['Year(presupuesto_fecha)' => $currentYear])
+                ->orderBy('facturador_id, presupuesto_num DESC')
+                ->all();
+        }
         return $this->render('index', [
             'model' => $model
         ]);

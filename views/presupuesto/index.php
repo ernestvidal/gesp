@@ -15,7 +15,14 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h4>Listado de facturas</h4>
+                    <span><strong>Listado de facturas / </strong></span>
+                    <span>
+                        <?= Html::a('2017',['index', 'year'=>2017])?>
+                        /
+                    </span>
+                    <span>
+                        <?= Html::a('2016',['index', 'year'=>2016])?>
+                    </span>
                 </div>
                 <div class="panel-body">
                     <div class="grid-view">
