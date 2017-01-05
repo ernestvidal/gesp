@@ -127,9 +127,18 @@ use yii\helpers\Html;
 </div>
 
 
+<?php if ($model['presupuesto_img']){ ?>
+<div id="imagen" style="margin-top: 5px">
+    <table class="table table-bordered" style="width: 100%; vertical-align: middle">
+        <tr style="text-align:center">
+             <td style="width: 100%; padding: 10px"> <?= Html::img('@web/clientes/' .$model['presupuesto_img'] , ['alt' => 'logo', 'width'=>'600']); ?></td>
+         </tr>
+     </table>
+</div>
+<?php } ?>
 
 <?php if ($model['forma_pago']){ ?>
-<div id="forma-de-pago" style="margin-top: 55px">
+<div id="forma-de-pago" style="margin-top: 5px">
     <table class="table table-bordered" style="width: 100%; vertical-align: middle">
          <tr>
              <td style="width: 35%; padding: 10px"><strong>FORMA DE PAGO</strong></td>
@@ -179,15 +188,7 @@ use yii\helpers\Html;
     </div>
 <?php } ?>
 
-<?php if ($model['presupuesto_img']){ ?>
-<div id="forma-de-pago" style="margin-top: 10px">
-    <table class="table table-bordered" style="width: 100%; vertical-align: middle">
-        <tr style="text-align:center">
-             <td style="width: 100%; padding: 10px"> <?= Html::img('@web/clientes/' .$model['presupuesto_img'] , ['alt' => 'logo', 'width'=>'600']); ?></td>
-         </tr>
-     </table>
-</div>
-<?php } ?>
+
 
 <?php
 

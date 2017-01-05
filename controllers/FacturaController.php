@@ -36,6 +36,7 @@ class FacturaController extends Controller {
      * @return mixed
      */
     public function actionIndex() {
+        
         $model = Factura::find()
                 ->orderBy('facturador_id, factura_num DESC')
                 ->all();

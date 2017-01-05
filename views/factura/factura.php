@@ -55,17 +55,17 @@ $form->field($model, 'cliente_id')->dropDownList(
         </div>
         <div class="well">
             <div class="row">
-                <div class="col-lg-2">
+                <div class="col-lg-2 col-xs-2">
                 <span class="form-control text-center label-default">Factura num.</span>
             </div>
-                <div class="col-md-4">
+                <div class="col-lg-4 col-xs-4">
                     <?= $form->field($model, 'factura_num')->textInput(['maxlength' => true, 'id' => 'factura_num'])->label(false) ?>
                 </div>
-            <div class="col-lg-2">
+            <div class="col-lg-2 col-xs-2">
                 <span class="form-control text-center label-default">Fecha</span>
             </div>
             
-                <div class="col-md-4">
+                <div class="col-lg-4 col-xs-4">
                     <?= $form->field($model, 'factura_fecha')->textInput(['maxlength' => true, 'type' => 'date', 'value' => Yii::$app->formatter->asDate('now', 'yyyy-MM-dd')])->label(false) ?>
                 </div>
             </div>
@@ -74,19 +74,19 @@ $form->field($model, 'cliente_id')->dropDownList(
     </div>
     <div id="factura_cos" class="well">
         <div class="row">
-            <div class="col-lg-2">
+            <div class="col-lg-2 col-xs-2">
                 <span class="form-control text-center label-info">Cantidad</span>
             </div>
-            <div class="col-lg-5">
+            <div class="col-lg-5 col-xs-5">
                 <span class="form-control text-center label-default">Descripción</span>
             </div>
-           <div class="col-lg-2">
+           <div class="col-lg-2 col-xs-2">
                 <span class="form-control text-center label-default">Precio</span>
             </div>
-           <div class="col-lg-2">
+           <div class="col-lg-2 col-xs-2">
                 <span class="form-control text-center label-default">Total</span>
             </div>
-           <div class="col-lg-1">
+           <div class="col-lg-1 col-xs-1">
                 <span class="form-control text-center label-default">#</span>
             </div>
         </div>
@@ -240,10 +240,10 @@ $form->field($model, 'cliente_id')->dropDownList(
    
    
         <div class="row">
-            <div class="col-lg-2">
+            <div class="col-lg-2 col-xs-2">
                 <span class="form-control text-center label-default">vto.factura</span>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-xs-4">
                 
                     <?=
                     $form->field($model, 'factura_vto')->textInput(
@@ -255,7 +255,7 @@ $form->field($model, 'cliente_id')->dropDownList(
                     ?>
             </div>
             
-            <div class="col-lg-6"><?=
+            <div class="col-lg-6 col-xs-6"><?=
                 $form->field($model, 'factura_vto_importe')->textInput(
                         [
                             'maxlength' => true,
@@ -267,10 +267,10 @@ $form->field($model, 'cliente_id')->dropDownList(
    
     
         <div class="row">
-            <div class="col-lg-2">
+            <div class="col-lg-2 col-xs-2">
                  <span class="form-control text-center label-default">vto.factura</span>
             </div>
-            <div class="col-lg-4"><?=
+            <div class="col-lg-4 col-xs-4"><?=
                 $form->field($model, 'factura_vto_dos')->textInput(
                         [
                             'maxlength' => true,
@@ -278,7 +278,7 @@ $form->field($model, 'cliente_id')->dropDownList(
                             'type' => 'date'
                 ])->label(false)
                 ?></div>
-            <div class="col-lg-6"><?=
+            <div class="col-lg-6 col-xs-6"><?=
                 $form->field($model, 'factura_vto_dos_importe')->textInput(
                         [
                             'maxlength' => true,

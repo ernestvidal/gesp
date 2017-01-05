@@ -14,22 +14,11 @@ textarea {
          border-radius: 0;
   }
   
-
-#sidebar{
-    background-color: #ddd;
-    position: fixed;
-    height: 100%;
-    bottom: 0;
-    left: 0;
-    z-index: 1000;
-    padding: 20px;
-    overflow-x: hidden;
-    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-    background-color: #f5f5f5;
-    border-right: 1px solid #eee;
+  .sidebar{
+      background-color: #eee;
   }
   #contenido{
-      margin-top: 150px;
+      margin-top: 75px;
   }
   
 .wrap {
@@ -122,4 +111,14 @@ a.desc:after {
     border-left: 3px solid #eed3d7;
     padding: 10px 20px;
     margin: 0 0 15px 0;
+}
+
+#cat-links{
+    padding-top: 75px;
+}
+#cat-links li{
+   
+    border-top: 1px #eee solid;
+    padding-top: 5px;
+    padding-bottom: 3px;
 }

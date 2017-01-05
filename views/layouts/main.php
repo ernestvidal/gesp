@@ -74,8 +74,7 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'Articulos', 'url' => ['/item/index']],
+            
             ['label' => 'Identidades', 'url' => ['/identidad/index']],
             ['label' => 'Presupuestos',
               'items' => [
@@ -124,29 +123,30 @@ AppAsset::register($this);
     ?>
 
 
-
-            <div id="sidebar">
-                <ul class="list-unstyled">
-                    <li>hola</li>
-                    <li>hola</li>
-                    <li>hola</li>
-                    <li>hola</li>
-                    <li>hola</li>
-                    <li>hola</li>
-                    <li>hola</li>
-                    <li>hola</li>
-                    <li>hola</li>
-                    <li><span class="glyphicon glyphicon-search" aria-hidden="true"></span></li>
-                </ul>
-            </div>
-    <div id="contenido" class="container">
+    
+           
+    <div id="contenido" class="container-fluid" >
         <div class="row">
-            <div class="col-md-12">
-
+            <div class="col-lg-1 col-xs-2 sidebar">
+                <div id="sidebar">
+                    <ul class="list-unstyled" id="cat-links">
+                       <li><?= Html::a('ARTICULOS', '@web/item/index')?></li>
+                       <li><?= Html::a('IDENTIDADES', '@web/identidad/index')?></li>
+                       <li><?= Html::a('PRESUPUESTOS', '@web/presupuesto/index')?></li>
+                       <li><?= Html::a('PEDIDOS', '@web/pedido/index')?></li></li>
+                       <li><?= Html::a('ALBARANES', '@web/albaran/index')?></li>
+                       <li><?= Html::a('FACTURAS', '@web/factura/index')?></li>
+                       <li><?= Html::a('PROFORMAS', '@web/proforma/index')?></li>
+                       <li><?= Html::a('INFORMES', '@web/informes/index')?></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-11 col-xs-10 main">
+                
                 <?= Breadcrumbs::widget([
                     'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
                 ]) ?>
-
+                
                 <?= $content ?>
             </div>
         </div>

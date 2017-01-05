@@ -59,7 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="row">
                 <div class="col-md-3 col-md-offset-9">
                     <?= $form->field($model, 'presupuesto_num')->textInput(['maxlength' => true, 'id'=>'presupuesto_num',
-                        'value'=>'2016.'. (substr($model->find()->max('presupuesto_num'), 5)+1)
+                        'value'=>'2017.'. substr('000'.(substr($model->find()->max('presupuesto_num'), 5)+1),-3,3)
                         ]) ?>
                 </div>
               </div>

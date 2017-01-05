@@ -241,7 +241,7 @@ class PresupuestoController extends Controller
                 </table> ' ;
                 
         $this->layout = 'viewLayout';
-        $mpdf=new mPDF('UTF-8','A4','','',15,15,15,0,'',5,'P');
+        $mpdf=new mPDF('UTF-8','A4','','',15,15,15,20,'',5,'P');
         $mpdf->SetHTMLFooter($footer);
         $mpdf->WriteHTML($this->render('view', ['model' => $this->findModel($id)]));
         $presupuestoPdf = $mpdf->Output('presupuesto ' . $num . '.pdf','D');
