@@ -5,19 +5,19 @@ use yii\bootstrap\Modal;
 use yii\helpers\Url;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\facturaSearch */
+/* @var $searchModel app\models\proformaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Facturas Proforma';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<div class="factura-index">
+<div class="proforma-index">
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h4>Listado de facturas</h4>
+                    <h4>Listado de proformas</h4>
                 </div>
                 <div class="panel-body">
                     <div class="grid-view">
@@ -44,58 +44,58 @@ $this->params['breadcrumbs'][] = $this->title;
                                 </tr>
                             </thead>
                             <?php $facturador = $model[0]->facturador->identidad_nombre; ?>
-                            <?php $año_factura = substr($model[0]->factura_fecha, 0, 4); ?>
-                            <?php $currentMonth = date("m", strtotime($model[0]->factura_fecha)); ?>
+                            <?php $año_proforma = substr($model[0]->proforma_fecha, 0, 4); ?>
+                            <?php $currentMonth = date("m", strtotime($model[0]->proforma_fecha)); ?>
                             <?php $currentQuarter = ceil($currentMonth / 3); ?>
                             <?php
                             for ($i = 0; $i < count($model); $i++) {
 
-                                if ($facturador <> $model[$i]->facturador->identidad_nombre || $año_factura <> substr($model[$i]->factura_fecha, 0, 4) || $currentQuarter <> ceil(date("m", strtotime($model[$i]->factura_fecha)) / 3)) {
+                                if ($facturador <> $model[$i]->facturador->identidad_nombre || $año_proforma <> substr($model[$i]->proforma_fecha, 0, 4) || $currentQuarter <> ceil(date("m", strtotime($model[$i]->proforma_fecha)) / 3)) {
                                     $facturador = $model[$i]->facturador->identidad_nombre;
-                                    $año_factura = substr($model[$i]->factura_fecha, 0, 4);
-                                    $currentQuarter = ceil(date("m", strtotime($model[$i]->factura_fecha)) / 3);
-                                    //echo '<h3>'. $año_factura . '-'. $facturador . '</h3>';
+                                    $año_proforma = substr($model[$i]->proforma_fecha, 0, 4);
+                                    $currentQuarter = ceil(date("m", strtotime($model[$i]->proforma_fecha)) / 3);
+                                    //echo '<h3>'. $año_proforma . '-'. $facturador . '</h3>';
                                 }
                                 $baseImponible = 0;
                                 $totalIva = 0;
                                 $totalFactura = 0;
-                                foreach ($model[$i]->proformaitems as $facturaDetalle) {
-                                    $totalLinea = $facturaDetalle->item_cantidad * $facturaDetalle->item_precio;
+                                foreach ($model[$i]->proformaitems as $proformaDetalle) {
+                                    $totalLinea = $proformaDetalle->item_cantidad * $proformaDetalle->item_precio;
                                     $baseImponible += $totalLinea;
-                                    $totalDto = $baseImponible * $model[$i]->factura_rate_descuento / 100;
-                                    $totalIva = $baseImponible * $model[$i]->factura_rate_iva / 100;
-                                    $totalIrpf = $baseImponible * $model[$i]->factura_rate_irpf / 100;
+                                    $totalDto = $baseImponible * $model[$i]->proforma_rate_descuento / 100;
+                                    $totalIva = $baseImponible * $model[$i]->proforma_rate_iva / 100;
+                                    $totalIrpf = $baseImponible * $model[$i]->proforma_rate_irpf / 100;
                                     $totalFactura = $baseImponible + $totalIva - $totalIrpf - $totalDto;
                                 }
                                 ?>
                             <tbody>
                                 <tr>
-                                    <td><?= Yii::$app->formatter->asDate($model[$i]->factura_fecha, 'php:d-m-Y') ?></td>
-                                    <td><?= $model[$i]->factura_num ?></td>
+                                    <td><?= Yii::$app->formatter->asDate($model[$i]->proforma_fecha, 'php:d-m-Y') ?></td>
+                                    <td><?= $model[$i]->proforma_num ?></td>
                                     <td><?= Html::a($model[$i]->cliente->identidad_nombre, ['reportfacturascliente', 'id' => $model[$i]->cliente->identidad_id]) ?></td>
                                     <td class="text-right"><?= Yii::$app->formatter->asDecimal($baseImponible, 2); ?></td>
-                                    <td class="text-right"><?= $model[$i]->factura_rate_iva ?> %</td>
+                                    <td class="text-right"><?= $model[$i]->proforma_rate_iva ?> %</td>
                                     <td class="text-right"><?= Yii::$app->formatter->asDecimal($totalIva, 2) ?></td>
-                                    <td class="text-right"><?= $model[$i]->factura_rate_irpf ?> %</td>
+                                    <td class="text-right"><?= $model[$i]->proforma_rate_irpf ?> %</td>
                                     <td class="text-right"><?= Yii::$app->formatter->asDecimal($totalIrpf, 2) ?></td>
-                                    <td class="text-right"><?= $model[$i]->factura_rate_descuento ?> %</td>
+                                    <td class="text-right"><?= $model[$i]->proforma_rate_descuento ?> %</td>
                                     <td class="text-right"><?= Yii::$app->formatter->asDecimal($totalDto, 2) ?></td>
                                     <td class="text-right"><?= Yii::$app->formatter->asDecimal($totalFactura, 2); ?></td>
-                                    <td><?= Html::a('<i class="glyphicon glyphicon-eye-open"></i>', ['view', 'id' => $model[$i]->factura_id]) ?></td>
-                                    <td><?= Html::a('<i class="glyphicon glyphicon-pencil"></i>', ['update', 'id' => $model[$i]->factura_id]) ?></td>
-                                    <td><?= Html::a('<i class="glyphicon glyphicon-print"></i>', ['printfactura', 'id' => $model[$i]->factura_id]) ?></td>
+                                    <td><?= Html::a('<i class="glyphicon glyphicon-eye-open"></i>', ['view', 'id' => $model[$i]->proforma_id]) ?></td>
+                                    <td><?= Html::a('<i class="glyphicon glyphicon-pencil"></i>', ['update', 'id' => $model[$i]->proforma_id]) ?></td>
+                                    <td><?= Html::a('<i class="glyphicon glyphicon-print"></i>', ['printproforma', 'id' => $model[$i]->proforma_id]) ?></td>
                                     <td><?=
                                         Html::a('<i class="glyphicon glyphicon-envelope"></i>', '#', [
-                                            'id' => 'enviar-factura',
+                                            'id' => 'enviar-proforma',
                                             //'class' => 'btn btn-success',
                                             //'data-toggle' => 'modal',
                                             //'data-target' => '#modal',
-                                            'data-url' => Url::to(['modalsendfactura', 'id' => $model[$i]->factura_id]),
+                                            'data-url' => Url::to(['modalsendproforma', 'id' => $model[$i]->proforma_id]),
                                             'data-pjax' => '0',
                                         ]);
                                         ?></td>
                                     <td><?=
-                                        Html::a('<i class="glyphicon glyphicon-trash"></i>', ['delete', 'id' => $model[$i]->factura_id], [
+                                        Html::a('<i class="glyphicon glyphicon-trash"></i>', ['delete', 'id' => $model[$i]->proforma_id], [
                                             'data' => [
                                                 'confirm' => 'Are you sure you want to delete this item?',
                                                 'method' => 'post',
@@ -118,7 +118,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
             <?php
         $this->registerJs(
-                "$(document).on('click', '#enviar-factura', (function() {
+                "$(document).on('click', '#enviar-proforma', (function() {
                 $.get(
                     $(this).data('url'),
                     function (data) {

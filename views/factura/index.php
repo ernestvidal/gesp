@@ -17,7 +17,10 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h4>Listado de facturas</h4>
+                    <span><strong>Listado de facturas | </strong></span>
+                    <span>
+                        <?= Html::a('Nueva', ['create']) ?>
+                    </span>
                 </div>
                 <div class="panel-body">
                     <div class="grid-view">
@@ -116,6 +119,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             </div>
         </div>
+    </div>
+</div>
             <?php
         $this->registerJs(
                 "$(document).on('click', '#enviar-factura', (function() {
@@ -140,4 +145,4 @@ $this->params['breadcrumbs'][] = $this->title;
 
         Modal::end();
         ?>
-    </div>
+    

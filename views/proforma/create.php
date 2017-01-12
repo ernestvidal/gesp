@@ -10,7 +10,7 @@ $this->title = 'Create Factura';
 $this->params['breadcrumbs'][] = ['label' => 'Facturas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="factura-create">
+<div class="proforma-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

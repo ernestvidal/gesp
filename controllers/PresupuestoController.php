@@ -14,6 +14,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\base\Model;
+use app\models\Proforma;
+use app\models\Proformaitem;
 
 /**
  * PresupuestoController implements the CRUD actions for Presupuesto model.
@@ -285,5 +287,81 @@ class PresupuestoController extends Controller
                 'model' => $model,
                 'numPresupuesto' => $id,
             ]);
+    }
+    
+    public function actionModalfacturar($id) {
+        $model = $this->findModel($id);
+
+       // if ($model->presupuesto_factura_num <> NULL) {
+       //     echo 'this albarán is factured';
+       // } else {
+           
+            return $this->renderAjax('modalFacturarPresupuesto', [
+                        //'model' => $model,
+                        'numPresupuesto' => $id,
+            ]);
+        //}
+    }
+
+    public function actionFacturar() {
+        /**
+         * Recogemos los datos enviados desde el formulario modalFacturaAlbaran.php
+         * Luego cargamos el alabarán con el id correspondiente
+         * 
+         */
+        $fecha_proforma;
+        $num_proforma;
+        $num_presupuesto;
+
+        $data_request = Yii::$app->request->post();
+        $num_presupuesto = $data_request['presupuesto_id'];
+        $fecha_proforma = $data_request['fecha_proforma'];
+        $num_proforma = $data_request['num_proforma'];
+        $model = $this->findModel($num_presupuesto);
+        $modelItems =$model['presupuestoitems'];
+        $fModel = new Proforma();
+        $fModel->proforma_num = $num_proforma;
+        $fModel->proforma_fecha = $fecha_proforma;
+        $fModel->facturador_id = $model->facturador_id;
+        $fModel->cliente_id = $model->cliente_id;
+        $fModel->proforma_rate_descuento = $model->presupuesto_rate_descuento;
+        $fModel->proforma_rate_iva = 21;
+        $fModel->proforma_rate_irpf = $model->presupuesto_rate_irpf;
+        $fModel->proforma_forma_pago =  ($model['cliente']['identidad_forma_pago'] <> Null)? $model['cliente']['identidad_forma_pago']:'';
+        $fModel->proforma_cta = $model['cliente']['identidad_cta'];
+        $fModel->save();
+        //var_dump($modelItems);
+        
+        /**
+         * Insertamos el número de albarán y la fecha en los items de la proforma.
+         * Lo hacemos de este modo porqué el foreach siguiente solo cuenta las líneas del albarán
+         */
+        $fModelItems = new Proformaitem();
+        $fModelItems->proforma_num = $num_proforma;
+        $fModelItems->item_cantidad = 0;
+        $fModelItems->item_descripcion = 'Albarán núm.: ' . $model->presupuesto_num . ' / ' . Yii::$app->formatter->asDate($model->presupuesto_fecha, 'dd-MM-yyyy') ;
+        $fModelItems->item_precio = 0;
+        if ($fModelItems->validate()){
+            $fModelItems->save();
+        }else{
+            $fModel->getErrors();
+        }
+        
+        foreach ($modelItems as $presupuestoItems){
+            $fModelItems = new Proformaitem();
+            $fModelItems->proforma_num = $num_proforma;
+            $fModelItems->item_cantidad = $presupuestoItems->item_cantidad;
+            $fModelItems->item_descripcion = $presupuestoItems->item_descripcion;
+            $fModelItems->item_precio = $presupuestoItems->item_precio;
+            $fModelItems->save();
+        }
+        // Guardamos en el albarán el número de la proforma para saber que está facturado
+        //$model->albaran_proforma_num = $num_proforma;
+        if ($model->validate()){
+            $model->save();
+            $this->redirect('@web/proforma/index');
+        }else{
+            $model->getErrors();
+        }
     }
 }

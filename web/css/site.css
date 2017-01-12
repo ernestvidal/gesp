@@ -16,6 +16,9 @@ textarea {
   
   .sidebar{
       background-color: #eee;
+      position: fixed;
+      left: 0;
+      height: 100%;
   }
   #contenido{
       margin-top: 75px;

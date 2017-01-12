@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\Modal;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\presupuestoSearch */
@@ -17,11 +18,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="panel-heading">
                     <span><strong>Listado de facturas / </strong></span>
                     <span>
-                        <?= Html::a('2017',['index', 'year'=>2017])?>
+                        <?= Html::a('2017', ['index', 'year' => 2017]) ?>
                         /
                     </span>
                     <span>
-                        <?= Html::a('2016',['index', 'year'=>2016])?>
+                        <?= Html::a('2016', ['index', 'year' => 2016]) ?>
                     </span>
                 </div>
                 <div class="panel-body">
@@ -94,43 +95,85 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <td class="text-right"><?= $model[$i]->presupuesto_rate_irpf ?></td>
                                     <td class="text-right"><?= Yii::$app->formatter->asDecimal($totalIrpf, 2) ?></td>
                                     <td class="text-right"><?= Yii::$app->formatter->asDecimal($totalPresupuesto, 2) ?></td>
-                                    <td ><?= Html::a('<i class="glyphicon glyphicon-eye-open"></i>', ['view', 'id' => $model[$i]->presupuesto_id]) ?></td>
-                                    <td><?= Html::a('<i class="glyphicon glyphicon-pencil"></i>', ['update', 'id' => $model[$i]->presupuesto_id]) ?></td>
+
+                                    <td><?= Html::a('<i class="glyphicon glyphicon-pencil"></i>', ['update', 'id' => $model[$i]->presupuesto_id], ['title' => 'editar'])
+                                    ?></td>
                                     <td><?=
                                         Html::a('<i class="glyphicon glyphicon-print"></i>', ['printpresupuesto',
                                             'id' => $model[$i]->presupuesto_id,
-                                            'num' => $model[$i]->presupuesto_num])
+                                            'num' => $model[$i]->presupuesto_num], ['title' => 'imprimir'])
                                         ?>
                                     </td>
-                                    <td><?= Html::a('<i class="glyphicon glyphicon-envelope"></i>', ['modalsendpresupuesto', 'id' => $model[$i]->presupuesto_id]) ?></td>
+                                    <td><?= Html::a('<i class="glyphicon glyphicon-envelope"></i>', ['modalsendpresupuesto', 'id' => $model[$i]->presupuesto_id], ['title' => 'enviar por mail'])
+                                    ?>
+                                    </td>
+                                    <td>
+                                        <?=
+                                        Html::a('<i class="glyphicon glyphicon-file"></i>', '#', [
+                                            'id' => 'modal-facturar-link',
+                                            'title' => 'proforma',
+                                            //'class' => 'btn btn-success',
+                                            //'data-toggle' => 'modal',
+                                            //'data-target' => '#modal',
+                                            'data-url' => Url::to(['modalfacturar', 'id' => $model[$i]->presupuesto_id]),
+                                            'data-pjax' => '0',])
+                                        ?>
+                                    </td>
                                     <td><?=
-                                        Html::a('<i class="glyphicon glyphicon-trash"></i>', ['delete', 'id' => $model[$i]->presupuesto_id], [
-                                            'data' => [
-                                                'confirm' => 'Are you sure you want to delete this item?',
-                                                'method' => 'post',
-                                            ],
-                                        ])
+                                    Html::a('<i class="glyphicon glyphicon-trash"></i>', ['delete', 'id' => $model[$i]->presupuesto_id], ['title' => 'delete'], [
+                                        'data' => [
+                                            'confirm' => 'Are you sure you want to delete this item?',
+                                            'method' => 'post',
+                                        ],
+                                    ])
                                         ?>
                                     </td>
                                 </tr>
-                            <?php } ?>
+                                    <?php } ?>
                         </table>
                     </div>
                 </div>
             </div>
         </div> 
+    </div>
+</div>
+
+ <?php
+            $this->registerJs(
+                    "$(document).on('click', '#modal-facturar-link', (function() {
+            $.get(
+                $(this).data('url'),
+                function (data) {
+                    $('.modal-body').html(data);
+                    $('#modal-facturar').modal();
+                }
+            );
+        }));"
+            );
+            ?>
 
 
 
-
-
-        <?php
+<?php
 // Ventana modal para introducir los datos para enviar la presupuesto por correo
-        Modal::begin([
-            'header' => '<h2>Enviar Presupuesto</h2>',
-            'id' => 'modalSendPresupuesto',
-        ]);
-        echo "<div id='modalContent'></div>";
+Modal::begin([
+    'header' => '<h2>Enviar Presupuesto</h2>',
+    'id' => 'modalSendPresupuesto',
+]);
+echo "<div id='modalContent'></div>";
 
-        Modal::end();
-        ?>
+Modal::end();
+?>
+
+ <?php
+            // Ventana modal donde mostramos la vista modalFacturarPedido.php
+            Modal::begin([
+                'header' => '<h2>Facturar albarán</h2>',
+                'id' => 'modal-facturar',
+            ]);
+            echo "<div id='modalContent'>";
+            echo "</div>";
+
+
+            Modal::end();
+            ?>

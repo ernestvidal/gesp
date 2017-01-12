@@ -59,7 +59,7 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        $this->layout = 'main-fluid';
+        //$this->layout = 'main-fluid';
 
         $presupuestoSearchModel = new PresupuestoSearch();
         $presupuestoProvider = $presupuestoSearchModel->search(Yii::$app->request->queryParams);

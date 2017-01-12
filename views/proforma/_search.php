@@ -8,22 +8,22 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="factura-search">
+<div class="proforma-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'factura_id') ?>
+    <?= $form->field($model, 'proforma_id') ?>
 
-    <?= $form->field($model, 'factura_num') ?>
+    <?= $form->field($model, 'proforma_num') ?>
 
     <?= $form->field($model, 'facturador_id') ?>
 
     <?= $form->field($model, 'cliente_id') ?>
 
-    <?= $form->field($model, 'factura_fecha') ?>
+    <?= $form->field($model, 'proforma_fecha') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

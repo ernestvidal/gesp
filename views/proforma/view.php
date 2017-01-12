@@ -12,7 +12,7 @@ use yii\helpers\Html;
     }
 
 </style>
-<div class="factura-view">
+<div class="proforma-view">
 
     <table id="head" style="width: 100%; margin-bottom: 25px;">
         <tr>
@@ -36,8 +36,8 @@ use yii\helpers\Html;
 
     <table class="table table-bordered">
         <tr>
-            <td style="width:50%; padding: 10px"><h4><?= 'FECHA : ' . Yii::$app->formatter->asDate($model['factura_fecha'], 'php:d-m-Y'); ?></h4></td>
-            <td style="width:50%; padding: 10px;  text-align: right"><h4><strong><?= 'FACTURA PROFORMA : ' . $model['factura_num'] ?></strong></h4></td>
+            <td style="width:50%; padding: 10px"><h4><?= 'FECHA : ' . Yii::$app->formatter->asDate($model['proforma_fecha'], 'php:d-m-Y'); ?></h4></td>
+            <td style="width:50%; padding: 10px;  text-align: right"><h4><strong><?= 'FACTURA PROFORMA : ' . $model['proforma_num'] ?></strong></h4></td>
         </tr>
     </table>
 
@@ -90,10 +90,10 @@ use yii\helpers\Html;
                 $total = $total + $total_linea;
             }
 
-            $importe_descuento = $total * ($model['factura_rate_descuento'] / 100);
+            $importe_descuento = $total * ($model['proforma_rate_descuento'] / 100);
             $base_imponible = $total - $importe_descuento;
-            $importe_iva = $base_imponible * ($model['factura_rate_iva'] / 100);
-            $importe_irpf = $base_imponible * ($model['factura_rate_irpf'] / 100);
+            $importe_iva = $base_imponible * ($model['proforma_rate_iva'] / 100);
+            $importe_irpf = $base_imponible * ($model['proforma_rate_irpf'] / 100);
             ?>
             <tr>
                 <td style="border-color: white; height: 15px;"></td>
@@ -111,11 +111,11 @@ use yii\helpers\Html;
             <td style="width: 16%; padding: 5px" class="text-right"><?= number_format($total, 2, ',', '.') ?></td>
         </tr>
 
-        <?php if ($model['factura_rate_descuento'] <> 0) { ?>
+        <?php if ($model['proforma_rate_descuento'] <> 0) { ?>
             <tr>
                 <td style="border-color: white; width: 29%"></td>
                 <td style="border-bottom-color: white; border-top-color: white; width: 30%"></td>
-                <td style="width: 25%; padding: 5px">Dto.<?= " " . $model['factura_rate_descuento'] . "%"; ?></td>
+                <td style="width: 25%; padding: 5px">Dto.<?= " " . $model['proforma_rate_descuento'] . "%"; ?></td>
                 <td style="width: 16%; padding: 5px" class="text-right"><?= number_format($importe_descuento, 2, ',', '.') ?></td>
             </tr>
         <?php } ?>
@@ -131,15 +131,15 @@ use yii\helpers\Html;
         <tr>
             <td style="border-color: white; width: 29%"></td>
             <td style="border-bottom-color: white; border-top-color: white; width: 30%"></td>
-            <td style="width: 25%; padding: 5px">Iva<?= " " . $model['factura_rate_iva'] . "%"; ?></td>
+            <td style="width: 25%; padding: 5px">Iva<?= " " . $model['proforma_rate_iva'] . "%"; ?></td>
             <td style="width: 16%; padding: 5px" class="text-right"><?= number_format($importe_iva, 2, ',', '.') ?></td>
         </tr>
 
-        <?php if ($model['factura_rate_irpf'] <> 0) { ?>
+        <?php if ($model['proforma_rate_irpf'] <> 0) { ?>
             <tr>
                 <td style="border-color: white; width: 29%"></td>
                 <td style="border-bottom-color: white; border-top-color: white; width: 30%"></td>
-                <td style="width: 25%; padding: 5px">Irpf<?= " " . $model['factura_rate_irpf'] . "%"; ?></td>
+                <td style="width: 25%; padding: 5px">Irpf<?= " " . $model['proforma_rate_irpf'] . "%"; ?></td>
                 <td style="width: 16%; padding: 5px" class="text-right"><?= number_format($importe_irpf, 2, ',', '.') ?></td>
             </tr>
         <?php } ?>
@@ -154,49 +154,71 @@ use yii\helpers\Html;
 
 </div>
 
-<?php if ($model['forma_pago']) { ?>
+<?php if ($model['proforma_forma_pago']) { ?>
     <div id="forma-de-pago" style="margin-top: 5px">
         <table class="table table-bordered" style="width: 100%; vertical-align: middle">
             <tr>
                 <td style="width: 35%; padding: 10px"><strong>FORMA DE PAGO</strong></td>
-                <td style="width: 65%; padding: 10px"><?= $model['forma_pago'] ?></td>
+                <td style="width: 65%; padding: 10px"><?= $model['proforma_forma_pago'] ?></td>
             </tr>
         </table>
     </div>
 <?php } ?>
 
-<?php if ($model['factura_vto']) { ?>
+<?php if ($model['proforma_vto']) { ?>
     <div id="forma-de-pago" style="margin-top: 1px">
         <table class="table table-bordered" style="width: 100%; vertical-align: middle">
             <tr>
                 <td style="width: 35%; padding: 10px"><strong>VENCIMIENTO</strong></td>
                 <td style="width: 65%; padding: 10px">
-                    <?= Yii::$app->formatter->asDate($model['factura_vto'], 'php:d-m-Y') . ' / Importe ' . $model['factura_vto_importe'] ?> &euro;
+                    <?= Yii::$app->formatter->asDate($model['proforma_vto'], 'php:d-m-Y') . ' / Importe ' . $model['proforma_vto_importe'] ?> &euro;
                 </td>
             </tr>
         </table>
     </div>
 <?php } ?>
 
-<?php if ($model['factura_vto_dos']) { ?>
+<?php if ($model['proforma_vto_dos']) { ?>
     <div id="forma-de-pago" style="margin-top: 1px">
         <table class="table table-bordered" style="width: 100%; vertical-align: middle">
             <tr>
                 <td style="width: 35%; padding: 10px"><strong>VENCIMIENTO</strong></td>
                 <td style="width: 65%; padding: 10px">
-                    <?= Yii::$app->formatter->asDate($model['factura_vto_dos'], 'php:d-m-Y') . ' / Importe ' . $model['factura_vto_dos_importe'] ?> &euro;
+                    <?= Yii::$app->formatter->asDate($model['proforma_vto_dos'], 'php:d-m-Y') . ' / Importe ' . $model['proforma_vto_dos_importe'] ?> &euro;
                 </td>
             </tr>
         </table>
     </div>
 <?php } ?>
 
-<?php if ($model['factura_cta']) { ?>
+<?php if ($model['proforma_cta']) { ?>
     <div id="forma-de-pago" style="margin-top: 5px">
         <table class="table table-bordered" style="width: 100%; vertical-align: middle">
             <tr>
                 <td style="width: 35%; padding: 10px"><strong>ENTIDAD/CTA</strong></td>
-                <td style="width: 65%; padding: 10px"><?= $model['factura_cta'] ?></td>
+                <td style="width: 65%; padding: 10px"><?= $model['proforma_cta'] ?></td>
+            </tr>
+        </table>
+    </div>
+<?php } ?>
+
+<?php if ($model['proforma_plazo_entrega']) { ?>
+    <div id="proforma-plazo-entrega" style="margin-top: 5px">
+        <table class="table table-bordered" style="width: 100%; vertical-align: middle">
+            <tr>
+                <td style="width: 35%; padding: 10px"><strong>PLAZO ENTREGA</strong></td>
+                <td style="width: 65%; padding: 10px"><?= $model['proforma_plazo_entrega'] ?></td>
+            </tr>
+        </table>
+    </div>
+<?php } ?>
+
+<?php if ($model['proforma_validez']) { ?>
+    <div id="proforma-validez" style="margin-top: 5px">
+        <table class="table table-bordered" style="width: 100%; vertical-align: middle">
+            <tr>
+                <td style="width: 35%; padding: 10px"><strong>VALIDEZ PROFORMA</strong></td>
+                <td style="width: 65%; padding: 10px"><?= $model['proforma_validez'] ?></td>
             </tr>
         </table>
     </div>

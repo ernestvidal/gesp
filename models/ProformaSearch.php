@@ -8,7 +8,7 @@ use yii\data\ActiveDataProvider;
 use app\models\Proforma;
 
 /**
- * facturaSearch represents the model behind the search form about `app\models\factura`.
+ * proformaSearch represents the model behind the search form about `app\models\proforma`.
  */
 class proformaSearch extends proforma
 {
@@ -18,9 +18,9 @@ class proformaSearch extends proforma
     public function rules()
     {
         return [
-            [['factura_id', 'facturador_id', 'cliente_id'], 'integer'],
-            [['factura_num', 'factura_fecha'], 'safe'],
-            [['factura_rate_descuento', 'factura_rate_iva', 'factura_rate_irpf'], 'number'],
+            [['proforma_id', 'facturador_id', 'cliente_id'], 'integer'],
+            [['proforma_num', 'proforma_fecha'], 'safe'],
+            [['proforma_rate_descuento', 'proforma_rate_iva', 'proforma_rate_irpf'], 'number'],
         ];
     }
 
@@ -42,7 +42,7 @@ class proformaSearch extends proforma
      */
     public function search($params)
     {
-        $query = proforma::find()->with('facturaitems');
+        $query = proforma::find()->with('proformaitems');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -57,16 +57,16 @@ class proformaSearch extends proforma
         }
 
         $query->andFilterWhere([
-            'factura_id' => $this->factura_id,
+            'proforma_id' => $this->proforma_id,
             'facturador_id' => $this->facturador_id,
             'cliente_id' => $this->cliente_id,
-            'factura_fecha' => $this->factura_fecha,
-            'factura_rate_descuento' => $this->factura_rate_descuento,
-            'factura_rate_iva' => $this->factura_rate_iva,
-            'factura_rate_irpf' => $this->factura_rate_irpf,
+            'proforma_fecha' => $this->proforma_fecha,
+            'proforma_rate_descuento' => $this->proforma_rate_descuento,
+            'proforma_rate_iva' => $this->proforma_rate_iva,
+            'proforma_rate_irpf' => $this->proforma_rate_irpf,
         ]);
 
-        $query->andFilterWhere(['like', 'factura_num', $this->factura_num]);
+        $query->andFilterWhere(['like', 'proforma_num', $this->proforma_num]);
 
         return $dataProvider;
     }

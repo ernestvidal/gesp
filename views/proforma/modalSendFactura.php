@@ -5,11 +5,11 @@ use yii\bootstrap\ActiveForm;
 
 
 ?>
-<div class="factura-send">
+<div class="proforma-send">
     <h1><?= Html::encode($this->title) ?></h1>
 
     <h5>
-        Rellenar los campos con los datos del destinatario de la factura.
+        Rellenar los campos con los datos del destinatario de la proforma.
     </h5>
    
     <div class="row">
@@ -26,7 +26,7 @@ use yii\bootstrap\ActiveForm;
                 <?= $form->field($model, 'asunto')->textInput(['value' => 'Factura num.' . $numFactura ]) ?>
 
                 <?= $form->field($model, 'body')->textArea(['rows' => 6,
-                        'value' => 'Adjunto le remitimos factura para su abono',
+                        'value' => 'Adjunto le remitimos proforma para su abono',
                     ]) ?>
          
 

@@ -5,15 +5,15 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "facturaitem".
+ * This is the model class for table "proformaitem".
  *
- * @property string $factura_id
- * @property string $factura_num
+ * @property string $proforma_id
+ * @property string $proforma_num
  * @property string $item_cantidad
  * @property string $item_precio
  * @property string $item_descripcion
  *
- * @property Factura $facturaNum
+ * @property Factura $proformaNum
  */
 class Proformaitem extends \yii\db\ActiveRecord
 {
@@ -32,9 +32,9 @@ class Proformaitem extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['factura_num', 'item_cantidad', 'item_precio', 'item_descripcion'], 'required'],
+            [['proforma_num', 'item_cantidad', 'item_precio', 'item_descripcion'], 'required'],
             [['item_cantidad', 'item_precio'], 'number'],
-            [['factura_num'], 'string', 'max' => 20],
+            [['proforma_num'], 'string', 'max' => 20],
             [['item_descripcion'], 'string', 'max' => 250]
         ];
     }
@@ -45,8 +45,8 @@ class Proformaitem extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'factura_id' => 'Factura ID',
-            'factura_num' => 'Factura Num',
+            'proforma_id' => 'Factura ID',
+            'proforma_num' => 'Factura Num',
             'item_cantidad' => 'Item Cantidad',
             'item_precio' => 'Item Precio',
             'item_descripcion' => 'Item Descripcion',
@@ -58,7 +58,7 @@ class Proformaitem extends \yii\db\ActiveRecord
      */
     public function getFacturaNum()
     {
-        return $this->hasOne(Proforma::className(), ['factura_num' => 'factura_num']);
+        return $this->hasOne(Proforma::className(), ['proforma_num' => 'proforma_num']);
     }
 
     /**

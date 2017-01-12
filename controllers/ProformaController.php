@@ -37,7 +37,7 @@ class ProformaController extends Controller {
      */
     public function actionIndex() {
         $model = Proforma::find()
-                ->orderBy('facturador_id, factura_fecha DESC')
+                ->orderBy('facturador_id, proforma_num DESC')
                 ->all();
         return $this->render('index', [
                     'model' => $model
@@ -70,7 +70,7 @@ class ProformaController extends Controller {
             /*
              * Esta es la esctructura de datos que tiene que tener el array $data para que se procese.
              *
-             * $data['FacturaItem'][0] = ['factura_num'=>'12ab', 'item_cantidad'=>10,00, 'item_descripcion'=>'holaa', 'item_precio'=>100,00];
+             * $data['FacturaItem'][0] = ['proforma_num'=>'12ab', 'item_cantidad'=>10,00, 'item_descripcion'=>'holaa', 'item_precio'=>100,00];
              */
 
             $count = count($data['FacturaItem']);
@@ -95,7 +95,7 @@ class ProformaController extends Controller {
                     // populate and save records for each model
                 }
             }
-            return $this->redirect(['view', 'id' => $model->factura_id]);
+            return $this->redirect(['view', 'id' => $model->proforma_id]);
         } else {
             return $this->render('proforma', [
                         'model' => $model,
@@ -109,9 +109,9 @@ class ProformaController extends Controller {
      *
      *
       if ($model->load(Yii::$app->request->post()) && $model->save()) {
-      return $this->redirect(['view', 'id' => $model->factura_id]);
+      return $this->redirect(['view', 'id' => $model->proforma_id]);
       } else {
-      return $this->render('factura', [
+      return $this->render('proforma', [
       'model' => $model,
       ]);
       }
@@ -124,21 +124,10 @@ class ProformaController extends Controller {
      * @return mixed
      */
     public function actionUpdate($id) {
-        /* Código original acción update
-
-          $model = $this->findModel($id);
-          if ($model->load(Yii::$app->request->post()) && $model->save()) {
-          return $this->redirect(['view', 'id' => $model->factura_id]);
-          } else {
-          return $this->render('update', [
-          'model' => $model,
-          ]);
-          }
-         */
 
         $model = $this->findModel($id);
         $models = $model['proformaitems'];
-
+        $counter_models = count($models);
 
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -146,11 +135,16 @@ class ProformaController extends Controller {
             /*
              * Esta es la esctructura de datos que tiene que tener el array $data para que se procese.
              *
-             * $data['FacturaItem'][0] = ['factura_num'=>'12ab', 'item_cantidad'=>10,00, 'item_descripcion'=>'holaa', 'item_precio'=>100,00];
+             * $data['FacturaItem'][0] = ['proforma_num'=>'12ab', 'item_cantidad'=>10,00, 'item_descripcion'=>'holaa', 'item_precio'=>100,00];
              */
 
-            $count = count($data['FacturaItem']);
-
+            $count = count($data['ProformaItem']);
+            $diferencia = $count - $counter_models;
+            if ($diferencia >0){
+                for($i= $counter_models; $i < $diferencia+$counter_models; $i++){
+                     $models[$i] = new ProformaItem();
+                }
+            }
 
             //$models = [new FacturaItem()];
 
@@ -159,7 +153,7 @@ class ProformaController extends Controller {
               $models[$i] = new FacturaItem();
               }
              */
-            if (Model::loadMultiple($models, $data, $formName = 'FacturaItem') && Model::validateMultiple($models)) {
+            if (Model::loadMultiple($models, $data, $formName = 'ProformaItem') && Model::validateMultiple($models)) {
                 foreach ($models as $modelo) {
                     // populate and save records for each model
                     if ($modelo->save(false)) {
@@ -174,7 +168,7 @@ class ProformaController extends Controller {
                     // populate and save records for each model
                 }
             }
-            return $this->redirect(['view', 'id' => $model->factura_id]);
+            return $this->redirect(['view', 'id' => $model->proforma_id]);
         } else {
             return $this->render('_proforma', [
                         'model' => $model,
@@ -209,7 +203,7 @@ class ProformaController extends Controller {
         }
     }
 
-    public function actionPrintfactura($id) {
+    public function actionPrintproforma($id) {
         $footer = ' 
 
               <table style="width: 100%">
@@ -235,10 +229,10 @@ class ProformaController extends Controller {
         $mpdf = new mPDF('UTF-8', 'A4', '', '', 15, 15, 15, 40, '', 5, 'P');
         $mpdf->SetHTMLFooter($footer);
         $mpdf->WriteHTML($this->render('view', ['model' => $this->findModel($id)]));
-        $facturaPdf = $mpdf->Output('factura.pdf', 'D');
+        $proformaPdf = $mpdf->Output('proforma.pdf', 'D');
     }
 
-    public function actionSendfactura($id) {
+    public function actionSendproforma($id) {
         // Recogemos los datos enviados desde modalSendFactura form.
         $datosmodel = Yii::$app->request->post();
         $mailto = $datosmodel['Identidad']['mail'];
@@ -248,7 +242,7 @@ class ProformaController extends Controller {
         $this->layout = 'viewLayout';
         $mpdf = new mPDF('UTF-8', 'A4', '', '', 10, 10, 20, 20, '', '', 'P');
         $mpdf->WriteHTML($this->render('view', ['model' => $this->findModel($id)]));
-        $facturaPdf = $mpdf->Output('factura.pdf', 'S');
+        $proformaPdf = $mpdf->Output('proforma.pdf', 'S');
 
 
         $message = Yii::$app->mailer->compose()
@@ -257,7 +251,7 @@ class ProformaController extends Controller {
                 ->setSubject($asunto)
                 ->setTextBody($body)
                 ->setHtmlBody($body)
-                ->attachContent($facturaPdf, ['fileName' => 'factura.pdf', 'contentType' => 'application/pdf'])
+                ->attachContent($proformaPdf, ['fileName' => 'proforma.pdf', 'contentType' => 'application/pdf'])
                 ->send();
 
         //exit;
@@ -265,7 +259,7 @@ class ProformaController extends Controller {
         return $this->redirect(['index']);
     }
 
-    public function actionModalsendfactura($id) {
+    public function actionModalsendproforma($id) {
         $modelFactura = $this->findModel($id);
 
         $model = Identidad::findOne($modelFactura->cliente_id);
@@ -275,10 +269,10 @@ class ProformaController extends Controller {
         ]);
     }
 
-    public function actionReportfacturascliente($id) {
+    public function actionReportproformascliente($id) {
         $model = Factura::find()
                 ->where (['cliente_id'=> $id])
-                ->orderBy('factura_fecha ASC')
+                ->orderBy('proforma_fecha ASC')
                 ->all();
         return $this->render('reportFacturasCliente', [
                     'model' => $model

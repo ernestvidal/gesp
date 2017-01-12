@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="pedido-index">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-lg-12 col-xs-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <span>Listado pedidos | <?= Html::a('Todos los pedidos', ['index', 'pedidos' => 'todos']) ?> </span>
@@ -71,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     $totalPedido = $baseImponible + $totalIva - $totalIrpf;
                                 }
                                 ?>
-                                <tbody>
+                                
                                     <tr>
 
                                         <td class="text-right"><?= Yii::$app->formatter->asDate($model[$i]->pedido_fecha, 'php:d-m-Y') ?>
@@ -108,13 +108,15 @@ $this->params['breadcrumbs'][] = $this->title;
                                             ?>
                                         </td>
                                     </tr>
-                                </tbody>
+                                
                             <?php } ?>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
 
         <?php
         $this->registerJs(
@@ -142,4 +144,4 @@ $this->params['breadcrumbs'][] = $this->title;
         ?>
 
 
-    </div>
+    
