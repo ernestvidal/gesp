@@ -154,7 +154,8 @@ class PresupuestoController extends Controller
 
         $model = $this->findModel($id);
         $models = $model['presupuestoitems'];
-
+        $counter_models = count($models);
+        
         if ($model->load(Yii::$app->request->post()) && $model->save()){
             $data = (Yii::$app->request->getBodyParams());
             /*
@@ -164,6 +165,12 @@ class PresupuestoController extends Controller
              */
 
             $count = count($data['PresupuestoItem']);
+            $diferencia = $count - $counter_models;
+            if ($diferencia >0){
+                for($i= $counter_models; $i < $diferencia+$counter_models; $i++){
+                     $models[$i] = new PresupuestoItem();
+                }
+            }
             //$models = [new PresupuestoItem()];
 
             /*
