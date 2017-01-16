@@ -81,17 +81,22 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <td class="text-right"><?= $model[$i]->proforma_rate_descuento ?> %</td>
                                     <td class="text-right"><?= Yii::$app->formatter->asDecimal($totalDto, 2) ?></td>
                                     <td class="text-right"><?= Yii::$app->formatter->asDecimal($totalFactura, 2); ?></td>
-                                    <td><?= Html::a('<i class="glyphicon glyphicon-eye-open"></i>', '#',
-                                            ['id' => 'copy-proforma',
-                                                'data-url'=>Url::to(['copiarproforma', 'id'=>$model[$i]->proforma_id]),
-                                                'data-pjax'=>'0',
-                                                ]) ?>
+                                   
+                                    <td><?= Html::a('<i class="glyphicon glyphicon-pencil"></i>', ['update', 'id' => $model[$i]->proforma_id],
+                                            ['title'=>'editar']) ?></td>
+                                    <td><?= Html::a('<i class="glyphicon glyphicon-print"></i>', ['printproforma', 'id' => $model[$i]->proforma_id],
+                                            ['title'=>'imprimir']) ?></td>
+                                     <td><?= Html::a('<i class="glyphicon glyphicon-copy"></i>', '#',[
+                                         'id' => 'copy-proforma',
+                                         'title'=>'copiar',
+                                         'data-url'=>Url::to(['copiarproforma', 'id'=>$model[$i]->proforma_id]),
+                                         'data-pjax'=>'0',
+                                            ]) ?>
                                     </td>
-                                    <td><?= Html::a('<i class="glyphicon glyphicon-pencil"></i>', ['update', 'id' => $model[$i]->proforma_id]) ?></td>
-                                    <td><?= Html::a('<i class="glyphicon glyphicon-print"></i>', ['printproforma', 'id' => $model[$i]->proforma_id]) ?></td>
                                     <td><?=
                                         Html::a('<i class="glyphicon glyphicon-envelope"></i>', '#', [
                                             'id' => 'enviar-proforma',
+                                            'title' => 'enviar',
                                             //'class' => 'btn btn-success',
                                             //'data-toggle' => 'modal',
                                             //'data-target' => '#modal',
@@ -105,6 +110,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'confirm' => 'Are you sure you want to delete this item?',
                                                 'method' => 'post',
                                             ],
+                                            'title'=>'delete'
                                         ])
                                         ?></td>
                                 </tr>
