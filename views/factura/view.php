@@ -75,7 +75,7 @@ use yii\helpers\Html;
 
                     <td class="text-right"><?php
                         if ($items['item_precio'] <> 0) {
-                            echo ($items['item_precio']);
+                            echo (number_format($items['item_precio'], 5,',','.'));;
                         }
                         ?></td>
                     <td class="text-right"><?php

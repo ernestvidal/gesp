@@ -64,7 +64,7 @@ use yii\helpers\Html;
                 <tr>
                     <td class="text-right"><?php if ($items['item_cantidad']<>0){echo $items['item_cantidad'];} ?></td>
                     <td style="padding-left: 15px; padding-right: 10px"><?= Yii::$app->formatter->asNtext($items['item_descripcion']) ?></td>
-                    <td class="text-right"><?php if ($items['item_precio']<>0){echo $items['item_precio'];} ?></td>
+                    <td class="text-right"><?php if ($items['item_precio']<>0){echo (number_format($items['item_precio'], 3,',','.'));} ?></td>
                     <td class="text-right"><?php if ($items['item_cantidad']<>0 && $items['item_precio']<>0){echo (number_format($items['item_cantidad'] * $items['item_precio'], 2,',','.'));} ?></td>
                 </tr>
 
@@ -131,7 +131,7 @@ use yii\helpers\Html;
 <div id="imagen" style="margin-top: 5px">
     <table class="table table-bordered" style="width: 100%; vertical-align: middle">
         <tr style="text-align:center">
-             <td style="width: 100%; padding: 10px"> <?= Html::img('@web/clientes/' .$model['presupuesto_img'] , ['alt' => 'logo', 'width'=>'600']); ?></td>
+             <td style="width: 100%; padding: 10px"> <?= Html::img('@web/clientes/' .$model['presupuesto_img'] , ['alt' => 'logo']); ?></td>
          </tr>
      </table>
 </div>

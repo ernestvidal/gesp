@@ -34,11 +34,19 @@ class Identidad extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['identidad_nombre', 'identidad_direccion', 'identidad_poblacion', 'identidad_mail', 'identidad_forma_pago','identidad_provincia'], 'string', 'max' => 50],
+            [['identidad_nombre','identidad_poblacion', 'identidad_mail', 'identidad_forma_pago',
+                'identidad_provincia',
+                'identidad_cta',
+                'identidad_persona_contacto',
+                'identidad_actividad',
+                'identidad_razon_social'], 'string', 'max' => 50],
+            ['identidad_nombre', 'required'],
+            ['identidad_direccion', 'string', 'max'=>'75'],
             [['identidad_nif'], 'string', 'max' => 9],
-            [['identidad_cp'], 'string', 'max' => 5],
+            ['identidad_nif','unique'],
+            ['identidad_cp', 'string', 'max' => 5],
             [['identidad_phone'], 'string', 'max' => 11],
-            [['identidad_cta','identidad_persona_contacto'], 'string', 'max'=>50],
+            ['identidad_phone', 'unique'],
             [['identidad_forma_pago','identidad_web'], 'string', 'max'=>100],
             [['identidad_role'], 'string']
         ];
@@ -63,7 +71,9 @@ class Identidad extends \yii\db\ActiveRecord
             'identidad_phone' => 'Teléfono',
             'identidad_role' => 'Role',
             'identidad_cta' => 'Cta.núm.',
-            'identidad_web' => 'Web'
+            'identidad_web' => 'Web',
+            'identidad_actividad'=>'Actividad',
+            'identidad_razon_social'=>'Razón social'
         ];
     }
 
@@ -81,6 +91,14 @@ class Identidad extends \yii\db\ActiveRecord
     public function getFacturas0()
     {
         return $this->hasMany(Factura::className(), ['facturador_id' => 'identidad_id']);
+    }
+    
+     /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCargos()
+    {
+        return $this->hasMany(Cargo::className(), ['cargo_identidad_id' => 'identidad_id']);
     }
 
     /**

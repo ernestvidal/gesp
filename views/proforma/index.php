@@ -29,12 +29,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <th>Núm.</th>
                                     <th>Cliente</th>
                                     <th>B.I.</th>
-                                    <th>% IVA</th>
                                     <th>I.IVA</th>
-                                    <th>% DTO</th>
                                     <th>I dto</th>
-                                    <th>% irpf</th>
                                     <th>I irpf</th>
+                                    <th></th>
                                     <th></th>
                                     <th></th>
                                     <th></th>
@@ -68,57 +66,64 @@ $this->params['breadcrumbs'][] = $this->title;
                                     $totalFactura = $baseImponible + $totalIva - $totalIrpf - $totalDto;
                                 }
                                 ?>
-                            <tbody>
-                                <tr>
-                                    <td><?= Yii::$app->formatter->asDate($model[$i]->proforma_fecha, 'php:d-m-Y') ?></td>
-                                    <td><?= Html::a($model[$i]->proforma_num, ['view', 'id'=>$model[$i]->proforma_id]) ?></td>
-                                    <td><?= Html::a($model[$i]->cliente->identidad_nombre, ['reportfacturascliente', 'id' => $model[$i]->cliente->identidad_id]) ?></td>
-                                    <td class="text-right"><?= Yii::$app->formatter->asDecimal($baseImponible, 2); ?></td>
-                                    <td class="text-right"><?= $model[$i]->proforma_rate_iva ?> %</td>
-                                    <td class="text-right"><?= Yii::$app->formatter->asDecimal($totalIva, 2) ?></td>
-                                    <td class="text-right"><?= $model[$i]->proforma_rate_irpf ?> %</td>
-                                    <td class="text-right"><?= Yii::$app->formatter->asDecimal($totalIrpf, 2) ?></td>
-                                    <td class="text-right"><?= $model[$i]->proforma_rate_descuento ?> %</td>
-                                    <td class="text-right"><?= Yii::$app->formatter->asDecimal($totalDto, 2) ?></td>
-                                    <td class="text-right"><?= Yii::$app->formatter->asDecimal($totalFactura, 2); ?></td>
-                                   
-                                    <td><?= Html::a('<i class="glyphicon glyphicon-pencil"></i>', ['update', 'id' => $model[$i]->proforma_id],
-                                            ['title'=>'editar']) ?></td>
-                                    <td><?= Html::a('<i class="glyphicon glyphicon-print"></i>', ['printproforma', 'id' => $model[$i]->proforma_id],
-                                            ['title'=>'imprimir']) ?></td>
-                                     <td><?= Html::a('<i class="glyphicon glyphicon-copy"></i>', '#',[
-                                         'id' => 'copy-proforma',
-                                         'title'=>'copiar',
-                                         'data-url'=>Url::to(['copiarproforma', 'id'=>$model[$i]->proforma_id]),
-                                         'data-pjax'=>'0',
-                                            ]) ?>
-                                    </td>
-                                    <td><?=
-                                        Html::a('<i class="glyphicon glyphicon-envelope"></i>', '#', [
-                                            'id' => 'enviar-proforma',
-                                            'title' => 'enviar',
-                                            //'class' => 'btn btn-success',
-                                            //'data-toggle' => 'modal',
-                                            //'data-target' => '#modal',
-                                            'data-url' => Url::to(['modalsendproforma', 'id' => $model[$i]->proforma_id]),
-                                            'data-pjax' => '0',
-                                        ]);
-                                        ?></td>
-                                    <td><?=
-                                        Html::a('<i class="glyphicon glyphicon-trash"></i>', ['delete', 'id' => $model[$i]->proforma_id], [
-                                            'data' => [
-                                                'confirm' => 'Are you sure you want to delete this item?',
-                                                'method' => 'post',
-                                            ],
-                                            'title'=>'delete'
-                                        ])
-                                        ?></td>
-                                </tr>
-                            </tbody>
+                                <tbody>
+                                    <tr>
+                                        <td><?= Yii::$app->formatter->asDate($model[$i]->proforma_fecha, 'php:d-m-Y') ?></td>
+                                        <td><?= Html::a($model[$i]->proforma_num, ['view', 'id' => $model[$i]->proforma_id]) ?></td>
+                                        <td><?= Html::a($model[$i]->cliente->identidad_nombre, ['reportfacturascliente', 'id' => $model[$i]->cliente->identidad_id]) ?></td>
+                                        <td class="text-right"><?= Yii::$app->formatter->asDecimal($baseImponible, 2); ?></td>
+                                        
+                                        <td class="text-right"><?= Yii::$app->formatter->asDecimal($totalIva, 2) ?></td>
+                                        
+                                        <td class="text-right"><?= Yii::$app->formatter->asDecimal($totalIrpf, 2) ?></td>
+                                        
+                                        <td class="text-right"><?= Yii::$app->formatter->asDecimal($totalDto, 2) ?></td>
+                                        <td class="text-right"><?= Yii::$app->formatter->asDecimal($totalFactura, 2); ?></td>
 
-
-
-
+                                        <td><?= Html::a('<i class="glyphicon glyphicon-pencil"></i>', ['update', 'id' => $model[$i]->proforma_id], ['title' => 'editar'])?></td>
+                                        <td><?= Html::a('<i class="glyphicon glyphicon-print"></i>', ['printproforma', 'id' => $model[$i]->proforma_id], ['title' => 'imprimir'])?></td>
+                                        <td><?=
+                                            Html::a('<i class="glyphicon glyphicon-duplicate"></i>', '#', [
+                                                'id' => 'copy-proforma',
+                                                'title' => 'duplicar proforma',
+                                                'data-url' => Url::to(['copiarproforma', 'id' => $model[$i]->proforma_id,
+                                                    'documento_destino' => 'proforma']),
+                                                'data-pjax' => '0',
+                                            ])
+                                            ?>
+                                        </td>
+                                        <td><?=
+                                            Html::a('<i class="glyphicon glyphicon-copy"></i>', '#', [
+                                                'id' => 'copy-factura',
+                                                'title' => 'copiar factura',
+                                                'data-url' => Url::to(['copiarproforma', 'id' => $model[$i]->proforma_id,
+                                                    'documento_destino' => 'factura']),
+                                                'data-pjax' => '0',
+                                            ])
+                                            ?>
+                                        </td>
+                                        <td><?=
+                                            Html::a('<i class="glyphicon glyphicon-envelope"></i>', '#', [
+                                                'id' => 'enviar-proforma',
+                                                'title' => 'enviar',
+                                                //'class' => 'btn btn-success',
+                                                //'data-toggle' => 'modal',
+                                                //'data-target' => '#modal',
+                                                'data-url' => Url::to(['modalsendproforma', 'id' => $model[$i]->proforma_id]),
+                                                'data-pjax' => '0',
+                                            ]);
+                                            ?></td>
+                                        <td><?=
+                                            Html::a('<i class="glyphicon glyphicon-trash"></i>', ['delete', 'id' => $model[$i]->proforma_id], [
+                                                'data' => [
+                                                    'confirm' => 'Are you sure you want to delete this item?',
+                                                    'method' => 'post',
+                                                ],
+                                                'title' => 'delete'
+                                            ])
+                                            ?></td>
+                                    </tr>
+                                </tbody>
 
                             <?php } ?>   
 
@@ -150,26 +155,30 @@ $this->params['breadcrumbs'][] = $this->title;
         echo "<div id='modalContent'></div>";
 
         Modal::end();
-        ?>
+        ?>       
+
         <?php
-         $this->registerJs(
-                "$(document).on('click', '#copy-proforma', (function() {
+        
+        /*
+         * Javascript y ventana modal donde mostramos la vista llamada desde el
+         * link #copiar-proforma y #copy-factura
+         */
+        
+        $this->registerJs(
+                "$(document).on('click', '#copy-proforma , #copy-factura', (function() {
                 $.get(
                     $(this).data('url'),
                     function (data) {
                         $('.modal-body').html(data);
-                        $('#copiarProforma').modal();
+                        $('#modal-proforma').modal();
                     }
                 );
             }));"
         );
-        ?>
 
-        <?php
-        // Ventana modal donde mostramos la vista modalSendFactura.php
         Modal::begin([
             'header' => '<h2>Copiar Proforma</h2>',
-            'id' => 'copiarProforma',
+            'id' => 'modal-proforma',
         ]);
         echo "<div id='modalContent'></div>";
 

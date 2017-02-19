@@ -7,9 +7,9 @@ use yii\widgets\ActiveForm;
 /* @var $model app\models\Albaran */
 /* @var $form yii\widgets\ActiveForm */
 ?>
+<div class="-albaran-form">
 
-<div class="albaran-form">
-
+   
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'albaran_id')->textInput(['maxlength' => true]) ?>

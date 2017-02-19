@@ -18,7 +18,7 @@ use yii\bootstrap\ActiveForm;
 
             <?php $form = ActiveForm::begin([
                 'id' => 'mailRecipient-form',
-                'action' =>'@web/pedido/facturar/'
+                'action' =>'@web/factura/sendfactura/' . $numFactura
                 ]); ?>
 
                 <?= $form->field($model, 'mail')->textInput(['value'=>$model->identidad_mail, 'size'=>'250']) ?>

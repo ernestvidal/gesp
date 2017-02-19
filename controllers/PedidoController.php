@@ -348,4 +348,14 @@ class PedidoController extends Controller
                     'model' => $model
         ]);
     }
+    
+    public function actionPedidosfacturados($id=NULL){
+        $model = Pedido::find()
+                ->where(['cliente_id'=>$id])
+                ->orderBy('pedido_factura_num, pedido_num ASC')
+                ->all();
+        return $this->render('pedidosFacturados', [
+            'model'=>$model
+        ]);
+    }
 }

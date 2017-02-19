@@ -19,7 +19,7 @@ class IdentidadSearch extends Identidad
     {
         return [
             [['identidad_id', 'identidad_poblacion'], 'integer'],
-            [['identidad_nombre', 'identidad_direccion', 'identidad_nif', 'identidad_mail', 'identidad_phone', 'identidad_role'], 'safe'],
+            [['identidad_nombre', 'identidad_direccion', 'identidad_nif', 'identidad_mail', 'identidad_phone', 'identidad_role', 'identidad_persona_contacto'], 'safe'],
         ];
     }
 
@@ -64,6 +64,7 @@ class IdentidadSearch extends Identidad
             ->andFilterWhere(['like', 'identidad_direccion', $this->identidad_direccion])
             ->andFilterWhere(['like', 'identidad_nif', $this->identidad_nif])
             ->andFilterWhere(['like', 'identidad_role', $this->identidad_role])
+                ->andFilterWhere(['like', 'identidad_persona_contacto', $this->identidad_persona_contacto])
                 ;
 
         return $dataProvider;

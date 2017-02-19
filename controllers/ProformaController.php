@@ -14,6 +14,9 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\base\Model;
+use app\models\Factura;
+use app\models\Facturaitem;
+use yii\filters\AccessControl;
 
 /**
  * FacturaController implements the CRUD actions for Factura model.
@@ -22,6 +25,7 @@ class ProformaController extends Controller {
 
     public function behaviors() {
         return [
+
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -279,12 +283,13 @@ class ProformaController extends Controller {
         ]);
     }
 
-    public function actionCopiarproforma($id) {
+    public function actionCopiarproforma($id, $documento_destino) {
         $model = $this->findModel($id);
 
         return $this->renderAjax('copiarProforma', [
                     //'model' => $model,
                     'numProforma' => $id,
+                    'documento_destino' => $documento_destino
         ]);
     }
 
@@ -294,19 +299,19 @@ class ProformaController extends Controller {
          * Luego cargamos la proforma que queremos copiar
          * 
          */
-        $fecha_proforma;
-        $num_proforma;
+        $fecha_documento;
+        $num_documento;
         $num_proforma_id;
 
         $data_request = Yii::$app->request->post();
         $num_proforma_id = $data_request['proforma_id'];
-        $fecha_proforma = $data_request['fecha_proforma'];
-        $num_proforma = $data_request['numero_proforma'];
+        $fecha_documento = $data_request['fecha_documento'];
+        $num_documento = $data_request['numero_documento'];
         $model = $this->findModel($num_proforma_id);
         $modelItems = $model['proformaitems'];
         $fModel = new Proforma();
-        $fModel->proforma_num = $num_proforma;
-        $fModel->proforma_fecha = $fecha_proforma;
+        $fModel->proforma_num = $num_documento;
+        $fModel->proforma_fecha = $fecha_documento;
         $fModel->facturador_id = $model->facturador_id;
         $fModel->cliente_id = $model->cliente_id;
         $fModel->proforma_rate_descuento = $model->proforma_rate_descuento;
@@ -315,34 +320,54 @@ class ProformaController extends Controller {
         $fModel->proforma_forma_pago = ($model['cliente']['identidad_forma_pago'] <> Null) ? $model['cliente']['identidad_forma_pago'] : '';
         $fModel->proforma_cta = $model['cliente']['identidad_cta'];
         $fModel->save();
-          
-        
-        //var_dump($modelItems);
 
-        /**
-         * Insertamos el número de albarán y la fecha en los items de la factura.
-         * Lo hacemos de este modo porqué el foreach siguiente solo cuenta las líneas del albarán
-         */
-        /*
-        $fModelItems = new Proformaitem();
-        $fModelItems->proforma_num = $num_proforma;
-        $fModelItems->item_cantidad = 0;
-        //$fModelItems->item_descripcion = 'Albarán núm.: ' . $model->albaran_num . ' / ' . Yii::$app->formatter->asDate($model->albaran_fecha, 'dd-MM-yyyy');
-        $fModelItems->item_precio = 0;
-        if ($fModelItems->validate()) {
-            $fModelItems->save();
-        } else {
-            $fModel->getErrors();
-        }
-*/
         foreach ($modelItems as $proformaItems) {
             $fModelItems = new Proformaitem();
-            $fModelItems->proforma_num = $num_proforma;
+            $fModelItems->proforma_num = $num_documento;
             $fModelItems->item_cantidad = $proformaItems->item_cantidad;
             $fModelItems->item_descripcion = $proformaItems->item_descripcion;
             $fModelItems->item_precio = $proformaItems->item_precio;
             $fModelItems->save();
         }
     }
+    
+     public function actionCopiarfactura() {
+        /**
+         * Recogemos los datos enviados desde el formulario copiarProforma.php
+         * Luego cargamos la proforma que queremos copiar
+         * 
+         */
+        $fecha_documento;
+        $num_documento;
+        $num_proforma_id;
+
+        $data_request = Yii::$app->request->post();
+        $num_proforma_id = $data_request['proforma_id'];
+        $fecha_documento = $data_request['fecha_documento'];
+        $num_documento = $data_request['numero_documento'];
+        $model = $this->findModel($num_proforma_id);
+        $modelItems = $model['proformaitems'];
+        $fModel = new Factura();
+        $fModel->factura_num = $num_documento;
+        $fModel->factura_fecha = $fecha_documento;
+        $fModel->facturador_id = $model->facturador_id;
+        $fModel->cliente_id = $model->cliente_id;
+        $fModel->factura_rate_descuento = $model->proforma_rate_descuento;
+        $fModel->factura_rate_iva = 21;
+        $fModel->factura_rate_irpf = $model->proforma_rate_irpf;
+        $fModel->forma_pago = ($model['cliente']['identidad_forma_pago'] <> Null) ? $model['cliente']['identidad_forma_pago'] : '';
+        $fModel->factura_cta = $model['cliente']['identidad_cta'];
+        $fModel->save();
+
+        foreach ($modelItems as $facturaItems) {
+            $fModelItems = new Facturaitem();
+            $fModelItems->factura_num = $num_documento;
+            $fModelItems->item_cantidad = $facturaItems->item_cantidad;
+            $fModelItems->item_descripcion = $facturaItems->item_descripcion;
+            $fModelItems->item_precio = $facturaItems->item_precio;
+            $fModelItems->save();
+        }
+    }
+
 
 }

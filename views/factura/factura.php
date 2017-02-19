@@ -62,8 +62,7 @@ $form->field($model, 'cliente_id')->dropDownList(
             <div class="row">
                 <div class="col-lg-6 col-xs-6">
                  
-                    <?= $form->field($model, 'factura_num')->textInput(['maxlength' => true, 'id' => 'factura_num',
-                        'addon' => ['prepend' => ['content'=>'ffffff@']]])->label(false) ?>
+                   
                     
                     <?= $form->field($model, 'factura_num',[
                             'options'=>['placeholder'=>'Introducir núm. factura'],
