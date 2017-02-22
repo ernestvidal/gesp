@@ -7,10 +7,9 @@
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
-//use yii\widgets\ActiveForm;
+use yii\widgets\ActiveForm;
 use app\models\Identidad;
-//use kartik\widgets\ActiveField;
-use kartik\widgets\ActiveForm;
+
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Factura */
@@ -31,10 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="factura-form">
 
-<?php $form = ActiveForm::begin([
-    'fieldConfig' => ['autoPlaceholder'=>true]
-
-]); ?>
+<?php $form = ActiveForm::begin(); ?>
 <?= $form->errorSummary($model); ?>
     <div id="factura_cap">
         <div>
@@ -61,13 +57,12 @@ $form->field($model, 'cliente_id')->dropDownList(
         <div class="well">
             <div class="row">
                 <div class="col-lg-6 col-xs-6">
-                 
+                    
+                 <?= $form->field($model, 'factura_num')->textInput(['maxlength' => true, 'id' => 'factura_num',
+-                        'addon' => ['prepend' => ['content'=>'ffffff@']]])->label(false) ?>
                    
                     
-                    <?= $form->field($model, 'factura_num',[
-                            'options'=>['placeholder'=>'Introducir núm. factura'],
-                            'addon' => ['prepend' => ['content'=>'Factura núm.']]
-                            ])->label(false) ?>
+                   
                 </div>
                 
             <div class="col-lg-2 col-xs-2">
