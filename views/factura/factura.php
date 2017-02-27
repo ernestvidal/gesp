@@ -56,17 +56,20 @@ $form->field($model, 'cliente_id')->dropDownList(
         </div>
         <div class="well">
             <div class="row">
-                <div class="col-lg-6 col-xs-6">
+                 <div class="col-lg-2 col-xs-2 btn btn-default">
+                    <span>Factura núm.</span>
+                </div>
+                
+                <div class="col-lg-4 col-xs-4">
                     
-                 <?= $form->field($model, 'factura_num')->textInput(['maxlength' => true, 'id' => 'factura_num',
--                        'addon' => ['prepend' => ['content'=>'ffffff@']]])->label(false) ?>
+                 <?= $form->field($model, 'factura_num')->textInput(['maxlength' => true, 'id' => 'factura_num'])->label(false) ?>
                    
                     
                    
                 </div>
                 
-            <div class="col-lg-2 col-xs-2">
-                <span class="form-control text-center label-default">Fecha</span>
+            <div class="col-lg-2 col-xs-2 btn btn-default">
+                <span>Fecha</span>
             </div>
             
                 <div class="col-lg-4 col-xs-4">

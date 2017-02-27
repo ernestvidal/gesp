@@ -18,7 +18,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'item_long_descripcion')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'modelo')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'item_modelo')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'item_size')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'item_identidad_id')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

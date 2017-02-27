@@ -2,9 +2,9 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-
+use yii\widgets\Pjax;
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\ItemSearch */
+/* @var $searchModel app\models\SearchItem */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Items';
@@ -18,8 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Create Item', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-
-    <?= GridView::widget([
+<?php Pjax::begin(); ?>    <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
@@ -29,10 +28,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'item_descripcion',
             'item_referencia',
             'item_long_descripcion',
-            'modelo',
+            'item_modelo',
+            // 'item_tamaño',
+            // 'item_identidad_id',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
-
-</div>
+<?php Pjax::end(); ?></div>

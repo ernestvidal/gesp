@@ -39,7 +39,7 @@ class Pedido extends \yii\db\ActiveRecord
         return [
             [['pedido_num', 'facturador_id', 'cliente_id', 'pedido_fecha', 'pedido_rate_descuento', 'pedido_rate_iva', 'pedido_rate_irpf'], 'required'],
             [['facturador_id', 'cliente_id'], 'integer'],
-            [['pedido_fecha'], 'safe'],
+            [['pedido_fecha', 'pedido_img'], 'safe'],
             [['pedido_rate_descuento', 'pedido_rate_iva', 'pedido_rate_irpf'], 'number'],
             [['pedido_num'], 'string', 'max' => 20],
             [['forma_pago', 'pedido_validez', 'pedido_plazo_entrega', 'pedido_free_one', 'pedido_free_two'], 'string', 'max' => 50],

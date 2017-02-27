@@ -8,7 +8,7 @@ use yii\data\ActiveDataProvider;
 use app\models\Item;
 
 /**
- * ItemSearch represents the model behind the search form about `app\models\Item`.
+ * SearchItem represents the model behind the search form about `app\models\Item`.
  */
 class ItemSearch extends Item
 {
@@ -18,8 +18,8 @@ class ItemSearch extends Item
     public function rules()
     {
         return [
-            [['item_id'], 'integer'],
-            [['item_descripcion', 'item_referencia', 'item_long_descripcion', 'modelo'], 'safe'],
+            [['item_id', 'item_identidad_id'], 'integer'],
+            [['item_descripcion', 'item_referencia', 'item_long_descripcion', 'item_modelo', 'item_size'], 'safe'],
         ];
     }
 
@@ -43,6 +43,8 @@ class ItemSearch extends Item
     {
         $query = Item::find();
 
+        // add conditions that should always apply here
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -55,14 +57,17 @@ class ItemSearch extends Item
             return $dataProvider;
         }
 
+        // grid filtering conditions
         $query->andFilterWhere([
             'item_id' => $this->item_id,
+            'item_identidad_id' => $this->item_identidad_id,
         ]);
 
         $query->andFilterWhere(['like', 'item_descripcion', $this->item_descripcion])
             ->andFilterWhere(['like', 'item_referencia', $this->item_referencia])
             ->andFilterWhere(['like', 'item_long_descripcion', $this->item_long_descripcion])
-            ->andFilterWhere(['like', 'modelo', $this->modelo]);
+            ->andFilterWhere(['like', 'item_modelo', $this->item_modelo])
+            ->andFilterWhere(['like', 'item_size', $this->item_size]);
 
         return $dataProvider;
     }

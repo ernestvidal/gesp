@@ -17,17 +17,37 @@ $this->params['breadcrumbs'][] = $this->title;
     <br>
     <div class="row">
         <div class="col-lg-1"></div>
-        <div class="col-lg-3">
-            <div class="btn-group">
-                <a class="btn btn-sm btn-default" href="index.php?page=compras_proveedores">
-                    <span class="glyphicon glyphicon-arrow-left"></span>
-                    <span class="hidden-xs hidden-sm">&nbsp; Identidades</span>
-                </a>
-                <?= Html::a('<span class="glyphicon glyphicon-refresh"></span>', 'index',['class'=>'btn btn-sm btn-default']) ?>
+        <div class="col-lg-10">
+            <div class="well">
+
+                
+                    <div class="btn-group">
+                        <a class="btn btn-default" href="index.php?page=compras_proveedores">
+                            <span class="glyphicon glyphicon-arrow-left"></span>
+                            <span class="hidden-xs hidden-sm">&nbsp; Identidades</span>
+                        </a>
+                        <?= Html::a('<span class="glyphicon glyphicon-refresh"></span>', 'index', ['class' => 'btn  btn-default']) ?>
+                    </div>
+                
+                
+
+
+                    <?=
+                    Html::a('Create', '#', [
+                        'id' => 'crear-identidad-link',
+                        'class' => 'btn btn-primary',
+                        'data-toggle' => 'modal',
+                        'data-target' => '#modal',
+                        'data-url' => Url::to(['create']),
+                        'data-pjax' => '0',]);
+                    ?>
+                
+
             </div>
         </div>
-        <div class="col-lg-8"></div>
+        <div class="col-lg-1"></div>
     </div>
+
     <br>
     <div class="row">
 
@@ -59,6 +79,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
                 'id' => 'identidad-grid',
+                'summary' => '',
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     //'identidad_id',
@@ -84,17 +105,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     <?php Pjax::end() ?>
 
-                    <p>
 
-                        <?=
-                        Html::a('Create', '#', [
-                            'id' => 'crear-identidad-link',
-                            'class' => 'btn btn-success',
-                            'data-toggle' => 'modal',
-                            'data-target' => '#modal',
-                            'data-url' => Url::to(['create']),
-                            'data-pjax' => '0',]);
-                        ?>
                     </p>
                 </div>
                 <div class="col-lg-1"></div>
@@ -118,7 +129,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php
         Modal::begin([
             'id' => 'modal',
-            'header' => '<h4 class="modal-title">Create /update identidad</h4>',
+            'header' => '<h4 class="modal-title">Create identidad</h4>',
             'footer' => '<a href="#" class="btn btn-primary" data-dismiss="modal">Cerrar</a>',
         ]);
 

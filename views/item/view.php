@@ -32,7 +32,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'item_descripcion',
             'item_referencia',
             'item_long_descripcion',
-            'modelo',
+            'item_modelo',
+            'item_tamaño',
+            'item_identidad_id',
         ],
     ]) ?>
 

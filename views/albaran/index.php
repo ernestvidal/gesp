@@ -12,7 +12,6 @@ $this->title = 'Albaranes';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-
 <div class="albaran-index">
     <div class="row">
         <div class="col-md-12">

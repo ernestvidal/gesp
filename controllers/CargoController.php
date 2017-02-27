@@ -4,7 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Cargo;
-use app\models\SearchCargo;
+use app\models\CargoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -35,7 +35,7 @@ class CargoController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new SearchCargo();
+        $searchModel = new CargoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [

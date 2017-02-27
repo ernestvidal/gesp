@@ -11,7 +11,11 @@ use Yii;
  * @property string $item_descripcion
  * @property string $item_referencia
  * @property string $item_long_descripcion
- * @property string $modelo
+ * @property string $item_modelo
+ * @property string $item_size
+ * @property string $item_identidad_id
+ *
+ * @property Identidad $itemIdentidad
  */
 class Item extends \yii\db\ActiveRecord
 {
@@ -29,10 +33,14 @@ class Item extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['item_descripcion', 'item_referencia', 'item_long_descripcion', 'item_modelo', 'item_size', 'item_identidad_id'], 'required'],
+            [['item_identidad_id'], 'integer'],
             [['item_descripcion', 'item_long_descripcion'], 'string', 'max' => 100],
             [['item_referencia'], 'string', 'max' => 30],
-            [['modelo'], 'string', 'max' => 50],
-            [['item_referencia'], 'unique']
+            [['item_modelo'], 'string', 'max' => 50],
+            [['item_size'], 'string', 'max' => 25],
+            [['item_referencia'], 'unique'],
+            [['item_identidad_id'], 'exist', 'skipOnError' => true, 'targetClass' => Identidad::className(), 'targetAttribute' => ['item_identidad_id' => 'identidad_id']],
         ];
     }
 
@@ -46,8 +54,18 @@ class Item extends \yii\db\ActiveRecord
             'item_descripcion' => 'Item Descripcion',
             'item_referencia' => 'Item Referencia',
             'item_long_descripcion' => 'Item Long Descripcion',
-            'modelo' => 'Modelo',
+            'item_modelo' => 'Item Modelo',
+            'item_size' => 'Item Tamaño',
+            'item_identidad_id' => 'Item Identidad ID',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getItemIdentidad()
+    {
+        return $this->hasOne(Identidad::className(), ['identidad_id' => 'item_identidad_id']);
     }
 
     /**

@@ -195,7 +195,7 @@ $form->field($model, 'facturador_id')->dropDownList(
             <?= $form->field($model, 'forma_pago')->textInput(['maxlength' => true, 'id' => 'presupuesto-forma_pago'])->label(false) ?>
         </div>
         <div class="row">
-            <?= $form->field($model, 'presupuesto_plazo_entrega')->textInput(['maxlength' => true, 'id' => 'presupuesto_plazo_entrega', 'value' => '10 días aprobación boceto y realizado el pago'])->label(false) ?>
+            <?= $form->field($model, 'presupuesto_plazo_entrega')->textInput(['maxlength' => true, 'id' => 'presupuesto_plazo_entrega'])->label(false) ?>
         </div>
 
         <div class="row">

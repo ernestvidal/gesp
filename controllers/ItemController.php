@@ -14,13 +14,16 @@ use yii\filters\VerbFilter;
  */
 class ItemController extends Controller
 {
+    /**
+     * @inheritdoc
+     */
     public function behaviors()
     {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['post'],
+                    'delete' => ['POST'],
                 ],
             ],
         ];

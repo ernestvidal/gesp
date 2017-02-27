@@ -117,6 +117,16 @@ use yii\helpers\Html;
 
 </div>
 
+<?php if ($model['pedido_img']){ ?>
+<div id="imagen" style="margin-top: 5px">
+    <table class="table table-bordered" style="width: 100%; vertical-align: middle">
+        <tr style="text-align:center">
+             <td style="width: 100%; padding: 10px"> <?= Html::img('@web/clientes/' .$model['pedido_img'] , ['alt' => 'logo']); ?></td>
+         </tr>
+     </table>
+</div>
+<?php } ?>
+
 <?php if ($model['forma_pago']) { ?>
     <div id="forma-de-pago" style="margin-top: 55px">
         <table class="table table-bordered" style="width: 100%; vertical-align: middle">
