@@ -27,9 +27,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'item_id',
             'item_descripcion',
             'item_referencia',
-            'item_long_descripcion',
             'item_modelo',
-            // 'item_tamaño',
+            'item_size',
             // 'item_identidad_id',
 
             ['class' => 'yii\grid\ActionColumn'],

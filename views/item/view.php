@@ -9,11 +9,30 @@ use yii\widgets\DetailView;
 $this->title = $model->item_id;
 $this->params['breadcrumbs'][] = ['label' => 'Items', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="item-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
+    
+    <?= DetailView::widget([
+        'model' => $model,
+        'attributes' => [
+            Yii::$app->formatter->asNtext('item_id'),
+            'item_descripcion',
+            'item_referencia',
+            'item_modelo',
+            'item_size',
+            'item_identidad_id',
+            array(
+                'label'=>'username',
+                'value'=>$model['itemIdentidad']['identidad_nombre'],
+                ),
+
+        ],
+    ]) ?>
+    
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->item_id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->item_id], [
@@ -24,18 +43,5 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'item_id',
-            'item_descripcion',
-            'item_referencia',
-            'item_long_descripcion',
-            'item_modelo',
-            'item_tamaño',
-            'item_identidad_id',
-        ],
-    ]) ?>
 
 </div>

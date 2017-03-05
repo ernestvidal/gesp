@@ -22,7 +22,13 @@ use yii\helpers\Html;
             <td style="width: 1%; border-left: 1px solid #DDD;"></td>
             <td style="width: 49%; padding-left: 15px;">
                 <h4>Factura a:</h4>
-                <h4><?= $model['cliente']['identidad_nombre'] ?></h4>
+                <?php
+                if (!empty($model['cliente']['identidad_razon_social'])) {
+                    echo $model['cliente']['identidad_razon_social'];
+                } else {
+                    echo $model['cliente']['identidad_nombre'];
+                }
+                ?>
                 <h5><?= $model['cliente']['identidad_direccion'] ?></h5>
                 <h5><?= $model['cliente']['identidad_cp'] . ' ' . $model['cliente']['identidad_poblacion'] ?></h5>
                 <h5><?= $model['cliente']['identidad_provincia'] ?></h5>
@@ -57,13 +63,13 @@ use yii\helpers\Html;
             $total_linea = 0;
             ?>
             <?php foreach ($modelItems as $items) { ?>
-       
+
                 <tr>
                     <td class="text-right"><?php
-            if ($items['item_cantidad'] <> 0) {
-                echo (number_format($items['item_cantidad'], 2, ',', '.'));
-            }
-                ?></td>
+                        if ($items['item_cantidad'] <> 0) {
+                            echo (number_format($items['item_cantidad'], 2, ',', '.'));
+                        }
+                        ?></td>
                     <td style="padding-left: 15px; padding-right: 10px">
                         <?php
                         if (preg_match('/Albarán/', $items['item_descripcion'])) {
@@ -75,7 +81,8 @@ use yii\helpers\Html;
 
                     <td class="text-right"><?php
                         if ($items['item_precio'] <> 0) {
-                            echo (number_format($items['item_precio'], 5,',','.'));;
+                            echo (number_format($items['item_precio'], 5, ',', '.'));
+                            ;
                         }
                         ?></td>
                     <td class="text-right"><?php
@@ -84,7 +91,7 @@ use yii\helpers\Html;
                         }
                         ?></td>
                 </tr>
-               
+
                 <?php
                 $total_linea = ($items['item_cantidad'] * $items['item_precio']);
                 $total = $total + $total_linea;
@@ -111,14 +118,14 @@ use yii\helpers\Html;
             <td style="width: 16%; padding: 5px" class="text-right"><?= number_format($total, 2, ',', '.') ?></td>
         </tr>
 
-        <?php if ($model['factura_rate_descuento'] <> 0) { ?>
+<?php if ($model['factura_rate_descuento'] <> 0) { ?>
             <tr>
                 <td style="border-color: white; width: 29%"></td>
                 <td style="border-bottom-color: white; border-top-color: white; width: 30%"></td>
                 <td style="width: 25%; padding: 5px">Dto.<?= " " . $model['factura_rate_descuento'] . "%"; ?></td>
                 <td style="width: 16%; padding: 5px" class="text-right"><?= number_format($importe_descuento, 2, ',', '.') ?></td>
             </tr>
-        <?php } ?>
+<?php } ?>
 
         <tr>
             <td style="border-color: white; width: 29%"></td>
@@ -135,14 +142,14 @@ use yii\helpers\Html;
             <td style="width: 16%; padding: 5px" class="text-right"><?= number_format($importe_iva, 2, ',', '.') ?></td>
         </tr>
 
-        <?php if ($model['factura_rate_irpf'] <> 0) { ?>
+<?php if ($model['factura_rate_irpf'] <> 0) { ?>
             <tr>
                 <td style="border-color: white; width: 29%"></td>
                 <td style="border-bottom-color: white; border-top-color: white; width: 30%"></td>
                 <td style="width: 25%; padding: 5px">Irpf<?= " " . $model['factura_rate_irpf'] . "%"; ?></td>
                 <td style="width: 16%; padding: 5px" class="text-right"><?= number_format($importe_irpf, 2, ',', '.') ?></td>
             </tr>
-        <?php } ?>
+<?php } ?>
         <tr>
             <td style="border-color: white; width: 29%"></td>
             <td style="border-bottom-color: white; border-top-color: white; width: 30%"></td>
@@ -171,7 +178,7 @@ use yii\helpers\Html;
             <tr>
                 <td style="width: 35%; padding: 10px"><strong>VENCIMIENTO</strong></td>
                 <td style="width: 65%; padding: 10px">
-                    <?= Yii::$app->formatter->asDate($model['factura_vto'], 'php:d-m-Y') . ' / Importe ' . $model['factura_vto_importe'] ?> &euro;
+    <?= Yii::$app->formatter->asDate($model['factura_vto'], 'php:d-m-Y') . ' / Importe ' . $model['factura_vto_importe'] ?> &euro;
                 </td>
             </tr>
         </table>
@@ -184,7 +191,7 @@ use yii\helpers\Html;
             <tr>
                 <td style="width: 35%; padding: 10px"><strong>VENCIMIENTO</strong></td>
                 <td style="width: 65%; padding: 10px">
-                    <?= Yii::$app->formatter->asDate($model['factura_vto_dos'], 'php:d-m-Y') . ' / Importe ' . $model['factura_vto_dos_importe'] ?> &euro;
+    <?= Yii::$app->formatter->asDate($model['factura_vto_dos'], 'php:d-m-Y') . ' / Importe ' . $model['factura_vto_dos_importe'] ?> &euro;
                 </td>
             </tr>
         </table>

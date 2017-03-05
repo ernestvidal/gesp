@@ -232,3 +232,12 @@ a.desc:after {
   border-color: #ddd #ddd #ddd transparent;
   *border-left-color: #ffffff;
 }
+
+/* Gestión tamaño ventana modal identidades */
+#modal.modal{
+    margin-left: -600px;
+}
+#modal .modal-content{
+    width: 1200px;
+}
+

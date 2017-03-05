@@ -10,7 +10,6 @@ use Yii;
  * @property string $item_id
  * @property string $item_descripcion
  * @property string $item_referencia
- * @property string $item_long_descripcion
  * @property string $item_modelo
  * @property string $item_size
  * @property string $item_identidad_id
@@ -33,9 +32,9 @@ class Item extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['item_descripcion', 'item_referencia', 'item_long_descripcion', 'item_modelo', 'item_size', 'item_identidad_id'], 'required'],
+            [['item_descripcion','item_identidad_id'], 'required'],
             [['item_identidad_id'], 'integer'],
-            [['item_descripcion', 'item_long_descripcion'], 'string', 'max' => 100],
+            [['item_descripcion'], 'string', 'max' => 250],
             [['item_referencia'], 'string', 'max' => 30],
             [['item_modelo'], 'string', 'max' => 50],
             [['item_size'], 'string', 'max' => 25],
@@ -50,12 +49,11 @@ class Item extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'item_id' => 'Item ID',
-            'item_descripcion' => 'Item Descripcion',
-            'item_referencia' => 'Item Referencia',
-            'item_long_descripcion' => 'Item Long Descripcion',
-            'item_modelo' => 'Item Modelo',
-            'item_size' => 'Item Tamaño',
+            'item_id' => '#ID',
+            'item_descripcion' => 'Descripcion',
+            'item_referencia' => 'Referencia',
+            'item_modelo' => 'Modelo',
+            'item_size' => 'Tamaño',
             'item_identidad_id' => 'Item Identidad ID',
         ];
     }

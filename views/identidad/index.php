@@ -13,6 +13,7 @@ $this->context->layout = 'viewLayout';
 $this->title = 'Identidades';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
 <div class="identidad-index">
     <br>
     <div class="row">

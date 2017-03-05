@@ -22,7 +22,14 @@ use yii\helpers\Html;
             <td style="width: 1%; border-left: 1px solid #DDD;"></td>
             <td style="width: 49%; padding-left: 15px;">
                 <h4>Factura a:</h4>
-                <h4><?= $model['cliente']['identidad_nombre'] ?></h4>
+
+                <h4><?php
+                    if (!empty($model['cliente']['identidad_razon_social'])) {
+                        echo $model['cliente']['identidad_razon_social'];
+                    } else {
+                        echo $model['cliente']['identidad_nombre'];
+                    }
+                    ?></h4>
                 <h5><?= $model['cliente']['identidad_direccion'] ?></h5>
                 <h5><?= $model['cliente']['identidad_cp'] . ' ' . $model['cliente']['identidad_poblacion'] ?></h5>
                 <h5><?= $model['cliente']['identidad_provincia'] ?></h5>
@@ -57,7 +64,7 @@ use yii\helpers\Html;
             $total_linea = 0;
             ?>
             <?php foreach ($modelItems as $items) { ?>
-       
+
                 <tr>
                     <td class="text-right"><?php
             if ($items['item_cantidad'] <> 0) {
@@ -74,17 +81,17 @@ use yii\helpers\Html;
                         ?></td>
 
                     <td class="text-right"><?php
-                        if ($items['item_precio'] <> 0) {
-                            echo ($items['item_precio']);
-                        }
+                    if ($items['item_precio'] <> 0) {
+                        echo ($items['item_precio']);
+                    }
                         ?></td>
                     <td class="text-right"><?php
-                        if ($items['item_cantidad'] <> 0 && $items['item_precio'] <> 0) {
-                            echo (number_format($items['item_cantidad'] * $items['item_precio'], 2, ',', '.'));
-                        }
+                    if ($items['item_cantidad'] <> 0 && $items['item_precio'] <> 0) {
+                        echo (number_format($items['item_cantidad'] * $items['item_precio'], 2, ',', '.'));
+                    }
                         ?></td>
                 </tr>
-               
+
                 <?php
                 $total_linea = ($items['item_cantidad'] * $items['item_precio']);
                 $total = $total + $total_linea;

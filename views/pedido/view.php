@@ -69,7 +69,7 @@ use yii\helpers\Html;
                 $base_imponible = $base_imponible + $total_linea;
             }
 
-            $importe_descuento = $base_imponible * ($model['pedido_rate_descuento']);
+            $importe_descuento = $base_imponible * ($model['pedido_rate_descuento']/100);
             $importe_iva = $base_imponible * ($model['pedido_rate_iva'] / 100);
             $importe_irpf = $base_imponible * ($model['pedido_rate_irpf'] / 100);
             ?>

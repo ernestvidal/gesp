@@ -129,7 +129,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 
-                echo Html::a('[ x ]', ['proformaitem/delete', 'id' => $model['proformaitems'][$i]['proforma_id']], [
+                echo Html::a('[ x ]',['proformaitem/delete',
+                    'id' => $model['proformaitems'][$i]['proforma_id'],'num_factura'=>$model['proformaitems'][$i]['proforma_num'],'id_proforma'=>$model['proforma_id']],
+                    [
                     'title' => 'delete',
                     'data' => [
                         'confirm' => 'Are you sure you want to delete this item?',
