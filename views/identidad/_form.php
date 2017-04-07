@@ -84,7 +84,7 @@ use app\models\Identidad;
 
     <div class="row">
         <div class="col-lg-6">
-            <?= $form->field($model, 'identidad_role')->dropDownList(['CLIENTE' => 'CLIENTE', 'CAPTACION' => 'CAPTACION', 'AMBOS' => 'AMBOS'], ['prompt' => 'Seleccionar ...']) ?>
+            <?= $form->field($model, 'identidad_role')->dropDownList(['CLIENTE' => 'CLIENTE', 'PROVEEDOR'=>'PROVEEDOR', 'CAPTACION' => 'CAPTACION', 'AMBOS' => 'AMBOS'], ['prompt' => 'Seleccionar ...']) ?>
 
         </div>
         <div class="col-lg-6">

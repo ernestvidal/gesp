@@ -44,8 +44,9 @@ class Presupuesto extends \yii\db\ActiveRecord
             [['presupuesto_rate_descuento', 'presupuesto_rate_iva', 'presupuesto_rate_irpf'], 'number'],
             [['presupuesto_num'], 'string', 'max' => 20],
             [['presupuesto_img'], 'safe'],
-            [['forma_pago', 'presupuesto_validez', 'presupuesto_plazo_entrega', 'presupuesto_free_one', 'presupuesto_free_two'], 'string', 'max' => 50],
-            [['presupuesto_free_one', 'presupuesto_free_two'], 'string', 'max' => 100],
+            [['forma_pago', 'presupuesto_validez', 'presupuesto_plazo_entrega'], 'string', 'max' => 50],
+            [['presupuesto_free_one'], 'string', 'max' => 100],
+            [['presupuesto_free_two'], 'string'],
             [['presupuesto_num'], 'unique'],
         ];
     }

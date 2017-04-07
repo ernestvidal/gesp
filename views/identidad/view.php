@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="identidad-view">
     <div class="row">
         <div class="col-md-12">
-            <ul>
+            <ul class="list-unstyled">
                 <li><h1><?= $model->identidad_id . ' ' . $model->identidad_nombre ?></h1></li>
                 <li><?= $model->identidad_razon_social ?></li>
                 <li><?= $model->identidad_direccion ?></li>
@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
             foreach ($cargos as $cargo) {
                 ?>
                 <div class="row">
-                    <div class="col-md-4"><?= $cargo['cargo_nombre'] ?></div>
+                    <div class = "col-md-4"><?= $cargo['cargo_nombre'] ?></div>
                     <div class = "col-md-3"><?= $cargo['cargo_cargo'] ?></div>
                     <div class = "col-md-1"><?= $cargo['cargo_phone'] ?></div>
                     <div class = "col-md-4"><?= $cargo['cargo_mail'] ?></div>

@@ -98,16 +98,16 @@ class ProformaitemController extends Controller
      */
     public function actionDelete($id,$num_factura,$id_proforma)
     {        
-        $number_proforma_num = Proformaitem::findAll('proforma_num'==$num_factura);
-        $num_proforma_lines = count($number_proforma_num);
+       // $number_proforma_num = Proformaitem::findAll('proforma_num'==$num_factura);
+       // $num_proforma_lines = count($number_proforma_num);
         
-        if ($num_proforma_lines >= 1){
+       // if ($num_proforma_lines >= 1){
              $this->findModel($id)->delete();
-                //return $this->redirect(['index']);
+                return $this->redirect(['index']);
           
-        }else{
-              Yii::$app->runAction('factura/delete',['id'=>$id_proforma]);
-        }
+      //  }else{
+        //      Yii::$app->runAction('factura/delete',['id'=>$id_proforma]);
+       // }
     }
 
     /**

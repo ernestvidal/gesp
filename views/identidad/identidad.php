@@ -118,8 +118,8 @@ use app\models\Cargo;
                             $formCargo = ActiveForm::begin();
                             ?>
                             <div class="row">
-                                <div class="col-lg-2"><?= $formCargo->field($cargo, 'cargo_identidad_id')->textInput() ?></div>
-                                <div class="col-lg-10"><?= $formCargo->field($cargo, 'cargo_nombre')->textInput(['maxlength' => true]) ?></div>
+                               
+                                <div class="col-lg-12"><?= $formCargo->field($cargo, 'cargo_nombre')->textInput(['maxlength' => true]) ?></div>
                             </div>
                             <div class="row">
                                 <div class="col-lg-2">
@@ -134,11 +134,14 @@ use app\models\Cargo;
                                     <?= $formCargo->field($cargo, 'cargo_mail')->textInput(['maxlength' => true]) ?>
                                 </div>
                             </div>
-                        <?php } ?>
-
-                        <div class="form-group">
-                            <?= Html::submitButton('Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                         <div class="form-group">
+                             <?= Html::a('Update',['update', 'id'=>$cargo['cargo_id']], ['class' => 'btn btn-primary']) ?>
+                             <?= Html::a('Delete',['delete', 'id'=>$cargo['cargo_id']], ['class' => 'btn btn-danger']) ?>
                         </div>
+                     <?php ActiveForm::end(); ?>
+                                <?php } ?>
+
+                    
                     <?php } ?>
 
                 </div>

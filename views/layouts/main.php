@@ -82,11 +82,20 @@ AppAsset::register($this);
                 ['label' => 'Nuevo', 'url' => ['/presupuesto/create']],
               ],
             ],
-            ['label' => 'Pedidos',
+            ['label' => 'Clientes',
               'items' => [
-                ['label' => 'Listado', 'url' => ['/pedido/index']],
-                ['label' => 'Nueva', 'url' => ['/pedido/create']],
+                ['label' => 'Pedidos', 'url' => ['/pedidocliente/index']],
               ],
+            ],
+            ['label' => 'Proveedores',
+                'items' => [
+                    ['label' => 'Pedidos',
+                        'items' => [
+                            ['label' => 'Listado', 'url' => ['/pedido/index']],
+                            ['label' => 'Nueva', 'url' => ['/pedido/create']],
+                        ],
+                    ],
+                ],
             ],
             ['label' => 'Albaranes',
               'items' => [

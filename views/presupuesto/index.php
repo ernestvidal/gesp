@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <span><strong>Listado de facturas / </strong></span>
+                    <span><strong>Listado de presupuestos / </strong></span>
                     <span>
                         <?= Html::a('2017', ['index', 'year' => 2017]) ?>
                         /
@@ -35,12 +35,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <th>Núm.</th>
                                     <th>Cliente</th>
                                     <th>B.I.</th>
-                                    <th>% IVA</th>
                                     <th>I.IVA</th>
-                                    <th>% DTO</th>
                                     <th>I dto</th>
-                                    <th>% irpf</th>
                                     <th>I irpf</th>
+                                    <th></th>
                                     <th></th>
                                     <th></th>
                                     <th></th>
@@ -62,7 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     $facturador = $model[$i]->facturador->identidad_nombre;
                                     $año_presupuesto = substr($model[$i]->presupuesto_fecha, 0, 4);
                                     $currentQuarter = ceil(date("m", strtotime($model[$i]->presupuesto_fecha)) / 3);
-                                    echo '<h3>' . $año_presupuesto . '-' . $facturador . '</h3>';
+                                    //echo '<h3>' . $año_presupuesto . '-' . $facturador . '</h3>';
                                 }
                                 $baseImponible = 0;
                                 $totalIva = 0;
@@ -88,11 +86,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                     </td>
                                     <td><?= $model[$i]->cliente->identidad_nombre; ?></td>
                                     <td class="text-right"><?= Yii::$app->formatter->asDecimal($baseImponible, 2) ?></td>
-                                    <td class="text-right"><?= $model[$i]->presupuesto_rate_iva ?></td>
+                                    <!-- <td class="text-right"><?= $model[$i]->presupuesto_rate_iva ?></td> -->
                                     <td class="text-right"><?= Yii::$app->formatter->asDecimal($totalIva, 2) ?>
-                                    <td class="text-right"><?= $model[$i]->presupuesto_rate_descuento ?></td>
+                                    <!--<td class="text-right"><?= $model[$i]->presupuesto_rate_descuento ?></td>-->
                                     <td class="text-right"><?= Yii::$app->formatter->asDecimal($totalDto, 2) ?></td>
-                                    <td class="text-right"><?= $model[$i]->presupuesto_rate_irpf ?></td>
+                                    <!--<td class="text-right"><?= $model[$i]->presupuesto_rate_irpf ?></td>-->
                                     <td class="text-right"><?= Yii::$app->formatter->asDecimal($totalIrpf, 2) ?></td>
                                     <td class="text-right"><?= Yii::$app->formatter->asDecimal($totalPresupuesto, 2) ?></td>
 
@@ -101,12 +99,24 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <td><?=
                                         Html::a('<i class="glyphicon glyphicon-print"></i>', ['printpresupuesto',
                                             'id' => $model[$i]->presupuesto_id,
-                                            'num' => $model[$i]->presupuesto_num], ['title' => 'imprimir'])
+                                            'num' => $model[$i]->presupuesto_num,
+                                            'name' => $model[$i]->cliente->identidad_nombre],
+                                            ['title' => 'imprimir'])
                                         ?>
                                     </td>
                                     <td><?= Html::a('<i class="glyphicon glyphicon-envelope"></i>', ['modalsendpresupuesto', 'id' => $model[$i]->presupuesto_id], ['title' => 'enviar por mail'])
                                     ?>
                                     </td>
+                                    <td><?=
+                                            Html::a('<i class="glyphicon glyphicon-duplicate"></i>', '#', [
+                                                'id' => 'copy-presupuesto',
+                                                'title' => 'duplicar presupuesto',
+                                                'data-url' => Url::to(['copiarpresupuesto', 'id' => $model[$i]->presupuesto_id,
+                                                    'documento_destino' => 'presupuesto']),
+                                                'data-pjax' => '0',
+                                            ])
+                                            ?>
+                                        </td>
                                     <td>
                                         <?=
                                         Html::a('<i class="glyphicon glyphicon-file"></i>', '#', [
@@ -120,7 +130,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         ?>
                                     </td>
                                     <td><?=
-                                    Html::a('<i class="glyphicon glyphicon-trash"></i>', ['delete', 'id' => $model[$i]->presupuesto_id], ['title' => 'delete'], [
+                                    Html::a('<i class="glyphicon glyphicon-trash"></i>', ['delete', 'id' => $model[$i]->presupuesto_id],[
                                         'data' => [
                                             'confirm' => 'Are you sure you want to delete this item?',
                                             'method' => 'post',
@@ -177,3 +187,29 @@ Modal::end();
 
             Modal::end();
             ?>
+<?php
+ /*
+         * Javascript y ventana modal donde mostramos la vista llamada desde el
+         * link #copiar-proforma y #copy-factura
+         */
+        
+        $this->registerJs(
+                "$(document).on('click', '#copy-presupuesto , #copy-factura', (function() {
+                $.get(
+                    $(this).data('url'),
+                    function (data) {
+                        $('.modal-body').html(data);
+                        $('#modal-presupuesto').modal();
+                    }
+                );
+            }));"
+        );
+
+        Modal::begin([
+            'header' => '<h2>Copiar Presupuesto</h2>',
+            'id' => 'modal-presupuesto',
+        ]);
+        echo "<div id='modalContent'></div>";
+
+        Modal::end();
+        ?>

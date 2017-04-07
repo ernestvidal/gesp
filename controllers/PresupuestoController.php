@@ -232,7 +232,7 @@ class PresupuestoController extends Controller
         }
     }
 
-    public function actionPrintpresupuesto($id, $num)
+    public function actionPrintpresupuesto($id, $num, $name)
     {
         $footer = ' 
             
@@ -253,7 +253,8 @@ class PresupuestoController extends Controller
         $mpdf=new mPDF('UTF-8','A4','','',15,15,15,20,'',5,'P');
         $mpdf->SetHTMLFooter($footer);
         $mpdf->WriteHTML($this->render('view', ['model' => $this->findModel($id)]));
-        $presupuestoPdf = $mpdf->Output('presupuesto ' . $num . '.pdf','D');
+        $presupuestoPdf = $mpdf->Output('presupuesto ' . $num . '.pdf','I');
+        $presupuestoPdf = $mpdf->Output('../../../mis documentos/portucajabonita/presupuestos/2017/' . $num .' '.$name . '.pdf','F');
     }
 
     public function actionSendpresupuesto($id)
@@ -369,6 +370,54 @@ class PresupuestoController extends Controller
             $this->redirect('@web/proforma/index');
         }else{
             $model->getErrors();
+        }
+    }
+    
+     public function actionCopiarpresupuesto($id, $documento_destino) {
+        $model = $this->findModel($id);
+
+        return $this->renderAjax('copiarPresupuesto', [
+                    //'model' => $model,
+                    'numPresupuesto' => $id,
+                    'documento_destino' => $documento_destino
+        ]);
+    }
+    
+     public function actionCopiar() {
+        /**
+         * Recogemos los datos enviados desde el formulario copiarPresupuesto.php
+         * Luego cargamos la proforma que queremos copiar
+         * 
+         */
+        $fecha_documento;
+        $num_documento;
+        $num_presupuesto_id;
+
+        $data_request = Yii::$app->request->post();
+        $num_presupuesto_id = $data_request['presupuesto_id'];
+        $fecha_documento = $data_request['fecha_documento'];
+        $num_documento = $data_request['numero_documento'];
+        $model = $this->findModel($num_presupuesto_id);
+        $modelItems = $model['presupuestoitems'];
+        $fModel = new Presupuesto();
+        $fModel->presupuesto_num = $num_documento;
+        $fModel->presupuesto_fecha = $fecha_documento;
+        $fModel->facturador_id = $model->facturador_id;
+        $fModel->cliente_id = $model->cliente_id;
+        $fModel->presupuesto_rate_descuento = $model->presupuesto_rate_descuento;
+        $fModel->presupuesto_rate_iva = 21;
+        $fModel->presupuesto_rate_irpf = $model->presupuesto_rate_irpf;
+        $fModel->forma_pago = ($model['cliente']['identidad_forma_pago'] <> Null) ? $model['cliente']['identidad_forma_pago'] : '';
+        //$fModel->presupuesto_cta = $model['cliente']['identidad_cta'];
+        $fModel->save();
+
+        foreach ($modelItems as $presupuestoItems) {
+            $fModelItems = new Presupuestoitem();
+            $fModelItems->presupuesto_num = $num_documento;
+            $fModelItems->item_cantidad = $presupuestoItems->item_cantidad;
+            $fModelItems->item_descripcion = $presupuestoItems->item_descripcion;
+            $fModelItems->item_precio = $presupuestoItems->item_precio;
+            $fModelItems->save();
         }
     }
 }

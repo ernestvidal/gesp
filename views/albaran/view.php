@@ -24,7 +24,7 @@ use yii\helpers\Html;
             <td style="width: 1%; border-left: 1px solid #DDD;"></td>
             <td style="width: 49%; padding-left: 15px;">
                 <h4>Albaran a:</h4>
-                <h4><?= $model['cliente']['identidad_nombre'] ?></h4>
+                <h4><?=  $model['cliente']['identidad_razon_social'] ? $model['cliente']['identidad_razon_social'] : $model['cliente']['identidad_nombre'] ?></h4>
                 <h5><?= $model['cliente']['identidad_direccion'] ?></h5>
                 <h5><?= $model['cliente']['identidad_cp'] .' '.$model['cliente']['identidad_poblacion'] ?></h5>
                 <h5><?= $model['cliente']['identidad_provincia'] ?></h5>

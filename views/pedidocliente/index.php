@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-lg-12 col-xs-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <span>Listado pedidos | <?= Html::a('Todos los pedidos', ['index', 'pedidos' => 'todos']) ?> </span>
+                    <span>Listado pedidos | <?= Html::a('Todos los pedidos', ['index', 'pedidos' => 'todos']) ?> | <?= Html::a('Create', ['create']) ?> </span>
                 </div>
                 <div class="panel-body">
                     <div class="grid-view">
@@ -62,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 $baseImponible = 0;
                                 $totalIva = 0;
                                 $totalPedido = 0;
-                                foreach ($model[$i]->pedidoitems as $pedidoDetalle) {
+                                foreach ($model[$i]->pedidoitemclientes as $pedidoDetalle) {
                                     $totalLinea = $pedidoDetalle->item_cantidad * $pedidoDetalle->item_precio;
                                     $baseImponible += $totalLinea;
                                     $totalDto = $baseImponible * $model[$i]->pedido_rate_descuento / 100;
@@ -91,7 +91,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'id' => $model[$i]->pedido_id,
                                             'num' => $model[$i]->pedido_num,
                                             'name' => $model[$i]->cliente->identidad_nombre]) ?></td>
-                                        
+                                         
                                         <td><?= Html::a('<i class="glyphicon glyphicon-envelope"></i>', ['modalsendpedido', 'id' => $model[$i]->pedido_id]) ?></td>
                                         <td><?=
                                             Html::a('<i class="glyphicon glyphicon-file"></i>', '#', [
@@ -102,6 +102,16 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'data-url' => Url::to(['modalfacturarpedido', 'id' => $model[$i]->pedido_id]),
                                                 'data-pjax' => '0',])
                                             ?></td>
+                                         <td><?=
+                                            Html::a('<i class="glyphicon glyphicon-copy"></i>', '#', [
+                                                'id' => 'copy-pedido',
+                                                'title' => 'copiar pedido',
+                                                'data-url' => Url::to(['copiarpedido', 'id' => $model[$i]->pedido_id,
+                                                    'documento_destino' => 'albaran']),
+                                                'data-pjax' => '0',
+                                            ])
+                                            ?>
+                                        </td>
                                         <td><?=
                                             Html::a('<i class="glyphicon glyphicon-trash"></i>', ['delete', 'id' => $model[$i]->pedido_id], [
                                                 'data' => [
@@ -148,4 +158,30 @@ $this->params['breadcrumbs'][] = $this->title;
         ?>
 
 
-    
+     <?php
+        
+        /*
+         * Javascript y ventana modal donde mostramos la vista llamada desde el
+         * link #copiar-pedido
+         */
+        
+        $this->registerJs(
+                "$(document).on('click', '#copy-pedido', (function() {
+                $.get(
+                    $(this).data('url'),
+                    function (data) {
+                        $('.modal-body').html(data);
+                        $('#modal-pedido').modal();
+                    }
+                );
+            }));"
+        );
+
+        Modal::begin([
+            'header' => '<h2>Copiar Pedido</h2>',
+            'id' => 'modal-pedido',
+        ]);
+        echo "<div id='modalContent'></div>";
+
+        Modal::end();
+        ?>

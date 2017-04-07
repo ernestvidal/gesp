@@ -240,7 +240,7 @@ class PedidoController extends Controller
         }
     }
 
-    public function actionPrintpedido($id)
+    public function actionPrintpedido($id, $num, $name)
     {
          $footer = ' 
             
@@ -262,7 +262,8 @@ class PedidoController extends Controller
         $mpdf=new mPDF('UTF-8','A4','','',15,15,15,20,'',5,'P');
         $mpdf->SetHTMLFooter($footer);
         $mpdf->WriteHTML($this->render('view', ['model' => $this->findModel($id)]));
-        $pedidoPdf = $mpdf->Output('pedido.pdf','D');
+        $pedidoPdf = $mpdf->Output('pedido.pdf','I');
+        $pedidoPdf = $mpdf->Output('../../../mis documentos/portucajabonita/pedidos/2017/' . $num .' '.$name . '.pdf','F');
     }
 
     public function actionSendpedido($id)

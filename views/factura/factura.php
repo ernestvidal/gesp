@@ -183,7 +183,7 @@ $form->field($model, 'cliente_id')->dropDownList(
                     <label for="factura_rate_iva">IVA %</label>
                 </div>
                 <div class="col-md-3">
-                    <?= $form->field($model, 'factura_rate_iva')->textInput(['maxlength' => true, 'value' => '0.00', 'id' => 'factura_rate_iva'])->label(false) ?>
+                    <?= $form->field($model, 'factura_rate_iva')->textInput(['maxlength' => true, 'value' => '21.00', 'id' => 'factura_rate_iva'])->label(false) ?>
                 </div>
                 <div class="col-md-5">
                     <?=

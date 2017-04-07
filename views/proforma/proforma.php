@@ -140,7 +140,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <label for="proforma_rate_iva">IVA %</label>
                 </div>
                 <div class="col-md-3">
-                    <?= $form->field($model, 'proforma_rate_iva')->textInput(['maxlength' => true, 'value'=>'0.00', 'id'=>'proforma_rate_iva'])->label(false) ?>
+                    <?= $form->field($model, 'proforma_rate_iva')->textInput(['maxlength' => true, 'value'=>'21.00', 'id'=>'proforma_rate_iva'])->label(false) ?>
                 </div>
                 <div class="col-md-5">
                     <input type="text" name="proforma_importe_iva" id="proforma_importe_iva" class="form-control text-right" value="0.00" readonly>
