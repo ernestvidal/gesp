@@ -8,7 +8,7 @@ use yii\helpers\Url;
 /* @var $searchModel app\models\pedidoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Pedidos';
+$this->title = 'Pedidos Clientes';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -36,6 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <th>I dto</th>
                                     <th>% irpf</th>
                                     <th>I irpf</th>
+                                    <th></th>
                                     <th></th>
                                     <th></th>
                                     <th></th>
@@ -105,7 +106,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                          <td><?=
                                             Html::a('<i class="glyphicon glyphicon-copy"></i>', '#', [
                                                 'id' => 'copy-pedido',
-                                                'title' => 'copiar pedido',
+                                                'title' => 'Make albarán',
                                                 'data-url' => Url::to(['copiarpedido', 'id' => $model[$i]->pedido_id,
                                                     'documento_destino' => 'albaran']),
                                                 'data-pjax' => '0',

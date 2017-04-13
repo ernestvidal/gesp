@@ -213,7 +213,7 @@ class FacturaController extends Controller {
         }
     }
 
-    public function actionPrintfactura($id) {
+    public function actionPrintfactura($id, $num, $name) {
         $footer = ' 
 
               <table style="width: 100%">
@@ -239,7 +239,8 @@ class FacturaController extends Controller {
         $mpdf = new mPDF('UTF-8', 'A4', '', '', 15, 15, 15, 40, '', 5, 'P');
         $mpdf->SetHTMLFooter($footer);
         $mpdf->WriteHTML($this->render('view', ['model' => $this->findModel($id)]));
-        $facturaPdf = $mpdf->Output('factura.pdf', 'D');
+        $facturaPdf = $mpdf->Output('factura.pdf', 'I');
+        $facturaPdf = $mpdf->Output('../../../mis documentos/portucajabonita/facturas/2017/' . $num .' '.$name . '.pdf','F');
     }
 
     public function actionSendfactura($id) {

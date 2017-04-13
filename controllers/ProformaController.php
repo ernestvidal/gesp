@@ -206,7 +206,7 @@ class ProformaController extends Controller {
         }
     }
 
-    public function actionPrintproforma($id) {
+    public function actionPrintproforma($id, $num, $name) {
         $footer = ' 
 
               <table style="width: 100%">
@@ -232,7 +232,9 @@ class ProformaController extends Controller {
         $mpdf = new mPDF('UTF-8', 'A4', '', '', 15, 15, 15, 40, '', 5, 'P');
         $mpdf->SetHTMLFooter($footer);
         $mpdf->WriteHTML($this->render('view', ['model' => $this->findModel($id)]));
-        $proformaPdf = $mpdf->Output('proforma.pdf', 'D');
+        $proformaPdf = $mpdf->Output('proforma.pdf', 'I');
+        $proformaPdf = $mpdf->Output('../../../mis documentos/portucajabonita/proforma/2017/' . $num .' '.$name . '.pdf','F');
+        
     }
 
     public function actionSendproforma($id) {

@@ -56,16 +56,19 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <div class="well">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <!-- <?= $form->field($model, 'pedido_num')->textInput(['maxlength' => true, 'id'=>'pedido_num']) ?> -->
                     <?= $form->field($model, 'pedido_num')->textInput(['maxlength' => true, 'id'=>'pedido_num',
                         'value'=>'2017.'. substr('000'.(substr($model->find()->max('pedido_num'), 5)+1),-3,3)
                         ]) ?>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <?= $form->field($model, 'pedido_cliente_num')->textInput(['maxlength' => true, 'id'=>'pedido_cliente_num']) ?>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
+                    <?= $form->field($model, 'pedido_fecha_entrega')->textInput(['type'=>'date', 'id'=>'pedido_fecha_entrega']) ?>
+                </div>
+                <div class="col-md-3">
                      <?= $form->field($model, 'pedido_fecha')->textInput(['maxlength' => true, 'type'=>'date', 'value'=>Yii::$app->formatter->asDate('now', 'yyyy-MM-dd')]) ?>
                 </div>
             </div>

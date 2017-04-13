@@ -212,7 +212,7 @@ class AlbaranController extends Controller {
         }
     }
 
-    public function actionPrintalbaran($id) {
+    public function actionPrintalbaran($id, $num, $name) {
         $footer = ' 
             
                 <table style="width: 100%">
@@ -232,7 +232,8 @@ class AlbaranController extends Controller {
         $mpdf = new mPDF('UTF-8', 'A4', '', '', 15, 15, 15, 0, '', 5, 'P');
         $mpdf->SetHTMLFooter($footer);
         $mpdf->WriteHTML($this->render('view', ['model' => $this->findModel($id)]));
-        $albaranPdf = $mpdf->Output('albaran.pdf', 'D');
+        $albaranPdf = $mpdf->Output('albaran.pdf', 'I');
+        $albaranPdf = $mpdf->Output('../../../mis documentos/portucajabonita/albaranes/2017/' . $num .' '.$name . '.pdf','F');
     }
 
     public function actionSendalbaran($id) {

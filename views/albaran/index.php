@@ -88,7 +88,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <td class="text-right"><?= Yii::$app->formatter->asDecimal($totalAlbaran, 2) ?></td>
                                         <td><?= Html::a('<i class="glyphicon glyphicon-eye-open"></i>', ['view', 'id' => $model[$i]->albaran_id], ['title' => 'ver']) ?></td>
                                         <td><?= Html::a('<i class="glyphicon glyphicon-pencil"></i>', ['update', 'id' => $model[$i]->albaran_id],['title' => 'editar']) ?></td>
-                                        <td><?= Html::a('<i class="glyphicon glyphicon-print"></i>', ['printalbaran', 'id' => $model[$i]->albaran_id],['title' => 'imprimir']) ?></td>
+                                        <td><?= Html::a('<i class="glyphicon glyphicon-print"></i>', ['printalbaran',
+                                            'id' => $model[$i]->albaran_id,
+                                            'num' => $model[$i]->albaran_num,
+                                            'name' => $model[$i]->cliente->identidad_nombre], 
+                                            ['title' => 'imprimir'])
+                                        ?></td>
                                         <td><?= Html::a('<i class="glyphicon glyphicon-envelope"></i>', ['modalsendalbaran', 'id' => $model[$i]->albaran_id],['title' => 'enviar']) ?></td>
                                         <td><?=
                                             Html::a('<i class="glyphicon glyphicon-file"></i>', '#', [

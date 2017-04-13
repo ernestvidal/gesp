@@ -81,7 +81,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <td class="text-right"><?= Yii::$app->formatter->asDecimal($totalFactura, 2); ?></td>
 
                                         <td><?= Html::a('<i class="glyphicon glyphicon-pencil"></i>', ['update', 'id' => $model[$i]->proforma_id], ['title' => 'editar'])?></td>
-                                        <td><?= Html::a('<i class="glyphicon glyphicon-print"></i>', ['printproforma', 'id' => $model[$i]->proforma_id], ['title' => 'imprimir'])?></td>
+                                        <td><?= Html::a('<i class="glyphicon glyphicon-print"></i>', ['printproforma',
+                                            'id' => $model[$i]->proforma_id,
+                                            'num' => $model[$i]->proforma_num,
+                                            'name' => $model[$i]->cliente->identidad_nombre],
+                                            ['title' => 'imprimir'])?></td>
                                         <td><?=
                                             Html::a('<i class="glyphicon glyphicon-duplicate"></i>', '#', [
                                                 'id' => 'copy-proforma',

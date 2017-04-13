@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use app\models\Albaran;
+
 ?>
 <div class="pedido-send">
     <h1><?= Html::encode($this->title) ?></h1>
@@ -28,15 +30,16 @@ use yii\bootstrap\ActiveForm;
         ?>
 
             <?=
-            Html::input('text', 'numero_documento', '', [
+            Html::input('text', 'numero_documento', '2017.'. substr('000'.(substr(Albaran::find()->max('albaran_num'), 5)+1),-3,3), [
                 'class' => 'form-control',
-                'placeholder' => 'Introducir número proforma'])
+                'placeholder' => 'Introducir número Albarán',
+                ])
             ?>
             <br />
             <?= Html::input('date', 'fecha_documento', '', ['class' => 'form-control']) ?>
 
             <br />
-            <?= Html::Input('hidden','proforma_id', $numPedido) ?>
+            <?= Html::Input('hidden','pedido_id', $numPedido) ?>
             <?= Html::Input('hidden','documento_destino', $documento_destino) ?>
             
             <div class="form-group">

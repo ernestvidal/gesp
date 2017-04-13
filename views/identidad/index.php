@@ -9,7 +9,7 @@ use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\IdentidadSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$this->context->layout = 'viewLayout';
+//$this->context->layout = 'viewLayout';
 $this->title = 'Identidades';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -17,8 +17,8 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="identidad-index">
     <br>
     <div class="row">
-        <div class="col-lg-1"></div>
-        <div class="col-lg-10">
+      
+        <div class="col-lg-11 col-lg-offset-1">
             <div class="well">
 
                 
@@ -46,14 +46,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
             </div>
         </div>
-        <div class="col-lg-1"></div>
     </div>
 
     <br>
     <div class="row">
 
-        <div class="col-lg-1"></div>
-        <div class="col-lg-10">
+      
+        <div class="col-lg-11 col-lg-offset-1">
 
 
             <!--<h1><?= Html::encode($this->title) ?></h1>-->
@@ -70,8 +69,8 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
     <div class="row">
-        <div class="col-lg-1"></div>
-        <div class="col-lg-10">
+      
+        <div class="col-lg-11 col-lg-offset-1">
 
             <?php Pjax::begin() ?>
 
@@ -109,7 +108,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     </p>
                 </div>
-                <div class="col-lg-1"></div>
+              
             </div>
         </div>
 

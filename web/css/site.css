@@ -19,9 +19,12 @@ textarea {
       position: fixed;
       left: 0;
       height: 100%;
+      top: -15px;
+      padding-top: 55px;
   }
   #contenido{
       margin-top: 75px;
+      margin-left: 45px;
   }
   
 .wrap {

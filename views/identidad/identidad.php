@@ -5,6 +5,9 @@ use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\Identidad;
 use app\models\Cargo;
+use yii\bootstrap\Modal;
+use yii\helpers\Url;
+
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Identidad */
@@ -93,7 +96,7 @@ use app\models\Cargo;
 
                 <div class="row">
                     <div class="col-lg-6">
-                        <?= $form->field($model, 'identidad_role')->dropDownList(['CLIENTE' => 'CLIENTE', 'PROVEEDOR'=>'PROVEEDOR', 'CAPTACION' => 'CAPTACION', 'AMBOS' => 'AMBOS'], ['prompt' => 'Seleccionar ...']) ?>
+                        <?= $form->field($model, 'identidad_role')->dropDownList(['CLIENTE' => 'CLIENTE', 'PROVEEDOR' => 'PROVEEDOR', 'CAPTACION' => 'CAPTACION', 'AMBOS' => 'AMBOS'], ['prompt' => 'Seleccionar ...']) ?>
 
                     </div>
                     <div class="col-lg-6">
@@ -118,7 +121,7 @@ use app\models\Cargo;
                             $formCargo = ActiveForm::begin();
                             ?>
                             <div class="row">
-                               
+
                                 <div class="col-lg-12"><?= $formCargo->field($cargo, 'cargo_nombre')->textInput(['maxlength' => true]) ?></div>
                             </div>
                             <div class="row">
@@ -134,18 +137,52 @@ use app\models\Cargo;
                                     <?= $formCargo->field($cargo, 'cargo_mail')->textInput(['maxlength' => true]) ?>
                                 </div>
                             </div>
-                         <div class="form-group">
-                             <?= Html::a('Update',['update', 'id'=>$cargo['cargo_id']], ['class' => 'btn btn-primary']) ?>
-                             <?= Html::a('Delete',['delete', 'id'=>$cargo['cargo_id']], ['class' => 'btn btn-danger']) ?>
-                        </div>
-                     <?php ActiveForm::end(); ?>
-                                <?php } ?>
+                            <div class="form-group">
+                                <?= Html::a('Update', ['update', 'id' => $cargo['cargo_id']], ['class' => 'btn btn-primary']) ?>
+                                <?= Html::a('Delete', ['delete', 'id' => $cargo['cargo_id']], ['class' => 'btn btn-danger']) ?>
+                            </div>
+                            <?php ActiveForm::end(); ?>
+                        <?php } ?>
 
-                    
+
                     <?php } ?>
-
+                    <?= 
+                     Html::a('<i class="glyphicon glyphicon-file"></i> Nuevo cargo', '#', [
+                                                'id' => 'nuevo-cargo-link',
+                                                'title' => 'Nuevo cargo',
+                                                'class' => 'btn btn-success',
+                                                'data-toggle' => 'modal',
+                                                'data-target' => '#modal',
+                                                'data-url' => Url::to(['cargo/create']),
+                                                'data-pjax' => '0',])
+                   ?>
                 </div>
             </div>
         </div>   
     </div>
+    
+    
+    <?php
+    $this->registerJs(
+            "$(document).on('click', '#nuevo-cargo-link', (function() {
+            $.get(
+                $(this).data('url'),
+                function (data) {
+                    $('.modal-body').html(data);
+                    $('#modal').modal();
+                }
+            );
+        }));"
+    );
 
+    // Ventana modal donde mostramos la vista modalFacturarPedido.php
+    Modal::begin([
+        'header' => '<h2>Crear nuevo cargo</h2>',
+        'id' => 'modal',
+    ]);
+    echo "<div id='modalContent'>";
+    echo "</div>";
+
+
+    Modal::end();
+    ?>

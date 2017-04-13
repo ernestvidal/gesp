@@ -134,7 +134,7 @@ AppAsset::register($this);
 
     
            
-    <div id="contenido" class="container" >
+    <div id="contenido">
         <div class="row">
             <div class="col-lg-1 col-xs-2 sidebar">
                 <div id="sidebar">
@@ -143,6 +143,7 @@ AppAsset::register($this);
                        <li><?= Html::a('IDENTIDADES', '@web/identidad/index')?></li>
                        <li><?= Html::a('PRESUPUESTOS', '@web/presupuesto/index')?></li>
                        <li><?= Html::a('PEDIDOS', '@web/pedido/index')?></li>
+                       <li><?= Html::a('PEDIDO CLIENTE', '@web/pedidocliente/index')?></li>
                        <li><?= Html::a('ALBARANES', '@web/albaran/index')?></li>
                        <li><?= Html::a('FACTURAS', '@web/factura/index')?></li>
                        <li><?= Html::a('PROFORMAS', '@web/proforma/index')?></li>
@@ -150,7 +151,7 @@ AppAsset::register($this);
                     </ul>
                 </div>
             </div>
-            <div class="col-lg-11 col-lg-offset-1 col-xs-10 col-xs-offset-2 main">
+            <div class="col-lg-10 col-lg-offset-1 col-xs-10 col-xs-offset-2 main">
                 
                 <?= Breadcrumbs::widget([
                     'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],

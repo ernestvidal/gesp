@@ -195,6 +195,9 @@ $this->params['breadcrumbs'][] = $this->title;
           <div class="row">
             <?= $form->field($model, 'forma_pago')->textInput(['maxlength' =>true, 'id'=>'pedido-forma_pago']) ?>
           </div>
+           <div class="row">
+            <?= $form->field($model, 'pedido_plazo_entrega')->textInput(['maxlength' =>true, 'id'=>'pedido_plazo_entrega']) ?>
+          </div> 
         </div>
     </div>
 </div>

@@ -218,9 +218,8 @@ class PedidoclienteController extends Controller
 
     public function actionCopiar() {
         /**
-         * Recogemos los datos enviados desde el formulario copiarProforma.php
-         * Luego cargamos la proforma que queremos copiar
-         * 
+         * Copiamos o convertimos el pedido del cliente en albarán para el envío
+         * de la mercancia. 
          */
         $fecha_documento;
         $num_documento;
@@ -231,6 +230,7 @@ class PedidoclienteController extends Controller
         $fecha_documento = $data_request['fecha_documento'];
         $num_documento = $data_request['numero_documento'];
         $model = $this->findModel($num_pedido_id);
+        $model->pedido_albaran_num = $num_documento;
         $modelItems = $model['pedidoitemclientes'];
         $fModel = new Albaran();
         $fModel->albaran_num = $num_documento;
@@ -252,9 +252,17 @@ class PedidoclienteController extends Controller
             $fModelItems->item_precio = $pedidoItems->item_precio;
             $fModelItems->save();
         }
+        /**
+         * Si se ha creado el albarán y sus líneas sin problemas, guardamos el
+         * número de albarán en el pedido para saber el traking del pedido de
+         * cliente.
+         *  
+         */
+        
+        $model->save();
     }
     
-    public function actionPrintpedido($id) {
+    public function actionPrintpedido($id, $num, $name) {
         $footer = ' 
             
                 <table style="width: 100%">
@@ -274,6 +282,7 @@ class PedidoclienteController extends Controller
         $mpdf = new mPDF('UTF-8', 'A4', '', '', 15, 15, 15, 0, '', 5, 'P');
         $mpdf->SetHTMLFooter($footer);
         $mpdf->WriteHTML($this->render('view', ['model' => $this->findModel($id)]));
-        $albaranPdf = $mpdf->Output('pedidocliente.pdf', 'D');
+        $pedidoPdf = $mpdf->Output('pedidocliente.pdf','I');
+        $pedidoPdf = $mpdf->Output('../../../mis documentos/portucajabonita/pedido cliente/2017/' . $num .' '.$name . '.pdf','F');
     }
 }
