@@ -58,10 +58,10 @@ use yii\helpers\Html;
             <?php foreach ($modelItems as $items) { ?>
 
                 <tr>
-                    <td class="text-right"><?= $items['item_cantidad'] != 0 ? $items['item_cantidad'] : '' ?></td>
+                    <td class="text-right" style="vertical-align: top"><?= $items['item_cantidad'] != 0 ? $items['item_cantidad'] : '' ?></td>
                     <td style="padding-left: 15px; padding-right: 10px"><?=  Yii::$app->formatter->asNtext($items['item_descripcion']) ?></td>
-                    <td class="text-right"><?= $items['item_precio'] != 0 ? $items['item_precio'] : '' ?></td>
-                    <td class="text-right"><?php if ($items['item_cantidad'] * $items['item_precio'] !=0){ echo number_format($items['item_cantidad'] * $items['item_precio'], 2, ',', '.');} ?></td>
+                    <td class="text-right" style="vertical-align: top"><?= $items['item_precio'] != 0 ? $items['item_precio'] : '' ?></td>
+                    <td class="text-right" style="vertical-align: top"><?php if ($items['item_cantidad'] * $items['item_precio'] !=0){ echo number_format($items['item_cantidad'] * $items['item_precio'], 2, ',', '.');} ?></td>
                 </tr>
 
                 <?php

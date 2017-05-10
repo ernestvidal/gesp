@@ -62,7 +62,7 @@ use yii\helpers\Html;
             <?php foreach ($modelItems as $items){ ?>
 
                 <tr>
-                    <td class="text-right"><?php if ($items['item_cantidad']<>0){echo Yii::$app->formatter->asDecimal($items['item_cantidad'], 2);} ?></td>
+                    <td class="text-right" style="vertical-align: top"><?php if ($items['item_cantidad']<>0){echo Yii::$app->formatter->asDecimal($items['item_cantidad'], 2);} ?></td>
                     <td style="padding-left: 15px; padding-right: 10px"><?= Yii::$app->formatter->asNtext($items['item_descripcion']) ?></td>
                     <td class="text-right"><?php if ($items['item_precio']<>0){echo (number_format($items['item_precio'], 3,',','.'));} ?></td>
                     <td class="text-right"><?php if ($items['item_cantidad']<>0 && $items['item_precio']<>0){echo (number_format($items['item_cantidad'] * $items['item_precio'], 2,',','.'));} ?></td>

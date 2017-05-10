@@ -91,8 +91,14 @@ $this->params['breadcrumbs'][] = $this->title;
                         }],
                             //'identidad_direccion',
                             'identidad_poblacion',
-                            //'identidad_nif',
-                            'identidad_mail',
+                            'identidad_provincia',
+                            'identidad_actividad',
+                            
+                                ['attribute' => 'identidad_web',
+                                    'format' => 'raw',
+                                    'value' => function($data){
+                                   return Html::a($data->identidad_web, 'http://'.$data->identidad_web,['target'=>'_blank']);
+                                   }],
                             'identidad_persona_contacto',
                             'identidad_phone',
                             'identidad_role',

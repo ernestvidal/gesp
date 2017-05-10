@@ -117,6 +117,16 @@ $this->params['breadcrumbs'][] = $this->title;
                                             ])
                                             ?>
                                         </td>
+                                    <td><?=
+                                            Html::a('<i class="glyphicon glyphicon-duplicate"></i>', '#', [
+                                                'id' => 'copyToOrder',
+                                                'title' => 'crear pedido cliente',
+                                                'data-url' => Url::to(['copiarpresupuesto', 'id' => $model[$i]->presupuesto_id,
+                                                    'documento_destino' => 'pedidoCliente']),
+                                                'data-pjax' => '0',
+                                            ])
+                                            ?>
+                                    </td>    
                                     <td>
                                         <?=
                                         Html::a('<i class="glyphicon glyphicon-file"></i>', '#', [
@@ -194,7 +204,7 @@ Modal::end();
          */
         
         $this->registerJs(
-                "$(document).on('click', '#copy-presupuesto , #copy-factura', (function() {
+                "$(document).on('click', '#copy-presupuesto , #copy-factura, #copyToOrder', (function() {
                 $.get(
                     $(this).data('url'),
                     function (data) {

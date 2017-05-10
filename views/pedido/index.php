@@ -66,6 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     $totalLinea = $pedidoDetalle->item_cantidad * $pedidoDetalle->item_precio;
                                     $baseImponible += $totalLinea;
                                     $totalDto = $baseImponible * $model[$i]->pedido_rate_descuento / 100;
+                                   
                                     $totalIva = $baseImponible * $model[$i]->pedido_rate_iva / 100;
                                     $totalIrpf = $baseImponible * $model[$i]->pedido_rate_irpf / 100;
                                     $totalPedido = $baseImponible + $totalIva - $totalIrpf;

@@ -16,6 +16,8 @@ use yii\filters\VerbFilter;
 use yii\base\Model;
 use app\models\Proforma;
 use app\models\Proformaitem;
+use app\models\Pedidocliente;
+use app\models\Pedidoitemcliente;
 
 /**
  * PresupuestoController implements the CRUD actions for Presupuesto model.
@@ -419,5 +421,45 @@ class PresupuestoController extends Controller
             $fModelItems->item_precio = $presupuestoItems->item_precio;
             $fModelItems->save();
         }
+     }
+      public function actionCopytoorder() {
+        /**
+         * Recogemos los datos enviados desde el formulario copiarPresupuesto.php
+         * Luego cargamos el pedido que hemos creado.
+         * 
+         */
+        $fecha_documento;
+        $num_documento;
+        $num_presupuesto_id;
+
+        $data_request = Yii::$app->request->post();
+        $num_presupuesto_id = $data_request['presupuesto_id'];
+        $fecha_documento = $data_request['fecha_documento'];
+        $num_documento = $data_request['numero_documento'];
+        $model = $this->findModel($num_presupuesto_id);
+        $modelItems = $model['presupuestoitems'];
+        $fModel = new Pedidocliente();
+        $fModel->pedido_num = $num_documento;
+        $fModel->pedido_fecha = $fecha_documento;
+        $fModel->facturador_id = $model->facturador_id;
+        $fModel->cliente_id = $model->cliente_id;
+        $fModel->pedido_rate_descuento = $model->presupuesto_rate_descuento;
+        $fModel->pedido_rate_iva = 21;
+        $fModel->pedido_rate_irpf = $model->presupuesto_rate_irpf;
+        $fModel->forma_pago = $model->forma_pago;
+        //$fModel->presupuesto_cta = $model['cliente']['identidad_cta'];
+        $fModel->save();
+
+        foreach ($modelItems as $pedidoItems) {
+            $fModelItems = new Pedidoitemcliente();
+            $fModelItems->pedido_num = $num_documento;
+            $fModelItems->item_cantidad = $pedidoItems->item_cantidad;
+            $fModelItems->item_descripcion = $pedidoItems->item_descripcion;
+            $fModelItems->item_precio = $pedidoItems->item_precio;
+            $fModelItems->save();
+            
+        $this->redirect('@web/pedidocliente/index');
+        }   
+        
     }
 }

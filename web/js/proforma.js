@@ -103,7 +103,7 @@ function borrar(item){
         var new_input_cantidad = $('<input>', {
             'type'  : 'text',
             'id'    : 'item_cantidad_' + item_order,
-            'name'  : 'FacturaItem[' + item_order + '][item_cantidad]',
+            'name'  : 'ProformaItem[' + item_order + '][item_cantidad]',
             'class' : 'form-control text-right',
             'value' : '0.00'
         });
@@ -114,7 +114,7 @@ function borrar(item){
 
         var new_textarea = $('<textarea>', {
             'id' : 'item_descripcion_' + item_order,
-            'name' : 'FacturaItem[' + item_order + '][item_descripcion]',
+            'name' : 'ProformaItem[' + item_order + '][item_descripcion]',
             'class' : 'form-control',
         });
 
@@ -125,7 +125,7 @@ function borrar(item){
         var new_input_precio = $('<input>', {
             'type'  : 'text',
             'id'    : 'item_precio_' + item_order,
-            'name'  : 'FacturaItem[' + item_order + '][item_precio]',
+            'name'  : 'ProformaItem[' + item_order + '][item_precio]',
             'class' : 'form-control text-right',
             'value' : '0.00'
         });
@@ -149,7 +149,7 @@ function borrar(item){
          var new_input_proforma_item_num = $('<input>', {
             'type'  : 'hidden',
             'id'    : 'proforma_item_num_' + item_order,
-            'name'  : 'FacturaItem[' + item_order + '][proforma_num]',
+            'name'  : 'ProformaItem[' + item_order + '][proforma_num]',
         });
 
         var new_div_delete_line = $('<div/>', {

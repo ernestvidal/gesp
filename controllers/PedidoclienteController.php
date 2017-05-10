@@ -6,6 +6,8 @@ use Yii;
 use app\models\Pedidocliente;
 use app\models\Pedidoitemcliente;
 use app\models\PedidoclienteSearch;
+use app\models\Albaran;
+use app\models\Albaranitem;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -40,7 +42,7 @@ class PedidoclienteController extends Controller
     {
        if (isset($pedidos) <> 'pendientes') {
             $model = Pedidocliente::find()
-                    ->where(['pedido_factura_num' => 'pendiente'])
+                    ->where(['pedido_albaran_num' => 'pendiente'])
                     ->orderBy('facturador_id, pedido_num DESC')
                     ->all();
             return $this->render('index', [
@@ -240,13 +242,13 @@ class PedidoclienteController extends Controller
         $fModel->albaran_rate_descuento = $model->pedido_rate_descuento;
         $fModel->albaran_rate_iva = 21;
         $fModel->albaran_rate_irpf = $model->pedido_rate_irpf;
-        $fModel->albaran_forma_pago = ($model['cliente']['identidad_forma_pago'] <> Null) ? $model['cliente']['identidad_forma_pago'] : '';
-        $fModel->albaran_cta = $model['cliente']['identidad_cta'];
+        //$fModel->albaran_forma_pago = ($model['cliente']['identidad_forma_pago'] <> Null) ? $model['cliente']['identidad_forma_pago'] : '';
+        //$fModel->albaran_cta = $model['cliente']['identidad_cta'];
         $fModel->save();
 
         foreach ($modelItems as $pedidoItems) {
             $fModelItems = new Albaranitem();
-            $fModelItems->pedido_num = $num_documento;
+            $fModelItems->albaran_num = $num_documento;
             $fModelItems->item_cantidad = $pedidoItems->item_cantidad;
             $fModelItems->item_descripcion = $pedidoItems->item_descripcion;
             $fModelItems->item_precio = $pedidoItems->item_precio;
@@ -279,7 +281,7 @@ class PedidoclienteController extends Controller
                 </table> ';
 
         $this->layout = 'viewLayout';
-        $mpdf = new mPDF('UTF-8', 'A4', '', '', 15, 15, 15, 0, '', 5, 'P');
+        $mpdf = new mPDF('UTF-8', 'A4', '', '', 15, 15, 15, 40, '', 5, 'P');
         $mpdf->SetHTMLFooter($footer);
         $mpdf->WriteHTML($this->render('view', ['model' => $this->findModel($id)]));
         $pedidoPdf = $mpdf->Output('pedidocliente.pdf','I');

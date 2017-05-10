@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <div class="panel-body">
                     <div class="grid-view">
-                        <table class="table table-striped table-bordered">
+                        <table class="table table-bordered">
 
                             <thead>
                                 <tr>
@@ -72,7 +72,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                 }
                                 ?>
                             <tbody>
-                                <tr>
+                                <?php if ($model[$i]->factura_fecha_envio == NULL){
+                                    echo "<tr class='bg-danger'>";
+                                }else{
+                                    echo "<tr>";
+                                } ?>
                                     <td><?= Yii::$app->formatter->asDate($model[$i]->factura_fecha, 'php:d-m-Y') ?></td>
                                     <td><?= $model[$i]->factura_num ?></td>
                                     <td><?= Html::a($model[$i]->cliente->identidad_nombre, ['reportfacturascliente', 'id' => $model[$i]->cliente->identidad_id]) ?></td>

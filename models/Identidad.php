@@ -44,7 +44,7 @@ class Identidad extends \yii\db\ActiveRecord {
             ['identidad_nif', 'validarNif'],
             ['identidad_nif', 'unique'],
             ['identidad_cp', 'string', 'max' => 5],
-            [['identidad_phone'], 'string', 'max' => 11],
+            [['identidad_phone', 'identidad_mobile_phone'], 'string', 'max' => 11],
             ['identidad_phone', 'unique'],
             [['identidad_forma_pago', 'identidad_web'], 'string', 'max' => 100],
             [['identidad_role'], 'string']
@@ -135,6 +135,7 @@ class Identidad extends \yii\db\ActiveRecord {
             'identidad_cp' => 'C.Postal',
             'identidad_provincia' => 'Provincia',
             'identidad_phone' => 'Teléfono',
+            'identidad_mobile_phone' => 'Móvil',
             'identidad_role' => 'Role',
             'identidad_cta' => 'Cta.núm.',
             'identidad_web' => 'Web',

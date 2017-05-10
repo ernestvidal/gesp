@@ -19,7 +19,7 @@ class IdentidadSearch extends Identidad
     {
         return [
             [['identidad_id', 'identidad_poblacion'], 'integer'],
-            [['identidad_nombre', 'identidad_direccion', 'identidad_nif', 'identidad_mail', 'identidad_phone', 'identidad_role', 'identidad_persona_contacto'], 'safe'],
+            [['identidad_nombre', 'identidad_direccion', 'identidad_provincia', 'identidad_actividad', 'identidad_web', 'identidad_mail', 'identidad_phone', 'identidad_role', 'identidad_persona_contacto'], 'safe'],
         ];
     }
 

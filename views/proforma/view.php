@@ -66,7 +66,7 @@ use yii\helpers\Html;
             <?php foreach ($modelItems as $items) { ?>
 
                 <tr>
-                    <td class="text-right"><?php
+                    <td class="text-right" style="vertical-align: top"><?php
             if ($items['item_cantidad'] <> 0) {
                 echo (number_format($items['item_cantidad'], 2, ',', '.'));
             }

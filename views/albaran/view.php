@@ -29,7 +29,7 @@ use yii\helpers\Html;
                 <h5><?= $model['cliente']['identidad_cp'] .' '.$model['cliente']['identidad_poblacion'] ?></h5>
                 <h5><?= $model['cliente']['identidad_provincia'] ?></h5>
                 <h5><?= 'Nif. / Cif. ' . $model['cliente']['identidad_nif'] ?></h5>
-                <h5><?= 'Telf.: ' . $model['cliente']['identidad_phone'] ?></h5>
+                <h5><?= 'Telf.: ' . $model['cliente']['identidad_phone'] ?> - <?= $model['cliente']['identidad_mobile_phone'] ?></h5>
             </td>
         </tr>
 

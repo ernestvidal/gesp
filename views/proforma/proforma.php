@@ -50,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div id="cliente" class="col-md-6 well">
                 <div class="col-md-12">
                     <?= $form->field($model, 'cliente_id')->dropDownList(
-                            ArrayHelper::map(Identidad::findAll(['identidad_role' => ['CLIENTE','AMBOS']]), 'identidad_id', 'identidad_nombre'),
+                            ArrayHelper::map(Identidad::findAll(['identidad_role' => ['CLIENTE','CAPTACION']]), 'identidad_id', 'identidad_nombre'),
                             ['prompt'=>'A quien se va a facturar...', 'id'=>'cliente_id', 'class'=>'form-control' ]) ?>
                 </div>
             </div>

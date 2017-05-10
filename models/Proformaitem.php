@@ -45,7 +45,7 @@ class Proformaitem extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'proforma_id' => 'Factura ID',
+            'proforma_id' => '#ID',
             'proforma_num' => 'Factura Num',
             'item_cantidad' => 'Item Cantidad',
             'item_precio' => 'Item Precio',

@@ -36,7 +36,7 @@ class FacturaController extends Controller {
      * @return mixed
      */
     public function actionIndex() {
-        
+
         $model = Factura::find()
                 ->orderBy('facturador_id, factura_num DESC')
                 ->all();
@@ -149,17 +149,17 @@ class FacturaController extends Controller {
              *
              * $data['FacturaItem'][0] = ['factura_num'=>'12ab', 'item_cantidad'=>10,00, 'item_descripcion'=>'holaa', 'item_precio'=>100,00];
              */
-            
-             /**
+
+            /**
              * Cuando queremos añadir un nuevo registro en el escenario de edición o update.
              * Calculamos la diferencia entre los modelos guardados y los modelos editados y la diferencia nos permite saber
              * cuantos modelos nuevos tenemos que crear
              */
             $count = count($data['FacturaItem']);
             $diferencia = $count - $counter_models;
-            if ($diferencia >0){
-                for($i= $counter_models; $i < $diferencia+$counter_models; $i++){
-                     $models[$i] = new FacturaItem();
+            if ($diferencia > 0) {
+                for ($i = $counter_models; $i < $diferencia + $counter_models; $i++) {
+                    $models[$i] = new FacturaItem();
                 }
             }
 
@@ -232,15 +232,15 @@ class FacturaController extends Controller {
                     </tr>
 
               </table> ';
-        
-        
+
+
 
         $this->layout = 'viewLayout';
         $mpdf = new mPDF('UTF-8', 'A4', '', '', 15, 15, 15, 40, '', 5, 'P');
         $mpdf->SetHTMLFooter($footer);
         $mpdf->WriteHTML($this->render('view', ['model' => $this->findModel($id)]));
         $facturaPdf = $mpdf->Output('factura.pdf', 'I');
-        $facturaPdf = $mpdf->Output('../../../mis documentos/portucajabonita/facturas/2017/' . $num .' '.$name . '.pdf','F');
+        $facturaPdf = $mpdf->Output('../../../mis documentos/portucajabonita/facturas/2017/' . $num . ' ' . $name . '.pdf', 'F');
     }
 
     public function actionSendfactura($id) {
@@ -256,38 +256,75 @@ class FacturaController extends Controller {
         $facturaPdf = $mpdf->Output('factura.pdf', 'S');
 
 
+
         $message = Yii::$app->mailer->compose()
-                ->setFrom('ernest@portucajabonita.com')
-                ->setTo($mailto)
-                ->setSubject($asunto)
-                ->setTextBody($body)
-                ->setHtmlBody($body)
-                ->attachContent($facturaPdf, ['fileName' => 'factura.pdf', 'contentType' => 'application/pdf'])
-                ->send();
+        ->setFrom('ernest@portucajabonita.com')
+        ->setTo($mailto)
+        ->setSubject($asunto)
+        ->setTextBody($body)
+        ->setHtmlBody($body)
+        ->attachContent($facturaPdf, ['fileName' => 'factura.pdf', 'contentType' => 'application/pdf'])
+        ->send();
 
         //exit;
+       
 
-        return $this->redirect(['index']);
-    }
+       
+        
+        $subject = "$asunto";
+        $stream = imap_open("{cp193.webempresa.eu/novalidate-cert}INBOX.Sent", "ernest@portucajabonita.com", "ernestprT204249");
+        $boundary = "------=" . md5(uniqid(rand()));
+        $header = "MIME-Version: 1.0\r\n";
+        $header .= "Content-Type: multipart/mixed; boundary=\"$boundary\"\r\n";
+        $header .= "\r\n";
+        //$file = "D:/mis documentos/portucajabonita/facturas/2017/244 JOSE IBORRA E HIJOS.PDF";
+        $file = $facturaPdf;
+        //$filename = "244 JOSE IBORRA E HIJOS.pdf";
+        $filename = $facturaPdf;
+        //$ouv = fopen("$file", "rb");
+        //$lir = fread($ouv, filesize("$file"));
+        $lir = fread($file, filesize("$file"));
+        //fclose($ouv);
+        $attachment = chunk_split(base64_encode($lir));
+        $msg2 .= "--$boundary\r\n";
+        $msg2 .= "Content-Transfer-Encoding: base64\r\n";
+        $msg2 .= "Content-Type: application/pdf; name=\"$filename\"\r\n";
+        $msg2 .= "Content-Disposition: attachment; filename=\"$filename\"\r\n";
+        $msg2 .= "\r\n";
+        //$msg2 .= $attachment . "\r\n";
+        $msg2 .= "\r\n\r\n";
+        $cuerpo .= "--$boundary\r\n";
+        $cuerpo .= "Content-Type: text/html;\r\n\tcharset=\"ISO-8859-1\"\r\n";
+        $cuerpo .= "Content-Transfer-Encoding: 8bit \r\n";
+        $cuerpo .= "\r\n\r\n";
+        $cuerpo .= "$body\r\n";
+        $cuerpo .= "\r\n\r\n";
+        $msg3 .= "--$boundary--\r\n";
+        imap_append($stream, "{cp193.webempresa.eu/novalidate-cert}INBOX.Sent", "From: ernest@portucajabonita.com\r\n" . "To: ernestvidal@hotmail.es\r\n" . "Subject: $subject\r\n"  . "$header\r\n" . "$cuerpo\r\n" . "$msg2\r\n" . "$msg3\r\n" );
+        imap_close($stream);
+        
 
-    public function actionModalsendfactura($id) {
-        $modelFactura = $this->findModel($id);
+return $this->redirect(['index']);
+}
 
-        $model = Identidad::findOne($modelFactura->cliente_id);
-        return $this->renderAjax('modalSendFactura', [
-                    'model' => $model,
-                    'numFactura' => $id,
-        ]);
-    }
+public function actionModalsendfactura($id) {
+$modelFactura = $this->findModel($id);
 
-    public function actionReportfacturascliente($id) {
-        $model = Factura::find()
-                ->where (['cliente_id'=> $id])
-                ->orderBy('factura_fecha ASC')
-                ->all();
-        return $this->render('reportFacturasCliente', [
-                    'model' => $model
-        ]);
-    }
+$model = Identidad::findOne($modelFactura->cliente_id);
+return $this->renderAjax('modalSendFactura', [
+'model' => $model,
+'numFactura' => $id,
+]);
+}
+
+public function actionReportfacturascliente($id) {
+$model = Factura::find()
+->where (['cliente_id'=> $id])
+->orderBy('factura_fecha ASC')
+->all();
+return $this->render('reportFacturasCliente', [
+'model' => $model
+]);
+}
 
 }

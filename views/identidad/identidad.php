@@ -68,11 +68,14 @@ use yii\helpers\Url;
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                         <?= $form->field($model, 'identidad_nif')->textInput(['maxlength' => true]) ?>
                     </div>
-                    <div class="col-lg-6">
+                     <div class="col-lg-4">
                         <?= $form->field($model, 'identidad_phone')->textInput(['maxlength' => true]) ?>
+                    </div>
+                    <div class="col-lg-4">
+                        <?= $form->field($model, 'identidad_mobile_phone')->textInput(['maxlength' => true]) ?>
                     </div>
 
                 </div>
@@ -138,7 +141,7 @@ use yii\helpers\Url;
                                 </div>
                             </div>
                             <div class="form-group">
-                                <?= Html::a('Update', ['update', 'id' => $cargo['cargo_id']], ['class' => 'btn btn-primary']) ?>
+                                <?= Html::a('Update', ['cargo/update', 'id' => $cargo['cargo_id']], ['class' => 'btn btn-primary']) ?>
                                 <?= Html::a('Delete', ['delete', 'id' => $cargo['cargo_id']], ['class' => 'btn btn-danger']) ?>
                             </div>
                             <?php ActiveForm::end(); ?>
@@ -154,7 +157,7 @@ use yii\helpers\Url;
                                                 'data-toggle' => 'modal',
                                                 'data-target' => '#modal',
                                                 'data-url' => Url::to(['cargo/create']),
-                                                'data-pjax' => '0',])
+                                                'data-pjax' => '1',])
                    ?>
                 </div>
             </div>
@@ -168,7 +171,7 @@ use yii\helpers\Url;
             $.get(
                 $(this).data('url'),
                 function (data) {
-                    $('.modal-body').html(data);
+                    $('#modalContent').html(data);
                     $('#modal').modal();
                 }
             );

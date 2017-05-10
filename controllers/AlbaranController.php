@@ -234,6 +234,9 @@ class AlbaranController extends Controller {
         $mpdf->WriteHTML($this->render('view', ['model' => $this->findModel($id)]));
         $albaranPdf = $mpdf->Output('albaran.pdf', 'I');
         $albaranPdf = $mpdf->Output('../../../mis documentos/portucajabonita/albaranes/2017/' . $num .' '.$name . '.pdf','F');
+      
+        
+     
     }
 
     public function actionSendalbaran($id) {
@@ -259,6 +262,9 @@ class AlbaranController extends Controller {
                 ->send();
 
         //exit;
+        
+         
+
 
         return $this->redirect(['index']);
     }

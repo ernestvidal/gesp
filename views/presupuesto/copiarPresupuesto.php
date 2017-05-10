@@ -18,7 +18,10 @@ use yii\bootstrap\ActiveForm;
         if($documento_destino == 'presupuesto')
         {
             $action = '@web/presupuesto/copiar/';
-        }
+        } elseif ($documento_destino == 'pedidoCliente') {
+            $action = '@web/presupuesto/copytoorder/';
+        
+}
         $form = ActiveForm::begin([
                     'id' => 'mailRecipient-form',
                     'action' => $action
