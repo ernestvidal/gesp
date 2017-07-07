@@ -22,11 +22,14 @@ $this->params['breadcrumbs'][] = $this->title;
             Yii::$app->formatter->asNtext('item_id'),
             'item_descripcion',
             'item_referencia',
+            'item_referencia_cliente',
             'item_modelo',
             'item_size',
+            'item_acabado',
+            'item_material',
             'item_identidad_id',
             array(
-                'label'=>'username',
+                'label'=>'cliente',
                 'value'=>$model['itemIdentidad']['identidad_nombre'],
                 ),
 

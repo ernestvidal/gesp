@@ -42,7 +42,7 @@ class Albaran extends \yii\db\ActiveRecord
             [['facturador_id', 'cliente_id'], 'integer'],
             [['albaran_fecha'], 'safe'],
             [['albaran_rate_descuento', 'albaran_rate_iva', 'albaran_rate_irpf'], 'number'],
-            [['albaran_num','albaran_factura_num'], 'string', 'max' => 20],
+            [['albaran_num','albaran_factura_num','albaran_pedido_cliente_num'], 'string', 'max' => 20],
             [['forma_pago', 'albaran_validez', 'albaran_plazo_entrega', 'albaran_free_one', 'albaran_free_two'], 'string', 'max' => 50],
             [['albaran_free_one', 'albaran_free_two'], 'string', 'max' => 100],
             [['albaran_num'], 'unique'],

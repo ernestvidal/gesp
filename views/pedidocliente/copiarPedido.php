@@ -36,8 +36,10 @@ use app\models\Albaran;
                 ])
             ?>
             <br />
-            <?= Html::input('date', 'fecha_documento', '', ['class' => 'form-control']) ?>
+            <?= Html::input('date', 'fecha_documento', Yii::$app->formatter->asDate('now', 'yyyy-MM-dd'), ['class' => 'form-control']) ?>
 
+            <br />
+            <?= Html::radioList('tipo_entrega', 'T', $items=['T'=>'Entrega total ', 'P'=>'Entrega parcial'], $options=['class'=> 'form-control']) ?>
             <br />
             <?= Html::Input('hidden','pedido_id', $numPedido) ?>
             <?= Html::Input('hidden','documento_destino', $documento_destino) ?>

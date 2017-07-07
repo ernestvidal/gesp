@@ -9,11 +9,15 @@ use Yii;
  *
  * @property string $item_id
  * @property string $item_descripcion
+ * @property string $item_long_descripcion
  * @property string $item_referencia
  * @property string $item_modelo
+ * @property string $item_referencia_cliente
  * @property string $item_size
+ * @property string $item_material
+ * @property string $item_acabado
  * @property string $item_identidad_id
- *
+ * @property string $item_url_imagen
  * @property Identidad $itemIdentidad
  */
 class Item extends \yii\db\ActiveRecord
@@ -32,11 +36,11 @@ class Item extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['item_descripcion','item_identidad_id'], 'required'],
+            [['item_descripcion', 'item_identidad_id'], 'required'],
             [['item_identidad_id'], 'integer'],
-            [['item_descripcion'], 'string', 'max' => 250],
+            [['item_descripcion', 'item_long_descripcion', 'item_material', 'item_acabado'], 'string', 'max' => 250],
             [['item_referencia'], 'string', 'max' => 30],
-            [['item_modelo'], 'string', 'max' => 50],
+            [['item_modelo', 'item_referencia_cliente', 'item_url_imagen'], 'string', 'max' => 50],
             [['item_size'], 'string', 'max' => 25],
             [['item_referencia'], 'unique'],
             [['item_identidad_id'], 'exist', 'skipOnError' => true, 'targetClass' => Identidad::className(), 'targetAttribute' => ['item_identidad_id' => 'identidad_id']],
@@ -51,10 +55,14 @@ class Item extends \yii\db\ActiveRecord
         return [
             'item_id' => '#ID',
             'item_descripcion' => 'Descripcion',
+            'item_long_descripcion' => 'Item Long Descripcion',
             'item_referencia' => 'Referencia',
             'item_modelo' => 'Modelo',
+            'item_referencia_cliente' => 'Referencia Cliente',
             'item_size' => 'Tamaño',
-            'item_identidad_id' => 'Item Identidad ID',
+            'item_material' => 'Material',
+            'item_acabado' => 'Acabado',
+            'item_identidad_id' => 'Identidad ID',
         ];
     }
 
@@ -64,14 +72,5 @@ class Item extends \yii\db\ActiveRecord
     public function getItemIdentidad()
     {
         return $this->hasOne(Identidad::className(), ['identidad_id' => 'item_identidad_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return ItemQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new ItemQuery(get_called_class());
     }
 }

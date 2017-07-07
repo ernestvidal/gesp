@@ -56,13 +56,13 @@ function borrar(item){
 
                     var cantidad = parseFloat($("#item_cantidad_" + i).val());
                     var precio = parseFloat($("#item_precio_" + i).val());
-                    var total_linea = parseFloat(cantidad * precio);
+                    var total_linea = parseFloat(cantidad * precio).toFixed(2);
                     var factura_num = $('#factura_num').val();
-                    $("#item_total_" + i).val(total_linea.toFixed(2));
+                    $("#item_total_" + i).val(total_linea);
                     //$('#item_cantidad_' + i).val(cantidad);
                     //$('#item_precio_' + i).val(precio);
                     $('#factura_item_num_' + i).val(factura_num);
-                    subtotal += (total_linea);
+                    subtotal += parseFloat((total_linea));
                     $('#factura_subtotal').val(subtotal.toFixed(2));
                     importe_dto = ((parseFloat($('#factura_subtotal').val()) * (parseFloat($('#factura_rate_descuento').val()) / 100))).toFixed(2);
                     base_imponible = subtotal - importe_dto;
@@ -71,8 +71,9 @@ function borrar(item){
                     $('#factura_importe_descuento').val(importe_dto);
                     $('#factura_importe_iva').val(parseFloat(importe_iva).toFixed(2));
                     $('#factura_importe_irpf').val(((parseFloat($('#factura_base_imponible').val()) * (parseFloat($('#factura_rate_irpf').val()) / 100)) * -1).toFixed(2));
-                    $('#factura_total').val(parseFloat((base_imponible) + parseFloat($('#factura_importe_iva').val()) + parseFloat($('#factura_importe_irpf').val())).toFixed(2));
-            });
+                    //$('#factura_total').val(parseFloat((base_imponible).toFixed(2) + parseFloat($('#factura_importe_iva').val().toFixed(2)) + parseFloat($('#factura_importe_irpf').val())).toFixed(2));
+                    $('#factura_total').val((parseFloat($('#factura_base_imponible').val()) + parseFloat($('#factura_importe_iva').val()) + parseFloat($('#factura_importe_irpf').val())).toFixed(2));
+                });
         //});
     });
 

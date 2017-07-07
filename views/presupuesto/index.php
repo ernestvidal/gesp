@@ -23,7 +23,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     </span>
                     <span>
                         <?= Html::a('2016', ['index', 'year' => 2016]) ?>
+                        /
                     </span>
+                    <span>
+                    	<?= Html::a('Create', ['create']) ?>
+                    	</span>
                 </div>
                 <div class="panel-body">
                     <div class="grid-view">

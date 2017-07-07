@@ -42,7 +42,7 @@ class Factura extends \yii\db\ActiveRecord
             [['factura_num', 'facturador_id', 'cliente_id', 'factura_fecha', 'factura_rate_descuento', 'factura_rate_iva', 'factura_rate_irpf'], 'required'],
             [['facturador_id', 'cliente_id'], 'integer'],
             [['factura_fecha','factura_fecha_envio', 'factura_vto', 'factura_vto_dos'], 'safe'],
-            [['factura_rate_descuento', 'factura_rate_iva', 'factura_rate_irpf', 'factura_vto_importe', 'factura_vto_dos_importe'], 'number'],
+            [['factura_rate_descuento', 'factura_rate_iva', 'factura_rate_recargo_equivalencia', 'factura_rate_irpf', 'factura_vto_importe', 'factura_vto_dos_importe'], 'number'],
             [['factura_num'], 'string', 'max' => 20],
             [['forma_pago'], 'string', 'max' => 50],
             [['factura_cta'], 'string', 'max' => 100],

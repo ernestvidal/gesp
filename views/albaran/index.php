@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <th>T.factura</th>
                                     <th></th>
                                     <th></th>
-                                    <th></th>
+                                  
                                     <th></th>
                                     <th></th>
                                     <th></th>
@@ -86,7 +86,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <td class="text-right"><?= $model[$i]->albaran_rate_irpf ?></td>
                                         <td class="text-right"><?= Yii::$app->formatter->asDecimal($totalIrpf, 2) ?></td>
                                         <td class="text-right"><?= Yii::$app->formatter->asDecimal($totalAlbaran, 2) ?></td>
-                                        <td><?= Html::a('<i class="glyphicon glyphicon-eye-open"></i>', ['view', 'id' => $model[$i]->albaran_id], ['title' => 'ver']) ?></td>
+                                        
                                         <td><?= Html::a('<i class="glyphicon glyphicon-pencil"></i>', ['update', 'id' => $model[$i]->albaran_id],['title' => 'editar']) ?></td>
                                         <td><?= Html::a('<i class="glyphicon glyphicon-print"></i>', ['printalbaran',
                                             'id' => $model[$i]->albaran_id,

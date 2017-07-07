@@ -226,17 +226,20 @@ class PedidoclienteController extends Controller
         $fecha_documento;
         $num_documento;
         $num_pedido_id;
+        $tipo_entrega;
 
         $data_request = Yii::$app->request->post();
         $num_pedido_id = $data_request['pedido_id'];
         $fecha_documento = $data_request['fecha_documento'];
         $num_documento = $data_request['numero_documento'];
+        $tipo_entrega = $data_request['tipo_entrega'];
         $model = $this->findModel($num_pedido_id);
         $model->pedido_albaran_num = $num_documento;
         $modelItems = $model['pedidoitemclientes'];
         $fModel = new Albaran();
         $fModel->albaran_num = $num_documento;
         $fModel->albaran_fecha = $fecha_documento;
+        $fModel->albaran_pedido_cliente_num = $model->pedido_cliente_num;
         $fModel->facturador_id = $model->facturador_id;
         $fModel->cliente_id = $model->cliente_id;
         $fModel->albaran_rate_descuento = $model->pedido_rate_descuento;

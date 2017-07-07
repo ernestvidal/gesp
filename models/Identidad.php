@@ -32,7 +32,7 @@ class Identidad extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-            [['identidad_nombre', 'identidad_poblacion', 'identidad_mail', 'identidad_forma_pago',
+            [['identidad_nombre', 'identidad_poblacion', 'identidad_mail', 'identidad_mail_facturas', 'identidad_forma_pago',
             'identidad_provincia',
             'identidad_cta',
             'identidad_persona_contacto',

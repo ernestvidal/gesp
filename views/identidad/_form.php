@@ -56,11 +56,14 @@ use app\models\Identidad;
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-4">
             <?= $form->field($model, 'identidad_nif')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-4">
             <?= $form->field($model, 'identidad_phone')->textInput(['maxlength' => true]) ?>
+        </div>
+         <div class="col-lg-4">
+            <?= $form->field($model, 'identidad_mobile_phone')->textInput(['maxlength' => true]) ?>
         </div>
 
     </div>

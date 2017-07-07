@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use yii\helpers\Url;
 
 
 ?>
@@ -18,7 +19,8 @@ use yii\bootstrap\ActiveForm;
 
             <?php $form = ActiveForm::begin([
                 'id' => 'mailRecipient-form',
-                'action' =>'@web/factura/sendfactura/' . $numFactura
+                //'action' =>'@web/factura/sendfactura/'.$idFactura
+                'action' => Url::to(['factura/sendfactura', 'id'=>$idFactura, 'num'=>$numFactura, 'name'=>$name])
                 ]); ?>
 
                 <?= $form->field($model, 'mail')->textInput(['value'=>$model->identidad_mail, 'size'=>'250']) ?>

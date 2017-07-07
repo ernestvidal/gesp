@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use app\models\Factura;
 
 
 ?>
@@ -19,11 +20,11 @@ use yii\bootstrap\ActiveForm;
                 'action' =>'@web/albaran/facturar/'
                 ]); ?>
 
-                <?= Html::textInput('num_factura','',[
+                <?= Html::textInput('num_factura',  Factura::find()->max('factura_num')+1,[
                     'class'=>'form-control',
                     'placeholder' => 'Introducir número de factura' ]) ?>
                 <br />
-                <?= Html::Input('date','fecha_factura', '',[
+                <?= Html::Input('date','fecha_factura', Yii::$app->formatter->asDate('now', 'yyyy-MM-dd'),[
                     'class'=>'form-control']) ?>
                 <br />
                 

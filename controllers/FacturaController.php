@@ -6,14 +6,14 @@ use Yii;
 use mPDF;
 use app\models\Factura;
 use app\models\Facturaitem;
-// use app\models\FacturaItem;
 use app\models\Identidad;
-use app\models\FacturaSearch;
-use yii\helpers\VarDumper;
+//use app\models\FacturaSearch;
+//use yii\helpers\VarDumper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\base\Model;
+use yii\bootstrap\Alert;
 
 /**
  * FacturaController implements the CRUD actions for Factura model.
@@ -125,17 +125,6 @@ class FacturaController extends Controller {
      * @return mixed
      */
     public function actionUpdate($id) {
-        /* Código original acción update
-
-          $model = $this->findModel($id);
-          if ($model->load(Yii::$app->request->post()) && $model->save()) {
-          return $this->redirect(['view', 'id' => $model->factura_id]);
-          } else {
-          return $this->render('update', [
-          'model' => $model,
-          ]);
-          }
-         */
 
         $model = $this->findModel($id);
         $models = $model['facturaitems'];
@@ -243,7 +232,7 @@ class FacturaController extends Controller {
         $facturaPdf = $mpdf->Output('../../../mis documentos/portucajabonita/facturas/2017/' . $num . ' ' . $name . '.pdf', 'F');
     }
 
-    public function actionSendfactura($id) {
+    public function actionSendfactura($id, $num, $name) {
         // Recogemos los datos enviados desde modalSendFactura form.
         $datosmodel = Yii::$app->request->post();
         $mailto = $datosmodel['Identidad']['mail'];
@@ -253,78 +242,99 @@ class FacturaController extends Controller {
         $this->layout = 'viewLayout';
         $mpdf = new mPDF('UTF-8', 'A4', '', '', 10, 10, 20, 20, '', '', 'P');
         $mpdf->WriteHTML($this->render('view', ['model' => $this->findModel($id)]));
-        $facturaPdf = $mpdf->Output('factura.pdf', 'S');
+        $facturaPdf = $mpdf->Output('../../../mis documentos/portucajabonita/facturas/2017/' . $num . ' ' . $name .'.pdf', 'S');
 
-
+        
 
         $message = Yii::$app->mailer->compose()
-        ->setFrom('ernest@portucajabonita.com')
-        ->setTo($mailto)
-        ->setSubject($asunto)
-        ->setTextBody($body)
-        ->setHtmlBody($body)
-        ->attachContent($facturaPdf, ['fileName' => 'factura.pdf', 'contentType' => 'application/pdf'])
-        ->send();
-
-        //exit;
+                ->setFrom('ernest@portucajabonita.com')
+                ->setTo($mailto)
+                ->setSubject($asunto)
+                ->setTextBody($body)
+                ->setHtmlBody($body)
+                ->attachContent($facturaPdf, ['fileName' => $num . ' ' . $name .'.pdf', 'contentType' => 'application/pdf']);
+                //->send();
+        $result = Yii::$app->mailer->send($message);
+        
+           
+        
        
 
-       
+        //En el  paso anterior generamos el pdf que aduntamos al correo y enviamos al cliente. En dicho paso no se guarda en 
+        //el sistema local de archivos porque al mandarlo como adjunto, lo manda como si fuese un fichero vacio. Por eso en este paso
+        //en el cual nos auto enviamos el correo a nuestra bandeja de saida para tener una copia de los mails enviados y dado 
+        //que en el paso anterior, no hemos guardado el pdf, lo volvemos a generar y lo adjuntamos de nuevo. De momento es lo 
+        //que me funciona.
         
-        $subject = "$asunto";
-        $stream = imap_open("{cp193.webempresa.eu/novalidate-cert}INBOX.Sent", "ernest@portucajabonita.com", "ernestprT204249");
-        $boundary = "------=" . md5(uniqid(rand()));
-        $header = "MIME-Version: 1.0\r\n";
-        $header .= "Content-Type: multipart/mixed; boundary=\"$boundary\"\r\n";
-        $header .= "\r\n";
-        //$file = "D:/mis documentos/portucajabonita/facturas/2017/244 JOSE IBORRA E HIJOS.PDF";
-        $file = $facturaPdf;
-        //$filename = "244 JOSE IBORRA E HIJOS.pdf";
-        $filename = $facturaPdf;
-        //$ouv = fopen("$file", "rb");
-        //$lir = fread($ouv, filesize("$file"));
-        $lir = fread($file, filesize("$file"));
-        //fclose($ouv);
-        $attachment = chunk_split(base64_encode($lir));
-        $msg2 .= "--$boundary\r\n";
-        $msg2 .= "Content-Transfer-Encoding: base64\r\n";
-        $msg2 .= "Content-Type: application/pdf; name=\"$filename\"\r\n";
-        $msg2 .= "Content-Disposition: attachment; filename=\"$filename\"\r\n";
-        $msg2 .= "\r\n";
-        //$msg2 .= $attachment . "\r\n";
-        $msg2 .= "\r\n\r\n";
-        $cuerpo .= "--$boundary\r\n";
-        $cuerpo .= "Content-Type: text/html;\r\n\tcharset=\"ISO-8859-1\"\r\n";
-        $cuerpo .= "Content-Transfer-Encoding: 8bit \r\n";
-        $cuerpo .= "\r\n\r\n";
-        $cuerpo .= "$body\r\n";
-        $cuerpo .= "\r\n\r\n";
-        $msg3 .= "--$boundary--\r\n";
-        imap_append($stream, "{cp193.webempresa.eu/novalidate-cert}INBOX.Sent", "From: ernest@portucajabonita.com\r\n" . "To: ernestvidal@hotmail.es\r\n" . "Subject: $subject\r\n"  . "$header\r\n" . "$cuerpo\r\n" . "$msg2\r\n" . "$msg3\r\n" );
-        imap_close($stream);
-        
+        if ($result == TRUE){
+               
+            $confirmationFrom = 'ernest@portucajabonita.com';
+            $facturaPdf = $mpdf->Output('../../../mis documentos/portucajabonita/facturas/2017/' . $num . ' ' . $name .'.pdf', 'F');
+            $subject = "$asunto";
+            $stream = imap_open("{cp193.webempresa.eu/novalidate-cert}INBOX.Sent", "ernest@portucajabonita.com", "ernestprT204249");
+            $boundary = "------=" . md5(uniqid(rand()));
+            $header = "MIME-Version: 1.0\r\n";
+            $header .= "Content-Type: multipart/mixed; boundary=\"$boundary\"\r\n";
+            $header .= "Disposition-Notification-To: $confirmationFrom\r\n"; 
+            $header .= "X-Confirm-Reading-To: $confirmationFrom\r\n"; 
+            $header .= "Read-Receipt-To: $confirmationFrom\r\n";
+            $header .= "\r\n";
+            $file = "../../../mis documentos/portucajabonita/facturas/2017/". $num ." ". $name .".pdf";
+            $filename = $num . " " . $name .".pdf";
+            $ouv = fopen("$file", "rb");
+            $lir = fread($ouv, filesize("$file"));
+            fclose($ouv);
+            $attachment = chunk_split(base64_encode($lir));
+            $msg2 .= "--$boundary\r\n";
+            $msg2 .= "Content-Transfer-Encoding: base64\r\n";
+            $msg2 .= "Content-Type: application/pdf; name=\"$filename\"\r\n";
+            $msg2 .= "Content-Disposition: attachment; filename=\"$filename\"\r\n";
+            $msg2 .= "\r\n";
+            $msg2 .= $attachment . "\r\n";
+            $msg2 .= "\r\n\r\n";
+            $cuerpo .= "--$boundary\r\n";
+            $cuerpo .= "Content-Type: text/html;\r\n\tcharset=\"ISO-8859-1\"\r\n";
+            $cuerpo .= "Content-Transfer-Encoding: 8bit \r\n";
+            $cuerpo .= "\r\n\r\n";
+            $cuerpo .= "$body\r\n";
+            $cuerpo .= "\r\n\r\n";
+            $msg3 .= "--$boundary--\r\n";
+            imap_append($stream, "{cp193.webempresa.eu/novalidate-cert}INBOX.Sent", "From: ernest@portucajabonita.com\r\n" . "To: $mailto\r\n" . "Subject: $subject\r\n" . "$header\r\n" . "$cuerpo\r\n" . "$msg2\r\n" . "$msg3\r\n");
+            imap_close($stream);
 
-return $this->redirect(['index']);
-}
+            // Guardamos en la base de datos la fecha de envío
 
-public function actionModalsendfactura($id) {
-$modelFactura = $this->findModel($id);
+             $model = $this->findModel($id);
+             $model->factura_fecha_envio = Yii::$app->formatter->asDate('now', 'yyyy-MM-dd');
+             $model->save();
 
-$model = Identidad::findOne($modelFactura->cliente_id);
-return $this->renderAjax('modalSendFactura', [
-'model' => $model,
-'numFactura' => $id,
-]);
-}
+            return $this->redirect(['index']);
+        } else {
+            
+             return $this->redirect(['index']);
+        }
+    }
 
-public function actionReportfacturascliente($id) {
-$model = Factura::find()
-->where (['cliente_id'=> $id])
-->orderBy('factura_fecha ASC')
-->all();
-return $this->render('reportFacturasCliente', [
-'model' => $model
-]);
-}
+    public function actionModalsendfactura($id, $num, $name) {
+        $modelFactura = $this->findModel($id);
+
+        $model = Identidad::findOne($modelFactura->cliente_id);
+        return $this->renderAjax('modalSendFactura', [
+                    'model' => $model,
+                    'idFactura' => $id,
+                    'numFactura' => $num,
+                    'name' => $name,
+        ]);
+    }
+
+    public function actionReportfacturascliente($id) {
+        $model = Factura::find()
+                ->where(['cliente_id' => $id])
+                ->orderBy('factura_fecha ASC')
+                ->all();
+        return $this->render('reportFacturasCliente', [
+                    'model' => $model
+        ]);
+    }
 
 }

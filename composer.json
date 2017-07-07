@@ -17,7 +17,7 @@
         "php": ">=5.4.0",
         "yiisoft/yii2": ">=2.0.6",
         "yiisoft/yii2-bootstrap": "*",
-        "yiisoft/yii2-swiftmailer": "*",
+        "yiisoft/yii2-swiftmailer": "^2.0",
         "mpdf/mpdf": "*",
         "kartik-v/yii2-widgets": "*"
 
@@ -55,5 +55,3 @@
         }
     }
 }
-    
-

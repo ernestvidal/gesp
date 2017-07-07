@@ -80,13 +80,13 @@ use yii\helpers\Html;
                         }
                         ?></td>
 
-                    <td class="text-right"><?php
+                    <td class="text-right" style="vertical-align: top" ><?php
                     if ($items['item_precio'] <> 0) {
                         //echo ($items['item_precio']);
                         echo (number_format($items['item_precio'], 4,',','.'));
                     }
                         ?></td>
-                    <td class="text-right"><?php
+                    <td class="text-right" style="vertical-align: top"><?php
                     if ($items['item_cantidad'] <> 0 && $items['item_precio'] <> 0) {
                         echo (number_format($items['item_cantidad'] * $items['item_precio'], 2, ',', '.'));
                       

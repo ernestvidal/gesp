@@ -209,6 +209,9 @@ $form->field($model, 'facturador_id')->dropDownList(
         <div class="row">
             <?= $form->field($model, 'presupuesto_free_two')->textInput(['maxlength' => true, 'id' => 'presupuesto_free_two', 'placeholder' => 'introducir cualquier anotación u observación'])->label(false) ?>
         </div>
+         <div class="row">
+            <?= $form->field($model, 'presupuesto_img')->textInput(['maxlength' => true, 'id' => 'presupuesto_free_two', 'placeholder' => 'ruta imágen'])->label(false) ?>
+        </div>
     </div>
 
 </div>

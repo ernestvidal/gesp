@@ -43,7 +43,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <th></th>
                                     <th></th>
                                     <th></th>
-                                    <th></th>
                                 </tr>
                             </thead>
                             <?php $facturador = $model[0]->facturador->identidad_nombre; ?>
@@ -78,7 +77,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     echo "<tr>";
                                 } ?>
                                     <td><?= Yii::$app->formatter->asDate($model[$i]->factura_fecha, 'php:d-m-Y') ?></td>
-                                    <td><?= $model[$i]->factura_num ?></td>
+                                    <td><?= Html::a($model[$i]->factura_num, ['view', 'id' => $model[$i]->factura_id]) ?></td>
                                     <td><?= Html::a($model[$i]->cliente->identidad_nombre, ['reportfacturascliente', 'id' => $model[$i]->cliente->identidad_id]) ?></td>
                                     <td class="text-right"><?= Yii::$app->formatter->asDecimal($baseImponible, 2); ?></td>
                                     <td class="text-right"><?= $model[$i]->factura_rate_iva ?> %</td>
@@ -88,7 +87,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <td class="text-right"><?= $model[$i]->factura_rate_descuento ?> %</td>
                                     <td class="text-right"><?= Yii::$app->formatter->asDecimal($totalDto, 2) ?></td>
                                     <td class="text-right"><?= Yii::$app->formatter->asDecimal($totalFactura, 2); ?></td>
-                                    <td><?= Html::a('<i class="glyphicon glyphicon-eye-open"></i>', ['view', 'id' => $model[$i]->factura_id]) ?></td>
+                                   
                                     <td><?= Html::a('<i class="glyphicon glyphicon-pencil"></i>', ['update', 'id' => $model[$i]->factura_id]) ?></td>
                                     <td><?= Html::a('<i class="glyphicon glyphicon-print"></i>', ['printfactura',
                                         'id' => $model[$i]->factura_id,
@@ -101,8 +100,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                             //'class' => 'btn btn-success',
                                             //'data-toggle' => 'modal',
                                             //'data-target' => '#modal',
-                                            'data-url' => Url::to(['modalsendfactura', 'id' => $model[$i]->factura_id]),
-                                            'data-pjax' => '0',
+                                            'data-url' => Url::to(['modalsendfactura',
+                                             'id' => $model[$i]->factura_id,
+                                             'num' => $model[$i]->factura_num,
+                                             'name' => $model[$i]->cliente->identidad_nombre,
+                                                ]),
+                                             'data-pjax' => '0',
                                         ]);
                                         ?></td>
                                     <td><?=

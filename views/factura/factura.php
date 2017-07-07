@@ -195,9 +195,9 @@ $form->field($model, 'cliente_id')->dropDownList(
                     ?>
                 </div>
             </div>
-            <div class="col-md-5 col-md-offset-7">
+             <div class="col-md-5 col-md-offset-7">
                 <div class="col-md-4">
-                    <label for="factura_rate_irpf">IRPF %</label>
+                    <label for="factura_rate_iva">IRPF %</label>
                 </div>
                 <div class="col-md-3">
                     <?= $form->field($model, 'factura_rate_irpf')->textInput(['maxlength' => true, 'value' => '0.00', 'id' => 'factura_rate_irpf'])->label(false) ?>
@@ -212,6 +212,27 @@ $form->field($model, 'cliente_id')->dropDownList(
                     ?>
                 </div>
             </div>
+            <?php
+                if ($model->factura_rate_recargo_equivalencia > 1){
+            ?>
+            <div class="col-md-5 col-md-offset-7">
+                <div class="col-md-4">
+                    <label for="factura_rate_recargo_equivalencia">R.E. %</label>
+                </div>
+                <div class="col-md-3">
+                    <?= $form->field($model, 'factura_rate_recargo_equivalencia')->textInput(['maxlength' => true, 'value' => '0.00', 'id' => 'factura_rate_recargo_equivalencia'])->label(false) ?>
+                </div>
+                <div class="col-md-5">
+                    <?=
+                    Html::textInput('factura_importe_recargo_equivalencia', '0.00', [
+                        'class' => 'form-control text-right',
+                        'id' => 'factura_importe_recargo_equivalencia',
+                        'readonly' => true]
+                    )
+                    ?>
+                </div>
+            </div>
+                <?php } ?>
             <div class="col-md-5 col-md-offset-7">
                 <div class="col-md-4">
                     <label for="factura_total">Total factura</label>

@@ -76,12 +76,7 @@ AppAsset::register($this);
         'items' => [
            
             ['label' => 'Identidades', 'url' => ['/identidad/index']],
-            ['label' => 'Presupuestos',
-              'items' => [
-                ['label' => 'Listado', 'url' => ['/presupuesto/index']],
-                ['label' => 'Nuevo', 'url' => ['/presupuesto/create']],
-              ],
-            ],
+            ['label' => 'Presupuestos','url' => ['/presupuesto/index']],
             ['label' => 'Pedidos',
               'items' => [
                 ['label' => 'Listado', 'url' => ['/pedido/index']],

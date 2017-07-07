@@ -24,7 +24,7 @@ use yii\helpers\Html;
                 <h4>Factura a:</h4>
                 <?php
                 if (!empty($model['cliente']['identidad_razon_social'])) {
-                    echo $model['cliente']['identidad_razon_social'];
+                    echo '<h4><strong>'.$model['cliente']['identidad_razon_social'].'</strong></h4>';
                 } else {
                     echo $model['cliente']['identidad_nombre'];
                 }
@@ -50,10 +50,10 @@ use yii\helpers\Html;
     <table id="content" class="table table-bordered">
         <thead>
             <tr>
-                <th class="text-center" style="width: 12%">cantidad</th>
+                <th class="text-center" style="width: 16%">cantidad</th>
                 <th class="text-center" style="width: 52%">descripción</th>
-                <th class="text-center" style="width: 18%">precio</th>
-                <th class="text-center" style="width: 18%">total</th>
+                <th class="text-center" style="width: 16%">precio</th>
+                <th class="text-center" style="width: 16%">total</th>
             </tr>
         </thead>
         <tbody>
@@ -65,7 +65,7 @@ use yii\helpers\Html;
             <?php foreach ($modelItems as $items) { ?>
 
                 <tr>
-                    <td class="text-right"><?php
+                    <td class="text-right" style="vertical-align: top"><?php
                         if ($items['item_cantidad'] <> 0) {
                             echo (number_format($items['item_cantidad'], 2, ',', '.'));
                         }
@@ -79,13 +79,13 @@ use yii\helpers\Html;
                         }
                         ?></td>
 
-                    <td class="text-right"><?php
+                    <td class="text-right" style="vertical-align: top"><?php
                         if ($items['item_precio'] <> 0) {
                             echo (number_format($items['item_precio'], 5, ',', '.'));
                             ;
                         }
                         ?></td>
-                    <td class="text-right"><?php
+                    <td class="text-right" style="vertical-align: top"><?php
                         if ($items['item_cantidad'] <> 0 && $items['item_precio'] <> 0) {
                             echo (number_format($items['item_cantidad'] * $items['item_precio'], 2, ',', '.'));
                         }
@@ -100,6 +100,7 @@ use yii\helpers\Html;
             $importe_descuento = $total * ($model['factura_rate_descuento'] / 100);
             $base_imponible = $total - $importe_descuento;
             $importe_iva = $base_imponible * ($model['factura_rate_iva'] / 100);
+            $importe_recargo_equivalencia = $base_imponible * ($model['factura_rate_recargo_equivalencia'] / 100);
             $importe_irpf = $base_imponible * ($model['factura_rate_irpf'] / 100);
             ?>
             <tr>
@@ -141,6 +142,15 @@ use yii\helpers\Html;
             <td style="width: 25%; padding: 5px">Iva<?= " " . $model['factura_rate_iva'] . "%"; ?></td>
             <td style="width: 16%; padding: 5px" class="text-right"><?= number_format($importe_iva, 2, ',', '.') ?></td>
         </tr>
+        
+        <?php if ($model['factura_rate_recargo_equivalencia'] <> 0) { ?>
+            <tr>
+                <td style="border-color: white; width: 29%"></td>
+                <td style="border-bottom-color: white; border-top-color: white; width: 30%"></td>
+                <td style="width: 25%; padding: 5px">R.E.<?= " " . $model['factura_rate_recargo_equivalencia'] . "%"; ?></td>
+                <td style="width: 16%; padding: 5px" class="text-right"><?= number_format($importe_recargo_equivalencia, 2, ',', '.') ?></td>
+            </tr>
+<?php } ?>
 
 <?php if ($model['factura_rate_irpf'] <> 0) { ?>
             <tr>
@@ -154,7 +164,7 @@ use yii\helpers\Html;
             <td style="border-color: white; width: 29%"></td>
             <td style="border-bottom-color: white; border-top-color: white; width: 30%"></td>
             <td style="width: 25%; padding: 5px"><strong>Total Factura</strong></td>
-            <td style="width: 16%; padding: 5px" class="text-right"><strong><?= number_format($base_imponible + $importe_iva - $importe_irpf, 2, ',', '.') ?></strong></td>
+            <td style="width: 16%; padding: 5px" class="text-right"><strong><?= number_format( round($base_imponible,2) + round($importe_iva,2) + round($importe_recargo_equivalencia,2) - round($importe_irpf,2),2,',','.') ?></strong></td>
         </tr>
         </tfoot>
     </table>
