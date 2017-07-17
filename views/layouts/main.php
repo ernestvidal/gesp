@@ -77,27 +77,9 @@ AppAsset::register($this);
             
             ['label' => 'Identidades', 'url' => ['/identidad/index']],
             ['label' => 'Presupuestos','url' => ['/presupuesto/index']],
-            ['label' => 'Clientes',
-              'items' => [
-                ['label' => 'Pedidos', 'url' => ['/pedidocliente/index']],
-              ],
-            ],
-            ['label' => 'Proveedores',
-                'items' => [
-                    ['label' => 'Pedidos',
-                        'items' => [
-                            ['label' => 'Listado', 'url' => ['/pedido/index']],
-                            ['label' => 'Nueva', 'url' => ['/pedido/create']],
-                        ],
-                    ],
-                ],
-            ],
-            ['label' => 'Albaranes',
-              'items' => [
-                ['label' => 'Listado', 'url' => ['/albaran/index']],
-                ['label' => 'Nuevo', 'url' => ['/albaran/create']],
-              ],
-            ],
+            ['label' => 'Clientes','url' => ['/pedidocliente/index']],
+            ['label' => 'Proveedores', 'url' => ['/pedido/index']],
+            ['label' => 'Albaranes', 'url' => ['/albaran/index']],
             ['label' => 'Facturas',
               'items' => [
                 ['label' => 'Listado', 'url' => ['/factura/index']],

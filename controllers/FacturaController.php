@@ -19,7 +19,26 @@ use yii\bootstrap\Alert;
  * FacturaController implements the CRUD actions for Factura model.
  */
 class FacturaController extends Controller {
+    
+    public $footer = ' 
 
+              <table style="width: 100%">
+                  <tr>
+                      <td style="text-align: center">Por tu caja bonita, slu </td>
+                  </tr>
+                  <tr>
+                      <td style="text-align: center">Nou d\'octubre, 11,1 / 46815 La Llosa de Ranes / Valencia</td>
+                  </tr>
+                  <tr><td style="text-align: center">Nif.: B98802622</td></tr>
+                  <tr>
+                      <td style="text-align: center"><h3>96 062 71 32</h3></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: center"><h5>Inscrita en el registro mercantil de Valencia, tomo 10073, Libro 7355, Folio 76, Sección GNE, Hoja 169087</td></h5>
+                    </tr>
+
+              </table> ';
+    
     public function behaviors() {
         return [
             'verbs' => [
@@ -203,36 +222,16 @@ class FacturaController extends Controller {
     }
 
     public function actionPrintfactura($id, $num, $name) {
-        $footer = ' 
-
-              <table style="width: 100%">
-                  <tr>
-                      <td style="text-align: center">Por tu caja bonita, slu </td>
-                  </tr>
-                  <tr>
-                      <td style="text-align: center">Nou d\'octubre, 11,1 / 46815 La Llosa de Ranes / Valencia</td>
-                  </tr>
-                  <tr><td style="text-align: center">Nif.: B98802622</td></tr>
-                  <tr>
-                      <td style="text-align: center"><h3>96 062 71 32</h3></td>
-                  </tr>
-                  <tr>
-                    <td style="text-align: center"><h5>Inscrita en el registro mercantil de Valencia, tomo 10073, Libro 7355, Folio 76, Sección GNE, Hoja 169087</td></h5>
-                    </tr>
-
-              </table> ';
-
-
-
         $this->layout = 'viewLayout';
         $mpdf = new mPDF('UTF-8', 'A4', '', '', 15, 15, 15, 40, '', 5, 'P');
-        $mpdf->SetHTMLFooter($footer);
+        $mpdf->SetHTMLFooter($this->footer);
         $mpdf->WriteHTML($this->render('view', ['model' => $this->findModel($id)]));
         $facturaPdf = $mpdf->Output('factura.pdf', 'I');
         $facturaPdf = $mpdf->Output('../../../mis documentos/portucajabonita/facturas/2017/' . $num . ' ' . $name . '.pdf', 'F');
     }
 
     public function actionSendfactura($id, $num, $name) {
+        
         // Recogemos los datos enviados desde modalSendFactura form.
         $datosmodel = Yii::$app->request->post();
         $mailto = $datosmodel['Identidad']['mail'];
@@ -240,7 +239,8 @@ class FacturaController extends Controller {
         $body = $datosmodel['Identidad']['body'];
 
         $this->layout = 'viewLayout';
-        $mpdf = new mPDF('UTF-8', 'A4', '', '', 10, 10, 20, 20, '', '', 'P');
+        $mpdf = new mPDF('UTF-8', 'A4', '', '', 15, 15, 15, 40, '', 5, 'P');
+        $mpdf->SetHTMLFooter($this->footer);
         $mpdf->WriteHTML($this->render('view', ['model' => $this->findModel($id)]));
         $facturaPdf = $mpdf->Output('../../../mis documentos/portucajabonita/facturas/2017/' . $num . ' ' . $name .'.pdf', 'S');
 

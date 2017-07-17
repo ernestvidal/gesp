@@ -19,6 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <span>Listado pedidos | <?= Html::a('Todos los pedidos', ['index', 'pedidos' => 'todos']) ?> </span>
+                    <span> | <?=Html::a('Nuevo','create')?></span>
                 </div>
                 <div class="panel-body">
                     <div class="grid-view">
@@ -93,7 +94,17 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'num' => $model[$i]->pedido_num,
                                             'name' => $model[$i]->cliente->identidad_nombre]) ?></td>
                                         
-                                        <td><?= Html::a('<i class="glyphicon glyphicon-envelope"></i>', ['modalsendpedido', 'id' => $model[$i]->pedido_id]) ?></td>
+                                        <td><?= Html::a('<i class="glyphicon glyphicon-envelope"></i>','#', [
+                                            'id' => 'send-pedido',
+                                            'data-url' => Url::to(['modalsendpedido',
+                                                
+                                                    'id' => $model[$i]->pedido_id,
+                                                    'num' => $model[$i]->pedido_num,
+                                                    'name' => $model[$i]->cliente->identidad_nombre,
+                                                    
+                                                ]),
+                                            'data-pjax' => '0',])
+                                                ?></td>
                                         <td><?=
                                             Html::a('<i class="glyphicon glyphicon-file"></i>', '#', [
                                                 'id' => 'modal-window',
@@ -147,6 +158,34 @@ $this->params['breadcrumbs'][] = $this->title;
 
         Modal::end();
         ?>
+
+          <?php
+        $this->registerJs(
+                "$(document).on('click', '#send-pedido', (function() {
+            $.get(
+                $(this).data('url'),
+                function (data) {
+                    $('.modal-body').html(data);
+                    $('#modal-send-pedido').modal();
+                }
+            );
+        }));"
+        );
+        ?>
+
+        <?php
+        // Ventana modal para introducir los datos para enviar la pedido por correo
+        Modal::begin([
+            'header' => '<h2>Enviar Pedido</h2>',
+            'id' => 'modal-send-pedido',
+        ]);
+        echo "<div id='modalContent'></div>";
+
+        Modal::end();
+        ?>
+        
+
+       
 
 
     
