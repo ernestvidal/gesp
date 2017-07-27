@@ -34,7 +34,7 @@ use yii\helpers\Url;
         <div class="tab-content col-lg-9">
             <!-- Tab Identidad -->
             <div class="tab-pane active" id="identidad">   
-                <?php $form = ActiveForm::begin();
+                <?php $form = ActiveForm::begin(['enableAjaxValidation'=>TRUE]);
                 ?>
                 <div class="row">
                     <div class="col-lg-12">

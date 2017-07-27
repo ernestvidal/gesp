@@ -97,7 +97,7 @@ function borrar(item){
         });
 
         var new_div_item_cantidad =  $('<div/>', {
-            'class' : 'col-md-2',
+            'class' : 'col-md-1',
         });
 
         var new_input_cantidad = $('<input>', {
@@ -108,9 +108,32 @@ function borrar(item){
             'value' : '0.00'
         });
         
+        $('#item_line').append(new_line_div);
+        $(new_line_div).append(new_div_item_cantidad);
+        $(new_div_item_cantidad).append(new_input_cantidad);
+        
+         var new_div_item_referencia = $('<div/>', {
+            'class' : 'col-md-2',
+        });
+        
+        var new_input_referencia = $('<select/>', {
+            'id'    : 'item_referencia_' + item_order,
+            'name'  : 'PedidoItem[' + item_order + '][item_referencia]',
+            'class' : 'form-control',
+        });
+        
+        
+        var new_input_referencia_options = $('#item_referencia_0 option').clone();
+       
+        
+        $(new_line_div).append(new_div_item_referencia);
+        $(new_div_item_referencia).append(new_input_referencia);
+        $('#item_referencia_' + item_order).append(new_input_referencia_options);
+        
         var new_div_col_5 = $('<div/>', {
             'class' : 'col-md-5',
         });
+        
 
         var new_textarea = $('<textarea>', {
             'id' : 'item_descripcion_' + item_order,
@@ -119,7 +142,7 @@ function borrar(item){
         });
 
         var new_div_item_precio =  $('<div/>', {
-            'class' : 'col-md-2',
+            'class' : 'col-md-1',
         });
 
         var new_input_precio = $('<input>', {
@@ -163,9 +186,8 @@ function borrar(item){
         });
 
 
-        $('#item_line').append(new_line_div);
-        $(new_line_div).append(new_div_item_cantidad);
-        $(new_div_item_cantidad).append(new_input_cantidad);
+        
+       
         $(new_line_div).append(new_div_col_5);
         $(new_div_col_5).append(new_textarea);
         $(new_line_div).append(new_div_item_precio);

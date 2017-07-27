@@ -53,10 +53,11 @@ use yii\helpers\Html;
         <thead>
 
             <tr>
-                <th class="text-center" style="width: 16%; padding: 10px">CANTIDAD</th>
+                <th class="text-center" style="width: 11%; padding: 10px">CANTIDAD</th>
+                <th class="text-center" style="width: 12%; padding: 10px">REFERENCIA</th>
                 <th class="text-center" style="width: 52%; padding: 10px">CONCEPTO</th>
-                <th class="text-center" style="width: 16%; padding: 10px">PRECIO</th>
-                <th class="text-center" style="width: 16%; padding: 10px">TOTAL</th>
+                <th class="text-center" style="width: 11%; padding: 10px">PRECIO</th>
+                <th class="text-center" style="width: 11%; padding: 10px">TOTAL</th>
             </tr>
         </thead>
         <tbody>
@@ -68,6 +69,7 @@ use yii\helpers\Html;
 
                 <tr>
                     <td class="text-right" style="vertical-align: top"><?= $items['item_cantidad'] != 0 ? number_format($items['item_cantidad'],2,',','.') : '' ?></td>
+                    <td class="text-right" style="vertical-align: top"><?= $items['item_referencia'] ?></td>
                     <td style="padding-left: 15px; padding-right: 10px"><?=  Yii::$app->formatter->asNtext($items['item_descripcion']) ?></td>
                     <td class="text-right" style="vertical-align: top"><?= $items['item_precio'] != 0 ? number_format($items['item_precio'],4,',','.') : '' ?></td>
                     <td class="text-right" style="vertical-align: top"><?php if ($items['item_cantidad'] * $items['item_precio'] !=0){ echo number_format($items['item_cantidad'] * $items['item_precio'], 2, ',', '.');} ?></td>

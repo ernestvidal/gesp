@@ -107,18 +107,23 @@ class IdentidadController extends Controller {
      * @return mixed
      */
     public function actionUpdate($id) {
-        
-          $model = $this->findModel($id);
-          $modelCargo = Cargo::find()->where(['cargo_identidad_id'=>$id])->all();
 
-          if ($model->load(Yii::$app->request->post()) && $model->save()) {
-          return $this->redirect(['view', 'id' => $model->identidad_id]);
-          } else {
-          return $this->render('update', [
-          'model' => $model,
-          'modelCargo' => $modelCargo,
-          ]);
-          }
+        $model = $this->findModel($id);
+        $modelCargo = Cargo::find()->where(['cargo_identidad_id' => $id])->all();
+        
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->identidad_id]);
+        } else {
+            return $this->render('update', [
+                        'model' => $model,
+                        'modelCargo' => $modelCargo,
+            ]);
+        }
     }
 
     /**
