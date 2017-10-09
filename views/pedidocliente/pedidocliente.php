@@ -10,6 +10,8 @@ use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
 use app\models\Identidad;
 use app\models\Item;
+use kartik\select2\Select2;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Pedido */
@@ -47,8 +49,24 @@ $this->params['breadcrumbs'][] = $this->title;
             <div id="cliente" class="col-md-6 well">
                 <div class="col-md-12">
                     <?=
-                    $form->field($model, 'cliente_id')->dropDownList(
-                            ArrayHelper::map(Identidad::findAll(['identidad_role' => ['CLIENTE']]), 'identidad_id', 'identidad_nombre'), ['prompt' => 'A quien se va a facturar...', 'id' => 'cliente_id', 'class' => 'form-control'])
+                    //$form->field($model, 'cliente_id')->dropDownList(
+                    //        ArrayHelper::map(Identidad::findAll(['identidad_role' => ['CLIENTE']]), 'identidad_id', 'identidad_nombre'), ['prompt' => 'A quien se va a facturar...', 'id' => 'cliente_id', 'class' => 'form-control'])
+
+
+                    $form->field($model, 'cliente_id')->widget(Select2::className(), [
+                        'data' => ArrayHelper::map(Identidad::find()->all(), 'identidad_id', 'identidad_nombre'),
+                        'options' => [
+                            'placeholder' => 'Seleccionar',
+                            'onchange'=>'$.get( "'.Url::toRoute('item/referencias').'", { id: $(this).val() })
+                                        .done(function( data ) { $( "#item_referencia_0" ).html( data ); } );'
+                            ],
+                        'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                        'id' => 'item_identidad_id',
+                        'class' => 'form-control',
+                       
+                    ]);
                     ?>
                 </div>
             </div>
@@ -59,7 +77,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     <!-- <?= $form->field($model, 'pedido_num')->textInput(['maxlength' => true, 'id' => 'pedido_num']) ?> -->
                     <?=
                     $form->field($model, 'pedido_num')->textInput(['maxlength' => true, 'id' => 'pedido_num',
-                        'value' => '2017.' . substr('000' . (substr($model->find()->max('pedido_num'), 5) + 1), -3, 3)
+                       'value' => '2017.' . substr('000' . (substr($model->find()->max('pedido_num'), -3, 3)+1),-3,3)
+                       
+                        
                     ])
                     ?>
                 </div>
@@ -104,14 +124,20 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <div class="col-md-2">
 
-                    <?php $referencias = ArrayHelper::map(Item::find()->all(), 'item_referencia','item_referencia','item_modelo'); ?>
+                    <?php $referencias = ArrayHelper::map(Item::find()->all(), 'item_referencia', 'item_referencia', 'item_modelo'); ?>
                     <?=
+                   
                     Html::dropDownList('PedidoItem[0][item_referencia]', null, $referencias, [
                         'prompt' => 'Select referencia...',
                         'id' => 'item_referencia_0',
                         'class' => 'form-control',
+                        'onchange'=>'$.get( "'.Url::toRoute('item/featuresitem').'", { id: $(this).val() })
+                                        .done(function( data ) { $( "#item_descripcion_0" ).html( data ); } );'
                     ]);
                     ?>
+                     
+                     
+                    
                 </div>
                 <div class="col-md-5">
                     <textarea name="PedidoItem[0][item_descripcion]" id="item_descripcion_0" class="form-control"></textarea>

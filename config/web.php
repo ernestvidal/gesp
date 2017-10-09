@@ -29,13 +29,13 @@ $config = [
             // for the mailer to send real emails.
             'useFileTransport' => false,
             'transport' => [
-             'class' => 'Swift_SmtpTransport',
-             'host' =>  'cp193.webempresa.eu',//smtp.inmobiliariavidal.es'  
-             'username' => 'ernest@portucajabonita.com',//'lbf835c',
-             'password' => 'ernestprT204249',//'rsY204249',
-             'port' => '465',
-             'encryption' => 'ssl', 
-                ],
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'cp193.webempresa.eu', //smtp.inmobiliariavidal.es'  
+                'username' => 'ernest@portucajabonita.com', //'lbf835c',
+                'password' => 'ernestprT204249', //'rsY204249',
+                'port' => '465',
+                'encryption' => 'ssl',
+            ],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -46,37 +46,35 @@ $config = [
                 ],
             ],
         ],
-
+        
+        
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
                 '' => 'site/index',
-                '<action>'=>'site/<action>',
+                '<action>' => 'site/<action>',
                 '<controller:\w+>/<id:\d+>' => '<controller>/view',
                 '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
             ],
         ],
-
         'db' => require(__DIR__ . '/db.php'),
     ],
-    
-    'as beforeRequest' => 
+    'as beforeRequest' =>
+    [
+        'class' => 'yii\filters\AccessControl',
+        'rules' => [
             [
-                'class' => 'yii\filters\AccessControl',
-                'rules' =>  [
-                                [
-                                     'actions' => ['login', 'error'],
-                                     'allow' => true,
-                                ],
-                                [
-                                    'allow' => true,
-                                    'roles' => ['@'],
-                                ],
-                            ],
+                'actions' => ['login', 'error'],
+                'allow' => true,
             ],
-    
+            [
+                'allow' => true,
+                'roles' => ['@'],
+            ],
+        ],
+    ],
     'params' => $params,
 ];
 

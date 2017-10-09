@@ -142,6 +142,10 @@ class Module extends \yii\base\Module implements BootstrapInterface
      */
     public function init()
     {
+        if (!Yii::$app instanceof \yii\web\Application) {
+            return;
+        }
+
         parent::init();
         $this->dataPath = Yii::getAlias($this->dataPath);
         $this->initPanels();
@@ -172,6 +176,9 @@ class Module extends \yii\base\Module implements BootstrapInterface
             $config['module'] = $this;
             $config['id'] = $id;
             $this->panels[$id] = Yii::createObject($config);
+            if ($this->panels[$id] instanceof Panel && !$this->panels[$id]->isEnabled()) {
+                unset($this->panels[$id]);
+            }
         }
     }
 
@@ -180,7 +187,7 @@ class Module extends \yii\base\Module implements BootstrapInterface
      */
     public function bootstrap($app)
     {
-        $this->logTarget = Yii::$app->getLog()->targets['debug'] = new LogTarget($this);
+        $this->logTarget = $app->getLog()->targets['debug'] = new LogTarget($this);
 
         // delay attaching event handler to the view component after it is fully configured
         $app->on(Application::EVENT_BEFORE_REQUEST, function () use ($app) {
@@ -224,12 +231,14 @@ class Module extends \yii\base\Module implements BootstrapInterface
         if ($this->checkAccess()) {
             $this->resetGlobalSettings();
             return true;
-        } elseif ($action->id === 'toolbar') {
+        }
+
+        if ($action->id === 'toolbar') {
             // Accessing toolbar remotely is normal. Do not throw exception.
             return false;
-        } else {
-            throw new ForbiddenHttpException('You are not allowed to access this page.');
         }
+
+        throw new ForbiddenHttpException('You are not allowed to access this page.');
     }
 
     /**

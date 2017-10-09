@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\factura;
+use app\models\Factura;
 
 /**
  * facturaSearch represents the model behind the search form about `app\models\factura`.
  */
-class facturaSearch extends factura
+class FacturaSearch extends Factura
 {
     /**
      * @inheritdoc

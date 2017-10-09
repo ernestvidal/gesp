@@ -35,6 +35,7 @@ class Proformaitem extends \yii\db\ActiveRecord
             [['proforma_num', 'item_cantidad', 'item_precio', 'item_descripcion'], 'required'],
             [['item_cantidad', 'item_precio'], 'number'],
             [['proforma_num'], 'string', 'max' => 20],
+            [['item_referencia'], 'string', 'max' => 30],
             [['item_descripcion'], 'string', 'max' => 250]
         ];
     }
@@ -50,6 +51,7 @@ class Proformaitem extends \yii\db\ActiveRecord
             'item_cantidad' => 'Item Cantidad',
             'item_precio' => 'Item Precio',
             'item_descripcion' => 'Item Descripcion',
+            'item_referencia'=>'Referencia'
         ];
     }
 

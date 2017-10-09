@@ -128,6 +128,7 @@ AppAsset::register($this);
                     <li><?= Html::a('FACTURAS', '@web/factura/index')?></li>
                     <li><?= Html::a('PROFORMAS', '@web/proforma/index')?></li>
                     <li><?= Html::a('INFORMES', '@web/informes/index')?></li>
+                    <li><?= Html::a('ETIQUETAS', '@web/etiquetas/index')?></li>
                 </ul>
            
             </div>

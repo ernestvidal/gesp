@@ -88,7 +88,8 @@ function borrar(item){
     $('#add_item_line').css('cursor','pointer');
 
     // Insertamos una nueva línea en la pedido.
-    $('#add_item_line').click(function(){
+    $('#add_item_line').click(function(event){
+        event.preventDefault();
         var item_order = $('#item_line').find('textarea').length;
 
         var new_line_div = $('<div/>', {
@@ -161,7 +162,7 @@ function borrar(item){
             href : 'javascript:borrar(' + item_order + ')',
             html : '[ x ]',
         });
-
+        
 
         $('#item_line').append(new_line_div);
         $(new_line_div).append(new_div_item_cantidad);

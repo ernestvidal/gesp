@@ -38,7 +38,7 @@ class PedidoclienteController extends Controller
      * Lists all Pedidocliente models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($pedidos = NULL)
     {
        if (isset($pedidos) <> 'pendientes') {
             $model = Pedidocliente::find()

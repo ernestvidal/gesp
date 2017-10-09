@@ -15,112 +15,102 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="identidad-index">
-    <br>
-    <div class="row">
-      
-        <div class="col-lg-11 col-lg-offset-1">
-            <div class="well">
 
-                
-                    <div class="btn-group">
-                        <a class="btn btn-default" href="index.php?page=compras_proveedores">
-                            <span class="glyphicon glyphicon-arrow-left"></span>
-                            <span class="hidden-xs hidden-sm">&nbsp; Identidades</span>
-                        </a>
-                        <?= Html::a('<span class="glyphicon glyphicon-refresh"></span>', 'index', ['class' => 'btn  btn-default']) ?>
-                    </div>
-                
-                
-
-
-                    <?=
-                    Html::a('Create', '#', [
-                        'id' => 'crear-identidad-link',
-                        'class' => 'btn btn-primary',
-                        'data-toggle' => 'modal',
-                        'data-target' => '#modal',
-                        'data-url' => Url::to(['create']),
-                        'data-pjax' => '0',]);
-                    ?>
-                
-
-            </div>
-        </div>
-    </div>
 
     <br>
     <div class="row">
-
-      
-        <div class="col-lg-11 col-lg-offset-1">
-
 
             <!--<h1><?= Html::encode($this->title) ?></h1>-->
-            <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+        <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-            <div class="well">
+    </div>
+
+
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="col-md-8">
+
                 <?= Html::a('Clientes', ['index?IdentidadSearch[identidad_role]=CLIENTE']) ?>
                 <?= ' / ' ?>
                 <?= Html::a('Captación', ['index?IdentidadSearch[identidad_role]=CAPTACION']) ?>
                 <?= ' / ' ?>
                 <?= Html::a('Proveedores', ['index?IdentidadSearch[identidad_role]=PROVEEDOR']) ?>
+
+            </div>
+            <div class="col-md-4">
+                <div class="btn-group">
+
+                    <?= Html::a('<span class="glyphicon glyphicon-refresh"></span>', 'index', ['class' => 'btn  btn-default']) ?>
+                </div>
+
+
+                <?=
+                Html::a('Create', '#', [
+                    'id' => 'crear-identidad-link',
+                    'class' => 'btn btn-primary',
+                    'data-toggle' => 'modal',
+                    'data-target' => '#modal',
+                    'data-url' => Url::to(['create']),
+                    'data-pjax' => '0',]);
+                ?>
             </div>
         </div>
     </div>
 
-    <div class="row">
-      
-        <div class="col-lg-11 col-lg-offset-1">
 
-            <?php Pjax::begin() ?>
 
-            <?=
-            GridView::widget([
-                'dataProvider' => $dataProvider,
-                'filterModel' => $searchModel,
-                'id' => 'identidad-grid',
-                'summary' => '',
-                'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
-                    //'identidad_id',
-                    [ 'attribute' => 'identidad_nombre',
-                        'label' => 'Nombre',
-                        'format' => 'raw',
-                        'value' => function($data) {
-                            return Html::a($data->identidad_nombre, ['update', 'id' => $data->identidad_id]);
-                        }],
-                            //'identidad_direccion',
-                            'identidad_poblacion',
-                            'identidad_provincia',
-                            'identidad_actividad',
-                            
-                                ['attribute' => 'identidad_web',
-                                    'format' => 'raw',
-                                    'value' => function($data){
-                                   return Html::a($data->identidad_web, 'http://'.$data->identidad_web,['target'=>'_blank']);
-                                   }],
-                            'identidad_persona_contacto',
-                            'identidad_phone',
-                            'identidad_role',
-                            ['class' => 'yii\grid\ActionColumn',
-                                'template' => '{delete}',
+
+
+
+<div class="row">
+
+    <div class="col-md-12">
+
+        <?php Pjax::begin() ?>
+
+        <?=
+        GridView::widget([
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'id' => 'identidad-grid',
+            'summary' => '',
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
+                //'identidad_id',
+                [ 'attribute' => 'identidad_nombre',
+                    'label' => 'Nombre',
+                    'format' => 'raw',
+                    'value' => function($data) {
+                        return Html::a($data->identidad_nombre, ['update', 'id' => $data->identidad_id]);
+                    }],
+                        //'identidad_direccion',
+                        'identidad_poblacion',
+                        'identidad_provincia',
+                        'identidad_actividad',
+                        ['attribute' => 'identidad_web',
+                            'format' => 'raw',
+                            'value' => function($data) {
+                                return Html::a($data->identidad_web, 'http://' . $data->identidad_web, ['target' => '_blank']);
+                            }],
+                                'identidad_persona_contacto',
+                                'identidad_phone',
+                                'identidad_role',
+                                ['class' => 'yii\grid\ActionColumn',
+                                    'template' => '{delete}',
+                                ],
                             ],
-                        ],
-                    ]);
-                    ?>
+                        ]);
+                        ?>
 
-                    <?php Pjax::end() ?>
-
-
-                    </p>
+                        <?php Pjax::end() ?>
+                    </div>
                 </div>
-              
-            </div>
-        </div>
+                </div>
 
-        <?php
-        $this->registerJs(
-                "$(document).on('click', '#crear-identidad-link', (function() {
+                <?php
+                $this->registerJs(
+                        "$(document).on('click', '#crear-identidad-link', (function() {
         $.get(
             $(this).data('url'),
             function (data) {
@@ -129,17 +119,17 @@ $this->params['breadcrumbs'][] = $this->title;
             }
         );
     }));"
-        );
-        ?>
+                );
+                ?>
 
-        <?php
-        Modal::begin([
-            'id' => 'modal',
-            'header' => '<h4 class="modal-title">Create identidad</h4>',
-            'footer' => '<a href="#" class="btn btn-primary" data-dismiss="modal">Cerrar</a>',
-        ]);
+                <?php
+                Modal::begin([
+                    'id' => 'modal',
+                    'header' => '<h4 class="modal-title">Create identidad</h4>',
+                    'footer' => '<a href="#" class="btn btn-primary" data-dismiss="modal">Cerrar</a>',
+                ]);
 
-        echo "<div class='well'></div>";
+                echo "<div class='well'></div>";
 
-        Modal::end();
-        ?>
+                Modal::end();
+                ?>

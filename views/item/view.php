@@ -23,15 +23,19 @@ $this->params['breadcrumbs'][] = $this->title;
             'item_descripcion',
             'item_referencia',
             'item_referencia_cliente',
+            'item_numero_pantalla',
             'item_modelo',
-            'item_size',
+            'item_ancho',
+            'item_largo',
             'item_acabado',
             'item_material',
+            'item_sistema_impresion',
             'item_identidad_id',
             array(
                 'label'=>'cliente',
                 'value'=>$model['itemIdentidad']['identidad_nombre'],
                 ),
+            'item_precio_venta'
 
         ],
     ]) ?>

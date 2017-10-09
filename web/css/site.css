@@ -2,7 +2,9 @@
 
 body {
     height: 100%;
-    font: normal 10pt Open Sans, sans-serif;
+    //font: normal 10pt Open Sans, sans-serif;
+   font: normal 10pt Futura LT CondensedLight, sans-serif;
+    
 }
 
 textarea {

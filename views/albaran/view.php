@@ -75,8 +75,8 @@ use yii\helpers\Html;
                 <tr>
                     <td class="text-right"><?php if ($items['item_cantidad']<>0){ echo (number_format($items['item_cantidad'],2,',','.'));} ?></td>
                     <td style="padding-left: 15px; padding-right: 10px"><?= Yii::$app->formatter->asNtext($items['item_descripcion']) ?></td>
-                    <td class="text-right"><?php // if($items['item_precio']<>0){ echo number_format($items['item_precio'],3,',','.');} ?></td>
-                    <td class="text-right"><?php // if(($items['item_cantidad'] * $items['item_precio']<>0)){ echo (number_format($items['item_cantidad'] * $items['item_precio'], 2,',','.'));} ?></td>
+                    <td class="text-right"><?php  //if($items['item_precio']<>0){ echo number_format($items['item_precio'],3,',','.');} ?></td>
+                    <td class="text-right"><?php  //if(($items['item_cantidad'] * $items['item_precio']<>0)){ echo (number_format($items['item_cantidad'] * $items['item_precio'], 2,',','.'));} ?></td>
                 </tr>
 
             <?php
@@ -105,13 +105,13 @@ use yii\helpers\Html;
                     <td style="border-color: white; width: 29%"></td>
                     <td style="border-bottom-color: white; border-top-color: white; width: 30%"></td>
                     <td style="width: 25%; padding: 5px">Total</td>
-                    <td style="width: 16%; padding: 5px" class="text-right"><?php // number_format($total, 2, ',', '.') ?></td>
+                    <td style="width: 16%; padding: 5px" class="text-right"><?php  //number_format($total, 2, ',', '.') ?></td>
                 </tr>
                 <tr>
                     <td style="border-color: white; width: 29%"></td>
                     <td style="border-bottom-color: white;  border-top-color: white; width: 30%"></td>
                     <td style="width: 25%; padding: 5px">B. Imponible</td>
-                    <td style="width: 16%; padding: 5px" class="text-right"><?php // number_format($base_imponible, 2,',','.') ?></td>
+                    <td style="width: 16%; padding: 5px" class="text-right"><?php  //number_format($base_imponible, 2,',','.') ?></td>
                 </tr>
                 <?php if ($importe_descuento > 0){ ?>
                 <tr>
@@ -131,7 +131,7 @@ use yii\helpers\Html;
                     <td style="border-color: white; width: 29%"></td>
                     <td style="border-bottom-color: white; width: 30%"></td>
                     <td style="width: 25%; padding: 5px"><strong>Total Albaran</strong></td>
-                    <td style="width: 16%; padding: 5px" class="text-right"><strong><?php // number_format($base_imponible  + $importe_iva - $importe_irpf, 2, ',','.')  ?></strong></td>
+                    <td style="width: 16%; padding: 5px" class="text-right"><strong><?php  //number_format($base_imponible  + $importe_iva - $importe_irpf, 2, ',','.')  ?></strong></td>
                 </tr>
         </table>
     

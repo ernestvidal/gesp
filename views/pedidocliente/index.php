@@ -30,12 +30,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <th>Núm.</th>
                                     <th>Cliente</th>
                                     <th>B.I.</th>
-                                    <th>% IVA</th>
-                                    <th>I.IVA</th>
-                                    <th>% DTO</th>
-                                    <th>I dto</th>
-                                    <th>% irpf</th>
-                                    <th>I irpf</th>
+                                    <th>IVA</th>
+                                    <th>DTO</th>
+                                    <th>IRPF</th>
                                     <th></th>
                                     <th></th>
                                     <th></th>
@@ -79,11 +76,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <td class="text-right"><?= Html::a($model[$i]->pedido_num, ['view', 'id' => $model[$i]->pedido_id]) ?></td>
                                         <td><?= Html::a($model[$i]->cliente->identidad_nombre, ['reportfacturasproveedor', 'id' => $model[$i]->cliente->identidad_id]) ?></td>
                                         <td class="text-right"><?= Yii::$app->formatter->asDecimal($baseImponible, 2); ?></td>
-                                        <td class="text-right"><?= $model[$i]->pedido_rate_iva ?></td>
+                                        <!--<td class="text-right"><?= $model[$i]->pedido_rate_iva ?></td>-->
                                         <td class="text-right"><?= Yii::$app->formatter->asDecimal($totalIva, 2) ?>
-                                        <td class="text-right"><?= $model[$i]->pedido_rate_descuento ?></td>
+                                        <!--<td class="text-right"><?= $model[$i]->pedido_rate_descuento ?></td>-->
                                         <td class="text-right"><?= Yii::$app->formatter->asDecimal($totalDto, 2) ?> 
-                                        <td class="text-right"><?= $model[$i]->pedido_rate_irpf ?></td>
+                                        <!--<td class="text-right"><?= $model[$i]->pedido_rate_irpf ?></td>-->
                                         <td class="text-right"><?= Yii::$app->formatter->asDecimal($totalIrpf, 2); ?></td>
                                         <td class="text-right"><?= Yii::$app->formatter->asDecimal($totalPedido, 2); ?></td>
                                         <!--<td><?= Html::a('<i class="glyphicon glyphicon-eye-open"></i>', ['view', 'id' => $model[$i]->pedido_id]) ?></td> -->

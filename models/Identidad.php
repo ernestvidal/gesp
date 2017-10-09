@@ -39,7 +39,7 @@ class Identidad extends \yii\db\ActiveRecord {
             'identidad_actividad',
             'identidad_razon_social'], 'string', 'max' => 50],
             ['identidad_nombre', 'required'],
-            ['identidad_direccion', 'string', 'max' => '75'],
+            [['identidad_direccion','identidad_direccion_two'], 'string', 'max' => '75'],
             //[['identidad_nif'], 'string', 'max' => 9],
             ['identidad_nif', 'isValidIdNumber'],
             ['identidad_nif', 'unique'],
@@ -88,7 +88,17 @@ class Identidad extends \yii\db\ActiveRecord {
     function isValidIdNumber($attribute) {
         $docNumber = $this->$attribute;
         $fixedDocNumber = strtoupper($docNumber);
-        return $this->isValidNIF($attribute) || $this->isValidNIE($attribute) || $this->isValidCIF($attribute);
+        //return $this->isValidNIF($attribute) || $this->isValidNIE($attribute) || $this->isValidCIF($attribute);
+        
+        if ($this->isValidNIF($attribute)){
+            return;
+       // }elseif ($this->isValidNIE($attribute)){
+       //     return;
+        }elseif ($this->isValidCIF($attribute) ){
+            return;
+        }else {
+            $this->addError($attribute, 'El cif/nif no es correcto');
+        }
     }
 
     /*
@@ -138,10 +148,10 @@ class Identidad extends \yii\db\ActiveRecord {
             if ($writtenDigit == $correctDigit) {
                 $isValid = TRUE;
             } else {
-                $this->addError($attribute, 'El nif no es correcto');
+                //$this->addError($attribute, 'El nif no es correcto');
             }
         } else {
-            $this->addError($attribute, 'El nif no es correcto');
+            //$this->addError($attribute, 'El nif no es correcto');
         }
 
         return $isValid;
@@ -246,14 +256,14 @@ class Identidad extends \yii\db\ActiveRecord {
             if ($writtenDigit == $correctDigit) {
                 $isValid = TRUE;
             } else {
-                $this->addError($attribute, 'El Cif no es correcto');
+                //$this->addError($attribute, 'El Cif no es correcto');
             }
         } else {
-            $this->addError($attribute, 'El Cif no es correcto');
+            //$this->addError($attribute, 'El Cif no es correcto');
         }
 
 
-        // return $isValid;
+         return $isValid;
     }
 
     /*
@@ -307,7 +317,7 @@ class Identidad extends \yii\db\ActiveRecord {
      */
 
     public function isValidNIEFormat($docNumber) {
-        return respectsDocPattern(
+        return $this->respectsDocPattern(
                 $docNumber, '/^[XYZT][0-9][0-9][0-9][0-9][0-9][0-9][0-9][A-Z0-9]/');
     }
 

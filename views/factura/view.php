@@ -26,7 +26,7 @@ use yii\helpers\Html;
                 if (!empty($model['cliente']['identidad_razon_social'])) {
                     echo '<h4><strong>'.$model['cliente']['identidad_razon_social'].'</strong></h4>';
                 } else {
-                    echo $model['cliente']['identidad_nombre'];
+                    echo '<h4><strong>'.$model['cliente']['identidad_nombre'].'</strong></h4>';
                 }
                 ?>
                 <h5><?= $model['cliente']['identidad_direccion'] ?></h5>
@@ -188,7 +188,7 @@ use yii\helpers\Html;
             <tr>
                 <td style="width: 35%; padding: 10px"><strong>VENCIMIENTO</strong></td>
                 <td style="width: 65%; padding: 10px">
-    <?= Yii::$app->formatter->asDate($model['factura_vto'], 'php:d-m-Y') . ' / Importe ' . $model['factura_vto_importe'] ?> &euro;
+    <?= Yii::$app->formatter->asDate($model['factura_vto'], 'php:d-m-Y') . ' / Importe ' . number_format($model['factura_vto_importe'],2,',','.') ?> &euro;
                 </td>
             </tr>
         </table>
@@ -201,7 +201,7 @@ use yii\helpers\Html;
             <tr>
                 <td style="width: 35%; padding: 10px"><strong>VENCIMIENTO</strong></td>
                 <td style="width: 65%; padding: 10px">
-    <?= Yii::$app->formatter->asDate($model['factura_vto_dos'], 'php:d-m-Y') . ' / Importe ' . $model['factura_vto_dos_importe'] ?> &euro;
+    <?= Yii::$app->formatter->asDate($model['factura_vto_dos'], 'php:d-m-Y') . ' / Importe ' . number_format($model['factura_vto_dos_importe'],2,',','.') ?> &euro;
                 </td>
             </tr>
         </table>

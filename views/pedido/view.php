@@ -35,8 +35,8 @@ use yii\helpers\Html;
 
     <table class="table table-bordered">
         <tr>
-            <td style="width:50%; background-color: #aaa; padding: 10px"><h4><?= 'FECHA : ' . Yii::$app->formatter->asDate($model['pedido_fecha'], 'php:d-m-Y'); ?></h4></td>
-            <td style="width:50%; background-color: #aaa; padding: 10px; text-align: right"><h4><?= 'PEDIDO : ' . $model['pedido_num'] ?></h4></td>
+            <td style="width:50%; padding: 10px"><h4><?= 'FECHA : ' . Yii::$app->formatter->asDate($model['pedido_fecha'], 'php:d-m-Y'); ?></h4></td>
+            <td style="width:50%; padding: 10px; text-align: right"><h4><?= 'PEDIDO : ' . $model['pedido_num'] ?></h4></td>
         </tr>
     </table>
 

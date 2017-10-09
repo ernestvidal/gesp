@@ -39,9 +39,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <th>Núm.</th>
                                     <th>Cliente</th>
                                     <th>B.I.</th>
-                                    <th>I.IVA</th>
-                                    <th>I dto</th>
-                                    <th>I irpf</th>
+                                    <th>IVA</th>
+                                    <th>DTO</th>
+                                    <th>IRPF</th>
+                                    <th></th>
                                     <th></th>
                                     <th></th>
                                     <th></th>

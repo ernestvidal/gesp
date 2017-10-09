@@ -10,6 +10,7 @@ use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
 use app\models\Identidad;
+use kartik\select2\Select2;
 
 
 /* @var $this yii\web\View */
@@ -49,9 +50,21 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div id="cliente" class="col-md-6 well">
                 <div class="col-md-12">
-                    <?= $form->field($model, 'cliente_id')->dropDownList(
-                            ArrayHelper::map(Identidad::findAll(['identidad_role'=>['CLIENTE','CAPTACION']]), 'identidad_id', 'identidad_nombre'),
-                            ['prompt'=>'A quien se va a facturar...', 'id'=>'cliente_id', 'class'=>'form-control']) ?>
+                    <?=
+                            //$form->field($model, 'cliente_id')->dropDownList(
+                            //ArrayHelper::map(Identidad::findAll(['identidad_role'=>['CLIENTE','CAPTACION']]), 'identidad_id', 'identidad_nombre'),
+                            //['prompt'=>'A quien se va a facturar...', 'id'=>'cliente_id', 'class'=>'form-control'])
+            
+                            $form->field($model, 'cliente_id')->widget(Select2::className(),[
+                            'data'=> ArrayHelper::map(Identidad::find()->all(), 'identidad_id', 'identidad_nombre'),
+                            'options'=>['placeholder'=>'Seleccionar'],
+                            'pluginOptions'=>[
+                            'allowClear'=>true
+                            ],
+                            'id' => 'item_identidad_id',
+                            'class' => 'form-control'
+                             ]);
+                    ?>
                 </div>
             </div>
         </div>

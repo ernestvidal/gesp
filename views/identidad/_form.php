@@ -45,6 +45,11 @@ use app\models\Identidad;
         </div>
     </div>
     <div class="row">
+        <div class="col-lg-12">
+            <?= $form->field($model, 'identidad_direccion')->textInput(['maxlength' => true]) ?>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-lg-2">
             <?= $form->field($model, 'identidad_cp')->textInput(['maxlength' => true]) ?>
         </div>

@@ -263,7 +263,7 @@ class PedidoController extends Controller
          
         $this->layout = 'viewLayout';
         
-        $mpdf=new mPDF('UTF-8','A4','','',15,15,15,20,'',5,'P');
+        $mpdf=new mPDF('UTF-8','A4','','futuraltcondensedlight',15,15,15,20,'',5,'P');
         $mpdf->SetHTMLFooter($this->footer);
         $mpdf->WriteHTML($this->render('view', ['model' => $this->findModel($id)]));
         $pedidoPdf = $mpdf->Output('pedido.pdf','I');

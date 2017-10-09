@@ -57,6 +57,11 @@ use yii\helpers\Url;
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-lg-12">
+                        <?= $form->field($model, 'identidad_direccion_two')->textInput(['maxlength' => true]) ?>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-lg-2">
                         <?= $form->field($model, 'identidad_cp')->textInput(['maxlength' => true]) ?>
                     </div>

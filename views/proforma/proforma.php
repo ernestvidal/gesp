@@ -10,6 +10,7 @@ use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
 use app\models\Identidad;
+use app\models\Item;
 
 
 /* @var $this yii\web\View */
@@ -72,13 +73,16 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div id="proforma_cos" class="well">
         <div class="row">
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <label for="item_cantidad">Cantidad</label>
+            </div>
+            <div class="col-md-2">
+                <label for="item_referencia">Referencia</label>
             </div>
             <div class="col-md-5">
                 <label for="item_descripcion">Descripción</label>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <label for="item_precio">Precio</label>
             </div>
             <div class="col-md-2">
@@ -90,20 +94,31 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <div id="item_line">
             <div id="line_0" class="row proforma_line">
-                <div class="col-md-2">
-                    <input type="text" name="FacturaItem[0][item_cantidad]" id="item_cantidad_0" class="form-control text-right" value="0.00" required>
+                <div class="col-md-1">
+                    <input type="text" name="ProformaItem[0][item_cantidad]" id="item_cantidad_0" class="form-control text-right" value="0.00" required>
+                </div>
+                 <div class="col-md-2">
+                    
+                    <?php $referencias = ArrayHelper::map(Item::find()->all(), 'item_referencia','item_referencia','item_modelo'); ?>
+                    <?=
+                    Html::dropDownList('ProformaItem[0][item_referencia]', null, $referencias, [
+                        'prompt' => 'Select referencia...',
+                        'id' => 'item_referencia_0',
+                        'class' => 'form-control',
+                    ]);
+                    ?>
                 </div>
                 <div class="col-md-5">
-                    <textarea name="FacturaItem[0][item_descripcion]" id="item_descripcion_0" class="form-control"></textarea>
+                    <textarea name="ProformaItem[0][item_descripcion]" id="item_descripcion_0" class="form-control"></textarea>
                 </div>
-                <div class="col-md-2">
-                    <input type="text" name="FacturaItem[0][item_precio]" id="item_precio_0" class="form-control text-right" value="0.00">
+                <div class="col-md-1">
+                    <input type="text" name="ProformaItem[0][item_precio]" id="item_precio_0" class="form-control text-right" value="0.00">
                 </div>
                 <div class="col-md-2">
                      <input type="text" name="item_total_0" id="item_total_0" class="form-control text-right item_total" value="0.00" readonly>
                 </div>
                 <div class="col-md-1">
-                    <input type="hidden" name="FacturaItem[0][proforma_num]" id="proforma_item_num_0">
+                    <input type="hidden" name="ProformaItem[0][proforma_num]" id="proforma_item_num_0">
                 </div>
             </div>
         </div>

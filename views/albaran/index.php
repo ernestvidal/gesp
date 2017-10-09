@@ -30,13 +30,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <th>Núm.</th>
                                     <th>Cliente</th>
                                     <th>B.I.</th>
-                                    <th>% IVA</th>
-                                    <th>I.IVA</th>
-                                    <th>% DTO</th>
-                                    <th>I dto</th>
-                                    <th>% irpf</th>
-                                    <th>I irpf</th>
-                                    <th>T.factura</th>
+                                    <th>IVA</th>
+                                    <th>DTO</th>
+                                    <th>IRPF</th>
+                                    <th>TOTAL</th>
                                     <th></th>
                                     <th></th>
                                   
@@ -79,11 +76,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <td><?= Html::a($model[$i]->albaran_num, ['view', 'id' => $model[$i]->albaran_id]) ?></td>
                                         <td><?= Html::a($model[$i]->cliente->identidad_nombre, ['index', 'cliente'=>$model[$i]->cliente_id]) ?></td>
                                         <td class="text-right"><?= Yii::$app->formatter->asDecimal($baseImponible, 2) ?></td>
-                                        <td class="text-right"><?= $model[$i]->albaran_rate_iva ?></td>
+                                        <!--<td class="text-right"><?= $model[$i]->albaran_rate_iva ?></td> -->
                                         <td class="text-right"><?= Yii::$app->formatter->asDecimal($totalIva, 2) ?></td>
-                                        <td class="text-right"><?= $model[$i]->albaran_rate_descuento ?></td>
+                                        <!--<td class="text-right"><?= $model[$i]->albaran_rate_descuento ?></td> -->
                                         <td class="text-right"><?= Yii::$app->formatter->asDecimal($totalDto, 2) ?></td>
-                                        <td class="text-right"><?= $model[$i]->albaran_rate_irpf ?></td>
+                                        <!--<td class="text-right"><?= $model[$i]->albaran_rate_irpf ?></td> -->
                                         <td class="text-right"><?= Yii::$app->formatter->asDecimal($totalIrpf, 2) ?></td>
                                         <td class="text-right"><?= Yii::$app->formatter->asDecimal($totalAlbaran, 2) ?></td>
                                         

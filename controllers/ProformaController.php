@@ -77,14 +77,14 @@ class ProformaController extends Controller {
              * $data['FacturaItem'][0] = ['proforma_num'=>'12ab', 'item_cantidad'=>10,00, 'item_descripcion'=>'holaa', 'item_precio'=>100,00];
              */
 
-            $count = count($data['FacturaItem']);
+            $count = count($data['ProformaItem']);
             $models = [new ProformaItem()];
 
             for ($i = 1; $i < $count; $i++) {
                 $models[$i] = new ProformaItem();
             }
 
-            if (Model::loadMultiple($models, $data, $formName = 'FacturaItem') && Model::validateMultiple($models)) {
+            if (Model::loadMultiple($models, $data, $formName = 'ProformaItem') && Model::validateMultiple($models)) {
                 foreach ($models as $modelo) {
                     // populate and save records for each model
                     if ($modelo->save(false)) {

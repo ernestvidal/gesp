@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\pedido;
+use app\models\Pedido;
 
 /**
  * pedidoSearch represents the model behind the search form about `app\models\pedido`.
  */
-class pedidoSearch extends pedido
+class PedidoSearch extends Pedido
 {
     /**
      * @inheritdoc

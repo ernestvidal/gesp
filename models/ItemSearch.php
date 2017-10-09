@@ -19,7 +19,7 @@ class ItemSearch extends Item
     {
         return [
             [['item_id', 'item_identidad_id'], 'integer'],
-            [['item_descripcion', 'item_referencia', 'item_long_descripcion', 'item_modelo', 'item_size'], 'safe'],
+            [['item_descripcion', 'item_referencia', 'item_long_descripcion', 'item_modelo'], 'safe'],
         ];
     }
 
@@ -66,8 +66,7 @@ class ItemSearch extends Item
         $query->andFilterWhere(['like', 'item_descripcion', $this->item_descripcion])
             ->andFilterWhere(['like', 'item_referencia', $this->item_referencia])
             ->andFilterWhere(['like', 'item_long_descripcion', $this->item_long_descripcion])
-            ->andFilterWhere(['like', 'item_modelo', $this->item_modelo])
-            ->andFilterWhere(['like', 'item_size', $this->item_size]);
+            ->andFilterWhere(['like', 'item_modelo', $this->item_modelo]);
 
         return $dataProvider;
     }

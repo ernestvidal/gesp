@@ -223,7 +223,7 @@ class FacturaController extends Controller {
 
     public function actionPrintfactura($id, $num, $name) {
         $this->layout = 'viewLayout';
-        $mpdf = new mPDF('UTF-8', 'A4', '', '', 15, 15, 15, 40, '', 5, 'P');
+        $mpdf = new mPDF('UTF-8', 'A4', '', '', 10, 10, 15, 40, '', 5, 'P');
         $mpdf->SetHTMLFooter($this->footer);
         $mpdf->WriteHTML($this->render('view', ['model' => $this->findModel($id)]));
         $facturaPdf = $mpdf->Output('factura.pdf', 'I');
@@ -234,7 +234,7 @@ class FacturaController extends Controller {
         
         // Recogemos los datos enviados desde modalSendFactura form.
         $datosmodel = Yii::$app->request->post();
-        $mailto = $datosmodel['Identidad']['mail'];
+        $mailto = $datosmodel['Identidad']['identidad_mail'];
         $asunto = $datosmodel['Identidad']['asunto'];
         $body = $datosmodel['Identidad']['body'];
 
@@ -242,7 +242,8 @@ class FacturaController extends Controller {
         $mpdf = new mPDF('UTF-8', 'A4', '', '', 15, 15, 15, 40, '', 5, 'P');
         $mpdf->SetHTMLFooter($this->footer);
         $mpdf->WriteHTML($this->render('view', ['model' => $this->findModel($id)]));
-        $facturaPdf = $mpdf->Output('../../../mis documentos/portucajabonita/facturas/2017/' . $num . ' ' . $name .'.pdf', 'S');
+        //$facturaPdf = $mpdf->Output('../../../mis documentos/portucajabonita/facturas/2017/' . $num . ' ' . $name .'.pdf', 'S');
+         $facturaPdf = $mpdf->Output('', 'S');
 
         
 
@@ -252,6 +253,7 @@ class FacturaController extends Controller {
                 ->setSubject($asunto)
                 ->setTextBody($body)
                 ->setHtmlBody($body)
+                ->setReadReceiptTo('ernest@portucajabonita.com')
                 ->attachContent($facturaPdf, ['fileName' => $num . ' ' . $name .'.pdf', 'contentType' => 'application/pdf']);
                 //->send();
         $result = Yii::$app->mailer->send($message);
@@ -319,11 +321,13 @@ class FacturaController extends Controller {
         $modelFactura = $this->findModel($id);
 
         $model = Identidad::findOne($modelFactura->cliente_id);
+        
         return $this->renderAjax('modalSendFactura', [
                     'model' => $model,
                     'idFactura' => $id,
                     'numFactura' => $num,
                     'name' => $name,
+                    'cliente_id'=>$model->identidad_id,
         ]);
     }
 

@@ -10,13 +10,12 @@ use app\models\Identidad;
 /**
  * IdentidadSearch represents the model behind the search form about `app\models\Identidad`.
  */
-class IdentidadSearch extends Identidad
-{
+class IdentidadSearch extends Identidad {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['identidad_id', 'identidad_poblacion'], 'integer'],
             [['identidad_nombre', 'identidad_direccion', 'identidad_provincia', 'identidad_actividad', 'identidad_web', 'identidad_mail', 'identidad_phone', 'identidad_role', 'identidad_persona_contacto'], 'safe'],
@@ -26,8 +25,7 @@ class IdentidadSearch extends Identidad
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ class IdentidadSearch extends Identidad
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = Identidad::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -61,12 +58,13 @@ class IdentidadSearch extends Identidad
         ]);
 
         $query->andFilterWhere(['like', 'identidad_nombre', $this->identidad_nombre])
-            ->andFilterWhere(['like', 'identidad_direccion', $this->identidad_direccion])
-            ->andFilterWhere(['like', 'identidad_nif', $this->identidad_nif])
-            ->andFilterWhere(['like', 'identidad_role', $this->identidad_role])
+                ->andFilterWhere(['like', 'identidad_direccion', $this->identidad_direccion])
+                ->andFilterWhere(['like', 'identidad_nif', $this->identidad_nif])
+                ->andFilterWhere(['like', 'identidad_role', $this->identidad_role])
                 ->andFilterWhere(['like', 'identidad_persona_contacto', $this->identidad_persona_contacto])
-                ;
+        ;
 
         return $dataProvider;
     }
+
 }
