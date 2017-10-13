@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\Url;
 
 $this->registerJsFile('@web/js/etiquetas.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
 ?>
@@ -19,8 +20,32 @@ $this->registerJsFile('@web/js/etiquetas.js', ['depends' => [\yii\web\JqueryAsse
             <div class="col-lg-2 col-sm-2"><?= $form->field($model, 'sistema_impresion')->dropDownList([
                 'offset'=>'Offset',
                 'toner'=>'Laser toner',
-                'serigrafia'=>'Serigrafia'
+                'serigrafia'=>'Serigrafia'],
+                ['id'=>'sistema_impresion',
+                    'prompt'=>'Select ....',
+                 'onchange'=>'$.get( "'.Url::toRoute('etiquetas/dataprinting').'", { tipoImpresion: $(this).val() })
+                                        .done(function( data ) { 
+                                        data
+                                        $( "#tipo_material" ).html(data);} );'
+                    
+                
             ])?></div>
+        </div>
+        <div class="row">
+            <div class="col-lg-2 col-sm-2"><h3>Etiquetas</h3></div>
+            <div class="col-lg-2 col-sm-2"><?= $form->field($model, 'tipo_material')->dropDownList([
+                ],
+                [
+                'id'=>'tipo_material',
+                'promtp'=>'Selet',
+                'onchange'=>'$.get( "'.Url::toRoute('etiquetas/tipomaterial').'", { tipo_material: $(this).val(), tipo_impresion: $(this.form.sistema_impresion).val() })
+                                        .done(function( data ) { 
+                                        $("#ancho_soporte" ).val( data.ancho );
+                                        $("#alto_soporte" ).val( data.alto );
+                                        
+                                        } );'
+                ]) ?></div>
+
         </div>
         
         <div class="row">
@@ -32,8 +57,8 @@ $this->registerJsFile('@web/js/etiquetas.js', ['depends' => [\yii\web\JqueryAsse
 
         <div class="row">
             <div class="col-lg-2 col-sm-2"><h3>Soporte</h3></div>
-            <div class="col-lg-2 col-sm-2"><?=  $form->field($model, 'ancho_soporte')->textInput(['id' => 'ancho_soporte', 'value' =>$tipusImpressio['offset']['medidas_impresion']['ancho']])->label('Ancho mm') ?></div>
-            <div class="col-lg-2 col-sm-2"><?= $form->field($model, 'largo_soporte')->textInput(['id' => 'largo_soporte', 'value' =>$tipusImpressio['offset']['medidas_impresion']['alto']])->label('Largo mm') ?></div>
+            <div class="col-lg-2 col-sm-2"><?=  $form->field($model, 'ancho_soporte')->textInput(['id' => 'ancho_soporte'])->label('Ancho mm') ?></div>
+            <div class="col-lg-2 col-sm-2"><?= $form->field($model, 'largo_soporte')->textInput(['id' => 'largo_soporte'])->label('Largo mm') ?></div>
 
         </div>
 

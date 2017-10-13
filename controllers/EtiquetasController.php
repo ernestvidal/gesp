@@ -14,14 +14,33 @@ use yii\filters\VerbFilter;
 class EtiquetasController extends Controller {
 
     public $tipusImpressio = [
-            'offset' => [
-                'medidas_impresion' => ['ancho' => 480, 'alto' => 340],
-                'medidas_soporte' => ['ancho' => 700, 'alto' => 500],
-                'cantidades_tarificar' => [500, 1000, 2000, 3000, 5000],
-                'coste_impresion' => 125,
-                'coste_hoja' => 0.90,
+        'offset' => [
+            'medidas_impresion' => ['ancho' => 480, 'alto' => 340],
+            'medidas_soporte' => ['ancho' => 700, 'alto' => 500],
+            'cantidades_tarificar' => [500, 1000, 2000, 3000, 5000],
+            'coste_impresion' => 125,
+            'tipo_material'=>[
+                'raso resinado'=>['coste'=>0.57, 'ancho'=>700, 'largo'=>500],
+                'raso adhesivo'=>['coste'=>1.04,'ancho'=>700, 'largo'=>500],
+                'raso termosoldable'=>['coste'=>1.14,'ancho'=>700, 'largo'=>500]
             ]
-        ];
+        ],
+        'serigrafia' => [
+            'medidas_impresion' => ['ancho' => 480, 'alto' => 340],
+            'medidas_soporte' => ['ancho' => 700, 'alto' => 500],
+            'cantidades_tarificar' => [500, 1000, 2000, 3000, 5000],
+            'coste_impresion' => 125,
+            'coste_hoja' => 0.90,
+        ],
+        'toner' => [
+            'medidas_impresion' => ['ancho' => 470, 'alto' => 370],
+            'medidas_soporte' => ['ancho' => 700, 'alto' => 500],
+            'cantidades_tarificar' => [500, 1000, 2000, 3000, 5000],
+            'coste_impresion' => 125,
+            'coste_hoja' => 0.90,
+        ],
+    ];
+
     public function behaviors() {
         return [
             'verbs' => [
@@ -53,22 +72,22 @@ class EtiquetasController extends Controller {
             'coste_impresion',
             'coste_transporte',
             'coste_corte',
-            'sistema_impresion'
+            'sistema_impresion',
+            'tipo_material'
         ]);
-        
-        $model->addRule(['ancho_etiqueta', 'largo_etiqueta', 'ancho_soporte', 'largo_soporte'], 'required')
-                ->addRule('ancho_etiqueta','number', ['max'=> $this->tipusImpressio['offset']['medidas_impresion']['ancho']])
-                ->addRule('largo_etiqueta','number', ['max'=> $this->tipusImpressio['offset']['medidas_impresion']['ancho']]);
-                
 
-        return $this->render('_form', ['model' => $model, 'tipusImpressio'=> $this->tipusImpressio]);
+        $model->addRule(['ancho_etiqueta', 'largo_etiqueta', 'ancho_soporte', 'largo_soporte'], 'required')
+                ->addRule('ancho_etiqueta', 'number', ['max' => $this->tipusImpressio['offset']['medidas_impresion']['ancho']])
+                ->addRule('largo_etiqueta', 'number', ['max' => $this->tipusImpressio['offset']['medidas_impresion']['ancho']]);
+
+
+        return $this->render('_form', ['model' => $model, 'tipusImpressio' => $this->tipusImpressio]);
     }
 
     public function actionValorar() {
 
         $data = Yii::$app->request->post();
         $modelo = $data['DynamicModel'];
-        
 
         function calcularNumeroEtiquetas($offset, $modelo) {
             $a1 = intval($offset['medidas_impresion']['ancho'] / $modelo['ancho_etiqueta']);
@@ -105,6 +124,24 @@ class EtiquetasController extends Controller {
         return $this->render('view', [
                     'model' => $model
         ]);
+    }
+
+    public function actionDataprinting($tipoImpresion) {
+        $data = $this->tipusImpressio[$tipoImpresion]['tipo_material'];
+        if ($data > 0) {
+            
+        foreach ($data as $key => $value) {
+                echo "<option value='" . $key . "'>" . $key . "</option>";
+            }
+        }
+        
+    }
+    
+    public function actionTipomaterial($tipo_material, $tipo_impresion) {
+        if (Yii::$app->request->isAjax) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return $this->tipusImpressio[$tipo_impresion][$tipo_material];
+        }
     }
 
 }
