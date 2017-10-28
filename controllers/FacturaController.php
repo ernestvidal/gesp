@@ -19,7 +19,7 @@ use yii\bootstrap\Alert;
  * FacturaController implements the CRUD actions for Factura model.
  */
 class FacturaController extends Controller {
-    
+
     public $footer = ' 
 
               <table style="width: 100%">
@@ -38,7 +38,7 @@ class FacturaController extends Controller {
                     </tr>
 
               </table> ';
-    
+
     public function behaviors() {
         return [
             'verbs' => [
@@ -69,10 +69,12 @@ class FacturaController extends Controller {
      * @param string $id
      * @return mixed
      */
-    public function actionView($id) {
+    public function actionView($id, $modo_vista = NULL) {
 
         return $this->render('view', [
-                    'model' => $this->findModel($id)
+                    'model' => $this->findModel($id),
+                    'modo_vista' => $modo_vista,
+                    'id' => $id
         ]);
     }
 
@@ -225,13 +227,13 @@ class FacturaController extends Controller {
         $this->layout = 'viewLayout';
         $mpdf = new mPDF('UTF-8', 'A4', '', '', 10, 10, 15, 40, '', 5, 'P');
         $mpdf->SetHTMLFooter($this->footer);
-        $mpdf->WriteHTML($this->render('view', ['model' => $this->findModel($id)]));
+        $mpdf->WriteHTML($this->render('view', ['model' => $this->findModel($id), 'modo_vista'=>'Imprimir']));
         $facturaPdf = $mpdf->Output('factura.pdf', 'I');
         $facturaPdf = $mpdf->Output('../../../mis documentos/portucajabonita/facturas/2017/' . $num . ' ' . $name . '.pdf', 'F');
     }
 
     public function actionSendfactura($id, $num, $name) {
-        
+
         // Recogemos los datos enviados desde modalSendFactura form.
         $datosmodel = Yii::$app->request->post();
         $mailto = $datosmodel['Identidad']['identidad_mail'];
@@ -243,9 +245,9 @@ class FacturaController extends Controller {
         $mpdf->SetHTMLFooter($this->footer);
         $mpdf->WriteHTML($this->render('view', ['model' => $this->findModel($id)]));
         //$facturaPdf = $mpdf->Output('../../../mis documentos/portucajabonita/facturas/2017/' . $num . ' ' . $name .'.pdf', 'S');
-         $facturaPdf = $mpdf->Output('', 'S');
+        $facturaPdf = $mpdf->Output('', 'S');
 
-        
+
 
         $message = Yii::$app->mailer->compose()
                 ->setFrom('ernest@portucajabonita.com')
@@ -254,35 +256,35 @@ class FacturaController extends Controller {
                 ->setTextBody($body)
                 ->setHtmlBody($body)
                 ->setReadReceiptTo('ernest@portucajabonita.com')
-                ->attachContent($facturaPdf, ['fileName' => $num . ' ' . $name .'.pdf', 'contentType' => 'application/pdf']);
-                //->send();
+                ->attachContent($facturaPdf, ['fileName' => $num . ' ' . $name . '.pdf', 'contentType' => 'application/pdf']);
+        //->send();
         $result = Yii::$app->mailer->send($message);
-        
-           
-        
-       
+
+
+
+
 
         //En el  paso anterior generamos el pdf que aduntamos al correo y enviamos al cliente. En dicho paso no se guarda en 
         //el sistema local de archivos porque al mandarlo como adjunto, lo manda como si fuese un fichero vacio. Por eso en este paso
         //en el cual nos auto enviamos el correo a nuestra bandeja de saida para tener una copia de los mails enviados y dado 
         //que en el paso anterior, no hemos guardado el pdf, lo volvemos a generar y lo adjuntamos de nuevo. De momento es lo 
         //que me funciona.
-        
-        if ($result == TRUE){
-               
+
+        if ($result == TRUE) {
+
             $confirmationFrom = 'ernest@portucajabonita.com';
-            $facturaPdf = $mpdf->Output('../../../mis documentos/portucajabonita/facturas/2017/' . $num . ' ' . $name .'.pdf', 'F');
+            $facturaPdf = $mpdf->Output('../../../mis documentos/portucajabonita/facturas/2017/' . $num . ' ' . $name . '.pdf', 'F');
             $subject = "$asunto";
             $stream = imap_open("{cp193.webempresa.eu/novalidate-cert}INBOX.Sent", "ernest@portucajabonita.com", "ernestprT204249");
             $boundary = "------=" . md5(uniqid(rand()));
             $header = "MIME-Version: 1.0\r\n";
             $header .= "Content-Type: multipart/mixed; boundary=\"$boundary\"\r\n";
-            $header .= "Disposition-Notification-To: $confirmationFrom\r\n"; 
-            $header .= "X-Confirm-Reading-To: $confirmationFrom\r\n"; 
+            $header .= "Disposition-Notification-To: $confirmationFrom\r\n";
+            $header .= "X-Confirm-Reading-To: $confirmationFrom\r\n";
             $header .= "Read-Receipt-To: $confirmationFrom\r\n";
             $header .= "\r\n";
-            $file = "../../../mis documentos/portucajabonita/facturas/2017/". $num ." ". $name .".pdf";
-            $filename = $num . " " . $name .".pdf";
+            $file = "../../../mis documentos/portucajabonita/facturas/2017/" . $num . " " . $name . ".pdf";
+            $filename = $num . " " . $name . ".pdf";
             $ouv = fopen("$file", "rb");
             $lir = fread($ouv, filesize("$file"));
             fclose($ouv);
@@ -306,14 +308,14 @@ class FacturaController extends Controller {
 
             // Guardamos en la base de datos la fecha de envío
 
-             $model = $this->findModel($id);
-             $model->factura_fecha_envio = Yii::$app->formatter->asDate('now', 'yyyy-MM-dd');
-             $model->save();
+            $model = $this->findModel($id);
+            $model->factura_fecha_envio = Yii::$app->formatter->asDate('now', 'yyyy-MM-dd');
+            $model->save();
 
             return $this->redirect(['index']);
         } else {
-            
-             return $this->redirect(['index']);
+
+            return $this->redirect(['index']);
         }
     }
 
@@ -321,13 +323,13 @@ class FacturaController extends Controller {
         $modelFactura = $this->findModel($id);
 
         $model = Identidad::findOne($modelFactura->cliente_id);
-        
+
         return $this->renderAjax('modalSendFactura', [
                     'model' => $model,
                     'idFactura' => $id,
                     'numFactura' => $num,
                     'name' => $name,
-                    'cliente_id'=>$model->identidad_id,
+                    'cliente_id' => $model->identidad_id,
         ]);
     }
 

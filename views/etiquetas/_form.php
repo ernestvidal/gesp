@@ -37,11 +37,13 @@ $this->registerJsFile('@web/js/etiquetas.js', ['depends' => [\yii\web\JqueryAsse
                 ],
                 [
                 'id'=>'tipo_material',
-                'promtp'=>'Selet',
+                'prompt'=>'Select',
                 'onchange'=>'$.get( "'.Url::toRoute('etiquetas/tipomaterial').'", { tipo_material: $(this).val(), tipo_impresion: $(this.form.sistema_impresion).val() })
                                         .done(function( data ) { 
                                         $("#ancho_soporte" ).val( data.ancho );
-                                        $("#alto_soporte" ).val( data.alto );
+                                        $("#largo_soporte" ).val( data.largo );
+                                        $("#coste_impresion" ).val( data.coste );
+                                        
                                         
                                         } );'
                 ]) ?></div>

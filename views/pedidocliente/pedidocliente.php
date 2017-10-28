@@ -132,7 +132,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'id' => 'item_referencia_0',
                         'class' => 'form-control',
                         'onchange'=>'$.get( "'.Url::toRoute('item/featuresitem').'", { id: $(this).val() })
-                                        .done(function( data ) { $( "#item_descripcion_0" ).html( data ); } );'
+                                        .done(function( data ) { $(("#item_descripcion_")+ ("01").substr(-1,1)).val( data ); } );'
                     ]);
                     ?>
                      

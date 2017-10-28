@@ -6,6 +6,9 @@ use yii\helpers\Html;
 /* @var $model app\models\Pedidocliente */
 ?>
 <style>
+     td,th{
+        font-family: 'futuraltcondensedlight';
+    }
     #content td, th{
         height: 25px;
         padding: 5px;

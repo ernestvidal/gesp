@@ -93,11 +93,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <td><?= Html::a('<i class="glyphicon glyphicon-envelope"></i>', ['modalsendpedido', 'id' => $model[$i]->pedido_id]) ?></td>
                                         <td><?=
                                             Html::a('<i class="glyphicon glyphicon-file"></i>', '#', [
-                                                'id' => 'modal-window',
+                                                'id' => 'pedido-proveedor',
+                                                'title' => 'Crear pedido proveedor',
                                                 //'class' => 'btn btn-success',
                                                 //'data-toggle' => 'modal',
                                                 //'data-target' => '#modal',
-                                                'data-url' => Url::to(['modalfacturarpedido', 'id' => $model[$i]->pedido_id]),
+                                                'data-url' => Url::to(['crearpedido', 'id' => $model[$i]->pedido_id,
+                                                    'documento_destino' => 'pedido']),
                                                 'data-pjax' => '0',])
                                             ?></td>
                                          <td><?=
@@ -132,12 +134,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <?php
         $this->registerJs(
-                "$(document).on('click', '#modal-window', (function() {
+                "$(document).on('click', '#pedido-proveedor', (function() {
             $.get(
                 $(this).data('url'),
                 function (data) {
                     $('.modal-body').html(data);
-                    $('#modal-facturar-pedido').modal();
+                    $('#modal-pedido-proveedor').modal();
                 }
             );
         }));"
@@ -147,8 +149,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php
         // Ventana modal para introducir los datos para enviar la pedido por correo
         Modal::begin([
-            'header' => '<h2>Facturar Pedido</h2>',
-            'id' => 'modal-facturar-pedido',
+            'header' => '<h2>Crear pedido proveedor</h2>',
+            'id' => 'modal-pedido-proveedor',
         ]);
         echo "<div id='modalContent'></div>";
 

@@ -36,8 +36,8 @@ class AlbaranController extends Controller {
      * Lists all Albaran models.
      * @return mixed
      */
-    public function actionIndex($albaranes = NULL, $cliente=Null) {
-        if (isset($cliente) != Null){
+    public function actionIndex($albaranes = NULL, $cliente = Null) {
+        if (isset($cliente) != Null) {
             $model = Albaran::find()
                     ->where(['cliente_id' => $cliente])
                     ->orderBy('facturador_id, albaran_id DESC')
@@ -45,7 +45,7 @@ class AlbaranController extends Controller {
             return $this->render('index', [
                         'model' => $model
             ]);
-        }elseif (isset($albaranes) == Null) {
+        } elseif (isset($albaranes) == Null) {
             $model = Albaran::find()
                     ->where(['albaran_factura_num' => NULL])
                     ->orderBy('facturador_id, albaran_id DESC')
@@ -69,10 +69,12 @@ class AlbaranController extends Controller {
      * @param string $id
      * @return mixed
      */
-    public function actionView($id) {
+    public function actionView($id, $modo_vista = NULL) {
 
         return $this->render('view', [
-                    'model' => $this->findModel($id)
+                    'model' => $this->findModel($id),
+                    'modo_vista' => $modo_vista,
+                    'id' => $id
         ]);
     }
 
@@ -212,7 +214,7 @@ class AlbaranController extends Controller {
         }
     }
 
-    public function actionPrintalbaran($id, $num, $name) {
+    public function actionPrintalbaran($id, $num, $name, $modo_vista) {
         $footer = ' 
             
                 <table style="width: 100%">
@@ -231,12 +233,9 @@ class AlbaranController extends Controller {
         $this->layout = 'viewLayout';
         $mpdf = new mPDF('UTF-8', 'A4', '', '', 15, 15, 15, 0, '', 5, 'P');
         $mpdf->SetHTMLFooter($footer);
-        $mpdf->WriteHTML($this->render('view', ['model' => $this->findModel($id)]));
+        $mpdf->WriteHTML($this->render('view', ['model' => $this->findModel($id), 'modo_vista'=>$modo_vista]));
         $albaranPdf = $mpdf->Output('albaran.pdf', 'I');
-        $albaranPdf = $mpdf->Output('../../../mis documentos/portucajabonita/albaranes/2017/' . $num .' '.$name . '.pdf','F');
-      
-        
-     
+        $albaranPdf = $mpdf->Output('../../../mis documentos/portucajabonita/albaranes/2017/' . $num . ' ' . $name . '.pdf', 'F');
     }
 
     public function actionSendalbaran($id) {
@@ -262,8 +261,8 @@ class AlbaranController extends Controller {
                 ->send();
 
         //exit;
-        
-         
+
+
 
 
         return $this->redirect(['index']);
@@ -275,7 +274,7 @@ class AlbaranController extends Controller {
         if ($model->albaran_factura_num <> NULL) {
             echo 'this albarán is factured';
         } else {
-           
+
             return $this->renderAjax('modalFacturarAlbaran', [
                         //'model' => $model,
                         'numAlbaran' => $id,
@@ -298,7 +297,7 @@ class AlbaranController extends Controller {
         $fecha_factura = $data_request['fecha_factura'];
         $num_factura = $data_request['num_factura'];
         $model = $this->findModel($num_albaran);
-        $modelItems =$model['albaranitems'];
+        $modelItems = $model['albaranitems'];
         $fModel = new Factura();
         $fModel->factura_num = $num_factura;
         $fModel->factura_fecha = $fecha_factura;
@@ -307,11 +306,11 @@ class AlbaranController extends Controller {
         $fModel->factura_rate_descuento = $model->albaran_rate_descuento;
         $fModel->factura_rate_iva = 21;
         $fModel->factura_rate_irpf = $model->albaran_rate_irpf;
-        $fModel->forma_pago =  ($model['cliente']['identidad_forma_pago'] <> Null)? $model['cliente']['identidad_forma_pago']:'';
+        $fModel->forma_pago = ($model['cliente']['identidad_forma_pago'] <> Null) ? $model['cliente']['identidad_forma_pago'] : '';
         $fModel->factura_cta = $model['cliente']['identidad_cta'];
         $fModel->save();
         //var_dump($modelItems);
-        
+
         /**
          * Insertamos el número de albarán y la fecha en los items de la factura.
          * Lo hacemos de este modo porqué el foreach siguiente solo cuenta las líneas del albarán
@@ -319,28 +318,29 @@ class AlbaranController extends Controller {
         $fModelItems = new Facturaitem();
         $fModelItems->factura_num = $num_factura;
         $fModelItems->item_cantidad = 0;
-        $fModelItems->item_descripcion = 'Albarán núm.: ' . $model->albaran_num . ' / ' . Yii::$app->formatter->asDate($model->albaran_fecha, 'dd-MM-yyyy') ;
+        $fModelItems->item_descripcion = 'Albarán núm.: ' . $model->albaran_num . ' / ' . Yii::$app->formatter->asDate($model->albaran_fecha, 'dd-MM-yyyy');
         $fModelItems->item_precio = 0;
-        if ($fModelItems->validate()){
+        if ($fModelItems->validate()) {
             $fModelItems->save();
-        }else{
+        } else {
             $fModel->getErrors();
         }
-        
-        foreach ($modelItems as $albaranItems){
+
+        foreach ($modelItems as $albaranItems) {
             $fModelItems = new Facturaitem();
             $fModelItems->factura_num = $num_factura;
             $fModelItems->item_cantidad = $albaranItems->item_cantidad;
             $fModelItems->item_descripcion = $albaranItems->item_descripcion;
             $fModelItems->item_precio = $albaranItems->item_precio;
+            $fModelItems->item_referencia = $albaranItems->item_referencia;
             $fModelItems->save();
         }
         // Guardamos en el albarán el número de la factura para saber que está facturado
         $model->albaran_factura_num = $num_factura;
-        if ($model->validate()){
+        if ($model->validate()) {
             $model->save();
             $this->redirect('@web/factura/index');
-        }else{
+        } else {
             $model->getErrors();
         }
     }

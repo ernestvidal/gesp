@@ -92,7 +92,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <td><?= Html::a('<i class="glyphicon glyphicon-print"></i>', ['printpedido',
                                             'id' => $model[$i]->pedido_id,
                                             'num' => $model[$i]->pedido_num,
-                                            'name' => $model[$i]->cliente->identidad_nombre]) ?></td>
+                                            'name' => $model[$i]->cliente->identidad_nombre,
+                                            'modo_vista'=> 'Imprimir']) ?></td>
                                         
                                         <td><?= Html::a('<i class="glyphicon glyphicon-envelope"></i>','#', [
                                             'id' => 'send-pedido',

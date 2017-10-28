@@ -30,7 +30,8 @@ use kartik\select2\Select2;
                 'SERIGRAFIA DIGITAL' => 'SERIGRAFIA DIGITAL',
                 'LASER' => 'LASER',
                 'OFFSET' => 'OFFSET',
-                'DIGITAL' => 'DIGITAL'], ['prompt' => 'Seleccionar ....'])
+                'DIGITAL' => 'DIGITAL',
+                'SUBLIMACION'=> 'SUBLIMACION'], ['prompt' => 'Seleccionar ....'])
             ?></div>
         <div class="col-md-6">
             <?=

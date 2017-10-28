@@ -5,9 +5,11 @@ namespace app\controllers;
 use Yii;
 use app\models\Pedidocliente;
 use app\models\Pedidoitemcliente;
-use app\models\PedidoclienteSearch;
+//use app\models\PedidoclienteSearch;
 use app\models\Albaran;
 use app\models\Albaranitem;
+use app\models\Pedido;
+use app\models\Pedidoitem;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -223,6 +225,8 @@ class PedidoclienteController extends Controller
          * Copiamos o convertimos el pedido del cliente en albarán para el envío
          * de la mercancia. 
          */
+      
+        
         $fecha_documento;
         $num_documento;
         $num_pedido_id;
@@ -255,6 +259,68 @@ class PedidoclienteController extends Controller
             $fModelItems->item_cantidad = $pedidoItems->item_cantidad;
             $fModelItems->item_descripcion = $pedidoItems->item_descripcion;
             $fModelItems->item_precio = $pedidoItems->item_precio;
+            $fModelItems->item_referencia = $pedidoItems->item_referencia;
+            $fModelItems->save();
+        }
+        /**
+         * Si se ha creado el albarán y sus líneas sin problemas, guardamos el
+         * número de albarán en el pedido para saber el traking del pedido de
+         * cliente.
+         *  
+         */
+        
+        $model->save();
+    }
+    
+    public function actionCrearpedido($id, $documento_destino) {
+        $model = $this->findModel($id);
+
+        return $this->renderAjax('modalPedidoProveedor', [
+                    //'model' => $model,
+                    'numPedido' => $id,
+                    'documento_destino' => $documento_destino,
+            
+        ]);
+    }
+     public function actionPedidoproveedor() {
+        /**
+         * Creamos el pedido de proveedor desde el pedido cliente 
+         */
+      
+        
+        $fecha_documento;
+        $num_documento;
+        $num_pedido_id;
+        $tipo_entrega;
+
+        $data_request = Yii::$app->request->post();
+        $num_pedido_id = $data_request['pedido_id'];
+        $fecha_documento = $data_request['fecha_documento'];
+        $num_documento = $data_request['numero_documento'];
+        $cliente_id = $data_request['cliente_id'];
+        $model = $this->findModel($num_pedido_id);
+        //$model->pedido_albaran_num = $num_documento;
+        $modelItems = $model['pedidoitemclientes'];
+        $fModel = new Pedido();
+        $fModel->pedido_num = $num_documento;
+        $fModel->pedido_fecha = $fecha_documento;
+        //$fModel->albaran_pedido_cliente_num = $model->pedido_cliente_num;
+        $fModel->facturador_id = $model->facturador_id;
+        $fModel->cliente_id = $cliente_id;
+        $fModel->pedido_rate_descuento = $model->pedido_rate_descuento;
+        $fModel->pedido_rate_iva = 21;
+        $fModel->pedido_rate_irpf = $model->pedido_rate_irpf;
+        //$fModel->albaran_forma_pago = ($model['cliente']['identidad_forma_pago'] <> Null) ? $model['cliente']['identidad_forma_pago'] : '';
+        //$fModel->albaran_cta = $model['cliente']['identidad_cta'];
+        $fModel->save();
+
+        foreach ($modelItems as $pedidoItems) {
+            $fModelItems = new Pedidoitem();
+            $fModelItems->pedido_num = $num_documento;
+            $fModelItems->item_cantidad = $pedidoItems->item_cantidad;
+            $fModelItems->item_descripcion = $pedidoItems->item_descripcion;
+            $fModelItems->item_precio = 0.00;
+            $fModelItems->item_referencia = $pedidoItems->item_referencia;
             $fModelItems->save();
         }
         /**
@@ -284,7 +350,7 @@ class PedidoclienteController extends Controller
                 </table> ';
 
         $this->layout = 'viewLayout';
-        $mpdf = new mPDF('UTF-8', 'A4', '', '', 15, 15, 15, 40, '', 5, 'P');
+        $mpdf = new mPDF('UTF-8', 'A4', '', '', 15, 15, 15, 40, '', 5, 'P');                
         $mpdf->SetHTMLFooter($footer);
         $mpdf->WriteHTML($this->render('view', ['model' => $this->findModel($id)]));
         $pedidoPdf = $mpdf->Output('pedidocliente.pdf','I');

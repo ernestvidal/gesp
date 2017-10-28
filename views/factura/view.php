@@ -5,7 +5,16 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Factura */
 ?>
-<style>
+
+<?php
+if ($modo_vista == 'Imprimir') {
+    echo "<style>";
+    echo "td,th{font-family: 'futuraltcondensedlight';}";
+    echo "</style>";
+}
+?>
+
+<style>    
     #content td, th{
         height: 25px;
         padding: 5px;
@@ -218,3 +227,29 @@ use yii\helpers\Html;
         </table>
     </div>
 <?php } ?>
+
+<?php
+/*
+ * En la vista del modelo se ha puesto un boton para no tener que salir a otra
+ * pantalla para imprimir y no se tengan dos vistas una con boton y otra sin
+ * boton de imprimir. Desde la vista ahora se puede y para ocultar el boton
+ * cuando se genere. Si no le damos a imprimir el valor de $modo_vista siempre
+ * sera null y el botón se verá en la vista. Si le damos a imprimir enviaremos
+ * a la acción la variable $modo_vista con el valor 'Imprimir', para que lo 
+ * oculte y no lo muestre cuando se genere el pdf. 
+ */
+
+
+if ($modo_vista == NULL) {
+    echo "<div class='row'>";
+    echo "<div class='col-md-2'>";
+    echo Html::a('Imprimir', ['printfactura',
+        'id' => $id,
+        'num' => $model->factura_num,
+        'name' => $model->cliente->identidad_nombre,
+        'modo_vista' => 'Imprimir'], ['class' => ['class' => 'btn btn-sm btn-primary']
+    ]);
+    echo "</div>";
+    echo "</div>";
+}
+?>

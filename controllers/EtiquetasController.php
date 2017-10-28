@@ -140,7 +140,7 @@ class EtiquetasController extends Controller {
     public function actionTipomaterial($tipo_material, $tipo_impresion) {
         if (Yii::$app->request->isAjax) {
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            return $this->tipusImpressio[$tipo_impresion][$tipo_material];
+            return $this->tipusImpressio[$tipo_impresion]['tipo_material'][$tipo_material];
         }
     }
 
