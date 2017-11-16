@@ -98,7 +98,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                for ($i = 0; $i < $count ; $i++)
               {
-                echo "<div id='line_0' class='row pedido_line'>";
+                echo "<div id='line_" . $i . "'class='row pedido_line'>";
 
                 echo "<div class='col-md-2'>";
                 echo "<input type='text' name='PedidoItem[$i][item_cantidad]' id='item_cantidad_" . $i . "'class='form-control text-right' value='" . $model['pedidoitemclientes'][$i]['item_cantidad'] . "'  >";
@@ -121,7 +121,7 @@ $this->params['breadcrumbs'][] = $this->title;
                  * y guardar - editar  el mismo en el cuerpo de la misma para que queden relacionados.
                 */
                 echo " <div class='col-md-1'>";
-                echo "<a href=''>[ x ]</a>";
+                echo Html::a('<i class="glyphicon glyphicon-trash"></i>', 'delete');
                 echo " </div> ";
 
                 echo " <input type='hidden' name='PedidoItem[$i][pedido_num]'  id='pedido_item_num_" . $i . "'>";

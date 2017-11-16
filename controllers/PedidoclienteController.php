@@ -66,10 +66,12 @@ class PedidoclienteController extends Controller
      * @param string $id
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView($id, $modo_vista = NULL)
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
+             'modo_vista' => $modo_vista,
+            'id' => $id
         ]);
     }
 
@@ -270,6 +272,9 @@ class PedidoclienteController extends Controller
          */
         
         $model->save();
+        return $this->redirect(['index']);
+        
+        
     }
     
     public function actionCrearpedido($id, $documento_destino) {
@@ -352,7 +357,7 @@ class PedidoclienteController extends Controller
         $this->layout = 'viewLayout';
         $mpdf = new mPDF('UTF-8', 'A4', '', '', 15, 15, 15, 40, '', 5, 'P');                
         $mpdf->SetHTMLFooter($footer);
-        $mpdf->WriteHTML($this->render('view', ['model' => $this->findModel($id)]));
+        $mpdf->WriteHTML($this->render('view', ['model' => $this->findModel($id), 'modo_vista'=>'Imprimir']));
         $pedidoPdf = $mpdf->Output('pedidocliente.pdf','I');
         $pedidoPdf = $mpdf->Output('../../../mis documentos/portucajabonita/pedido cliente/2017/' . $num .' '.$name . '.pdf','F');
     }

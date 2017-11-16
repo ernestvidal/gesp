@@ -39,7 +39,7 @@ if ($modo_vista == 'sin valorar' || $modo_vista == 'valorado') {
             <td style="width: 49%; padding-left: 15px;">
                 <h4>Albaran a:</h4>
                 <h4><?= $model['cliente']['identidad_razon_social'] ? $model['cliente']['identidad_razon_social'] : $model['cliente']['identidad_nombre'] ?></h4>
-                <h5><?= $model['cliente']['identidad_direccion'] ?></h5>
+                <h5><?= $model['cliente']['identidad_direccion'] . " - " . $model['cliente']['identidad_direccion_two']  ?></h5>
                 <h5><?= $model['cliente']['identidad_cp'] . ' ' . $model['cliente']['identidad_poblacion'] ?></h5>
                 <h5><?= $model['cliente']['identidad_provincia'] ?></h5>
                 <h5><?= 'Nif. / Cif. ' . $model['cliente']['identidad_nif'] ?></h5>
@@ -231,7 +231,7 @@ if ($modo_vista == 'sin valorar' || $modo_vista == 'valorado') {
 
     if ($modo_vista == NULL) {
         echo "<div class='row'>";
-        echo "<div class='col-md-2'>";
+        echo "<div class='col-md-4'>";
         echo Html::a('<i class="glyphicon glyphicon-print"></i> Albarán sin valorar', ['printalbaran',
             'id' => $id,
             'num' => $model->albaran_num,
@@ -243,8 +243,13 @@ if ($modo_vista == 'sin valorar' || $modo_vista == 'valorado') {
             'id' => $id,
             'num' => $model->albaran_num,
             'name' => $model->cliente->identidad_nombre,
-            'modo_vista' => 'valorado'], ['class' => ['class' => 'btn btn-sm btn-primary']
-        ]);
+            'modo_vista' => 'valorado'],
+            ['class' => 'btn btn-sm btn-primary']);
+        echo "  ";
+        echo Html::a('<i class="glyphicon glyphicon-pencil"></i> Editar', ['update',
+            'id' => $id],
+            ['class' => 'btn btn-sm btn-primary']);
+        
         echo "</div>";
         echo "</div>";
     }

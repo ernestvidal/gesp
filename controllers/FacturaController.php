@@ -250,12 +250,12 @@ class FacturaController extends Controller {
 
 
         $message = Yii::$app->mailer->compose()
-                ->setFrom('ernest@portucajabonita.com')
+                ->setFrom('admin@portucajabonita.com')
                 ->setTo($mailto)
                 ->setSubject($asunto)
                 ->setTextBody($body)
                 ->setHtmlBody($body)
-                ->setReadReceiptTo('ernest@portucajabonita.com')
+                ->setReadReceiptTo('admin@portucajabonita.com')
                 ->attachContent($facturaPdf, ['fileName' => $num . ' ' . $name . '.pdf', 'contentType' => 'application/pdf']);
         //->send();
         $result = Yii::$app->mailer->send($message);
@@ -272,10 +272,10 @@ class FacturaController extends Controller {
 
         if ($result == TRUE) {
 
-            $confirmationFrom = 'ernest@portucajabonita.com';
+            $confirmationFrom = 'admin@portucajabonita.com';
             $facturaPdf = $mpdf->Output('../../../mis documentos/portucajabonita/facturas/2017/' . $num . ' ' . $name . '.pdf', 'F');
             $subject = "$asunto";
-            $stream = imap_open("{cp193.webempresa.eu/novalidate-cert}INBOX.Sent", "ernest@portucajabonita.com", "ernestprT204249");
+            $stream = imap_open("{cp193.webempresa.eu/novalidate-cert}INBOX.Sent", "admin@portucajabonita.com", "adminprT204249");
             $boundary = "------=" . md5(uniqid(rand()));
             $header = "MIME-Version: 1.0\r\n";
             $header .= "Content-Type: multipart/mixed; boundary=\"$boundary\"\r\n";
@@ -303,7 +303,7 @@ class FacturaController extends Controller {
             $cuerpo .= "$body\r\n";
             $cuerpo .= "\r\n\r\n";
             $msg3 .= "--$boundary--\r\n";
-            imap_append($stream, "{cp193.webempresa.eu/novalidate-cert}INBOX.Sent", "From: ernest@portucajabonita.com\r\n" . "To: $mailto\r\n" . "Subject: $subject\r\n" . "$header\r\n" . "$cuerpo\r\n" . "$msg2\r\n" . "$msg3\r\n");
+            imap_append($stream, "{cp193.webempresa.eu/novalidate-cert}INBOX.Sent", "From: admin@portucajabonita.com\r\n" . "To: $mailto\r\n" . "Subject: $subject\r\n" . "$header\r\n" . "$cuerpo\r\n" . "$msg2\r\n" . "$msg3\r\n");
             imap_close($stream);
 
             // Guardamos en la base de datos la fecha de envío
@@ -341,6 +341,24 @@ class FacturaController extends Controller {
         return $this->render('reportFacturasCliente', [
                     'model' => $model
         ]);
+    }
+    
+    /**
+     * 
+     * Función que guarda la fecha en la que hemos verificado que nuestro
+     * cliente ha recibido nuestra factura.
+     */
+    
+     public function actionConfirmacionrecepcion($id){
+         
+        $model = $this->findModel($id);
+        $model->factura_fecha_recepcion = date('Y-m-d');
+        if ($model->validate()){
+            $model->save();
+            return $this->redirect('@web/factura/index');
+        } else {
+            $model->getErrors();
+        }        
     }
 
 }

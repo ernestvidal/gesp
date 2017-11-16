@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use app\models\Pedidocliente;
 ?>
 <div class="proforma-send">
     <h1><?= Html::encode($this->title) ?></h1>
@@ -28,10 +29,12 @@ use yii\bootstrap\ActiveForm;
                 ]);
         ?>
 
-            <?=
-            Html::input('text', 'numero_documento', '', [
+           
+             <?=
+            Html::input('text', 'numero_documento', '2017.'. substr('000'.(substr(Pedidocliente::find()->max('pedido_num'), 5)+1),-3,3), [
                 'class' => 'form-control',
-                'placeholder' => 'Introducir número presupuesto'])
+                'placeholder' => 'Introducir número Pedido',
+                ])
             ?>
             <br />
             <?= Html::input('date', 'fecha_documento', '', ['class' => 'form-control']) ?>

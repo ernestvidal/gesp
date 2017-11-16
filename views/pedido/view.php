@@ -205,12 +205,18 @@ if ($modo_vista == 'Imprimir') {
 if ($modo_vista == NULL) {
     echo "<div class='row'>";
     echo "<div class='col-md-2'>";
-    echo Html::a('Imprimir', ['printpedido',
+    echo Html::a('<i class="glyphicon glyphicon-print"></i> Imprimir', ['printpedido',
         'id' => $id,
         'num' => $model->pedido_num,
         'name' => $model->cliente->identidad_nombre,
         'modo_vista' => 'Imprimir'], ['class' => ['class' => 'btn btn-sm btn-primary']
     ]);
+     echo "  ";
+        echo Html::a('<i class="glyphicon glyphicon-pencil"></i> Editar', ['update',
+            'id' => $id,
+            'num' => $model->pedido_num,
+            'modo_vista' => 'Editar'], ['class' => ['class' => 'btn btn-sm btn-primary']
+        ]);
     echo "</div>";
     echo "</div>";
 }

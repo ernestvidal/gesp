@@ -38,7 +38,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <th>I dto</th>
                                     <th>% irpf</th>
                                     <th>I irpf</th>
-                                    <th></th>
+                                    <th>Total</th>
+                                    <th>CRF</th>
+                                    <th>CRP</th>
                                     <th></th>
                                     <th></th>
                                     <th></th>
@@ -87,6 +89,18 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <td class="text-right"><?= $model[$i]->factura_rate_descuento ?> %</td>
                                     <td class="text-right"><?= Yii::$app->formatter->asDecimal($totalDto, 2) ?></td>
                                     <td class="text-right"><?= Yii::$app->formatter->asDecimal($totalFactura, 2); ?></td>
+                                    <td class="text-center"><?php if ($model[$i]->factura_fecha_recepcion==NULL){
+                                            echo Html::a('<i class="glyphicon glyphicon-remove text-danger"></i>',['confirmacionrecepcion', 'id'=>$model[$i]->factura_id]);
+                                            } else{
+                                            echo Html::a('<i class="glyphicon glyphicon-ok text-success"></i>',['confirmacionrecepcion', 'id'=>$model[$i]->factura_id]);;   
+                                            } ?></td>
+                                    
+                                      <td class="text-center"><?php if ($model[$i]->factura_pago_recibido==NULL){
+                                            echo '<i class="glyphicon glyphicon-remove text-danger"></i>';
+                                            } else{
+                                            echo  '<i class="glyphicon glyphicon-ok green text-success"></i>';   
+                                            } ?></td>
+                                    
                                    
                                     <td><?= Html::a('<i class="glyphicon glyphicon-pencil"></i>', ['update', 'id' => $model[$i]->factura_id]) ?></td>
                                     <td><?= Html::a('<i class="glyphicon glyphicon-print"></i>', ['printfactura',

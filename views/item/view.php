@@ -35,10 +35,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label'=>'cliente',
                 'value'=>$model['itemIdentidad']['identidad_nombre'],
                 ),
-            'item_precio_venta'
+            'item_precio_venta',
+            'item_url_imagen'
 
         ],
     ]) ?>
+    
+    <p>
+        <img src="<?='file://'.$model->item_url_imagen?>" alt="imagen"/>
+    </p>
     
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->item_id], ['class' => 'btn btn-primary']) ?>

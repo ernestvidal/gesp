@@ -87,6 +87,29 @@ class ItemController extends Controller {
             ]);
         }
     }
+    
+     /**
+     * Duplicate Item model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionDuplicate($id) {
+        /**
+         * $oldModel es el record/registro que queremos copiar
+         */
+        
+        $oldModel = $this->findModel($id);
+        $model = new Item();
+        $model->attributes = $oldModel->attributes;
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->item_id]);
+        } else {
+            return $this->render('duplicate', [
+                        'model' => $model,
+            ]);
+        }
+    }
 
     /**
      * Deletes an existing Item model.

@@ -32,7 +32,19 @@ $this->params['breadcrumbs'][] = $this->title;
             'item_precio_compra',
             'item_identidad_id',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn',
+            'buttons' => [
+                'additional_icon' => function ($url, $model, $key) {
+                    return Html::a ('<span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>', ['duplicate', 'id' => $key]);
+                },
+            ],
+            'template' => '{update} {view} {delete} {additional_icon}'
+
+
+        ],
+
+            
+          //  ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
 <?php Pjax::end(); ?></div>
