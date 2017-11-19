@@ -8,7 +8,6 @@ use app\models\Cargo;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
 
-
 /* @var $this yii\web\View */
 /* @var $model app\models\Identidad */
 /* @var $form yii\widgets\ActiveForm */
@@ -25,7 +24,12 @@ use yii\helpers\Url;
                 </li>
                 <li>
                     <a href="#cargos" aria-controls="cargos" role="tab" data-toggle="tab">
-                        <span class="glyphicon glyphicon-credit-card"></span> &nbsp; Cargos 
+                        <span class="glyphicon glyphicon-user"></span> &nbsp; Cargos 
+                    </a>
+                </li>
+                <li>
+                    <a href="#resumen" aria-controls="resumens" role="tab" data-toggle="tab">
+                        <span class="glyphicon glyphicon-list-alt"></span> &nbsp; Resumen 
                     </a>
                 </li>
             </ul>
@@ -34,7 +38,7 @@ use yii\helpers\Url;
         <div class="tab-content col-lg-9">
             <!-- Tab Identidad -->
             <div class="tab-pane active" id="identidad">   
-                <?php $form = ActiveForm::begin(['enableAjaxValidation'=>TRUE]);
+                <?php $form = ActiveForm::begin(['enableAjaxValidation'=> true]);
                 ?>
                 <div class="row">
                     <div class="col-lg-12">
@@ -124,7 +128,7 @@ use yii\helpers\Url;
             <div class="tab-pane" id="cargos">
                 <div class="cargo-form">
                     <?php
-                    if ($model->isNewRecord == FALSE) {
+                    if ($model->isNewRecord == false) {
                         foreach ($modelCargo as $cargo) {
                             $formCargo = ActiveForm::begin();
                             ?>
@@ -150,11 +154,11 @@ use yii\helpers\Url;
                                 <?= Html::a('Delete', ['delete', 'id' => $cargo['cargo_id']], ['class' => 'btn btn-danger']) ?>
                             </div>
                             <?php ActiveForm::end(); ?>
-                        <?php } ?>
+                        <?php  } ?>
 
 
-                    <?php } ?>
-                    <?= 
+                    <?php  } ?>
+                    <?=
                      Html::a('<i class="glyphicon glyphicon-file"></i> Nuevo cargo', '#', [
                                                 'id' => 'nuevo-cargo-link',
                                                 'title' => 'Nuevo cargo',
@@ -163,8 +167,27 @@ use yii\helpers\Url;
                                                 'data-target' => '#modal',
                                                 'data-url' => Url::to(['cargo/create']),
                                                 'data-pjax' => '1',])
-                   ?>
+                    ?>
                 </div>
+            </div>
+
+            <!-- Tab resumen -->
+            <div class="tab-pane" id="resumen">
+                <div class="page-header">
+                    <h1><span class="glyphicon glyphicon-user"> </span><?=' ' . $model->identidad_nombre ?><small>  Resumen cta.</small></h1>
+                </div>
+
+                                <?=
+                                Html::a('<i class="glyphicon glyphicon-record"></i> Facturas', '#', [
+                                                'id' => 'nuevo-cargo-link',
+                                                'title' => 'Nuevo cargo',
+                                               // 'class' => 'btn btn-success',
+                                                'data-toggle' => 'modal',
+                                                'data-target' => '#modal',
+                                                'data-url' => Url::to(['cargo/create']),
+                                                'data-pjax' => '1',])
+                    ?>
+                      </div>
             </div>
         </div>   
     </div>

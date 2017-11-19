@@ -19,6 +19,7 @@ use app\models\Facturaitem;
 /**
  * AlbaranController implements the CRUD actions for Albaran model.
  */
+
 class AlbaranController extends Controller {
 
     public function behaviors() {
@@ -268,10 +269,11 @@ class AlbaranController extends Controller {
         return $this->redirect(['index']);
     }
 
-    public function actionModalfacturar($id) {
+    public function actionModalfacturar($id)
+    {
         $model = $this->findModel($id);
 
-        if ($model->albaran_factura_num <> NULL) {
+        if ($model->albaran_factura_num <> null) {
             echo 'this albarán is factured';
         } else {
 
@@ -306,7 +308,7 @@ class AlbaranController extends Controller {
         $fModel->factura_rate_descuento = $model->albaran_rate_descuento;
         $fModel->factura_rate_iva = 21;
         $fModel->factura_rate_irpf = $model->albaran_rate_irpf;
-        $fModel->forma_pago = ($model['cliente']['identidad_forma_pago'] <> Null) ? $model['cliente']['identidad_forma_pago'] : '';
+        $fModel->forma_pago = ($model['cliente']['identidad_forma_pago'] <> null) ? $model['cliente']['identidad_forma_pago'] : '';
         $fModel->factura_cta = $model['cliente']['identidad_cta'];
         $fModel->save();
         //var_dump($modelItems);
@@ -335,7 +337,8 @@ class AlbaranController extends Controller {
             $fModelItems->item_referencia = $albaranItems->item_referencia;
             $fModelItems->save();
         }
-        // Guardamos en el albarán el número de la factura para saber que está facturado
+        // Guardamos en el albarán el número de la factura para saber que está
+        // facturado
         $model->albaran_factura_num = $num_factura;
         if ($model->validate()) {
             $model->save();

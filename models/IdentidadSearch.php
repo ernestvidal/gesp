@@ -62,6 +62,8 @@ class IdentidadSearch extends Identidad {
                 ->andFilterWhere(['like', 'identidad_nif', $this->identidad_nif])
                 ->andFilterWhere(['like', 'identidad_role', $this->identidad_role])
                 ->andFilterWhere(['like', 'identidad_persona_contacto', $this->identidad_persona_contacto])
+                ->andFilterWhere(['like', 'identidad_phone', $this->identidad_phone])
+                
         ;
 
         return $dataProvider;

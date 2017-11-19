@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
     
     <p>
-        <img src="<?='file://'.$model->item_url_imagen?>" alt="imagen"/>
+        <img src="<?=$model->item_url_imagen?>" alt="imagen"/>
     </p>
     
     <p>
