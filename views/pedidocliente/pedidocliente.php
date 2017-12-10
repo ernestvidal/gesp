@@ -1,4 +1,4 @@
-<?php
+ <?php
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -132,7 +132,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         'id' => 'item_referencia_0',
                         'class' => 'form-control',
                         'onchange'=>'$.get( "'.Url::toRoute('item/featuresitem').'", { id: $(this).val() })
-                                        .done(function( data ) { $(("#item_descripcion_")+ ("01").substr(-1,1)).val( data ); } );'
+                                     .done(function( data ) { $("#"+id).parent().nextAll("div:has(textarea)").first().find("textarea").focus().val( data ); } );'
+                        //Este select se rellena con los productos que correspondan al cliente de este pedido.
+                        //Cuando seleccionamos el producto, se copia en el textarea de la descripción lo que queramos traer
+                        //con la consulta ajax realizada.
                     ]);
                     ?>
                      

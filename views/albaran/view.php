@@ -91,7 +91,7 @@ if ($modo_vista == 'sin valorar' || $modo_vista == 'valorado') {
                         }
                         ?></td>
                     <td style="padding-left: 15px; padding-right: 10px"><?= Yii::$app->formatter->asNtext($items['item_descripcion']) ?></td>
-                    <td class="text-right"><?php if($items['item_precio']<>0 && $modo_vista == 'valorado' || $modo_vista == NULL){ echo number_format($items['item_precio'],3,',','.');}   ?></td>
+                    <td class="text-right"><?php if($items['item_precio']<>0 && $modo_vista == 'valorado' || $modo_vista == NULL){ echo number_format($items['item_precio'],5,',','.');}   ?></td>
                     <td class="text-right"><?php if(($items['item_cantidad'] * $items['item_precio']<>0 && $modo_vista == 'valorado' || $modo_vista == NULL)){ echo (number_format($items['item_cantidad'] * $items['item_precio'], 2,',','.'));}   ?></td>
                 </tr>
 

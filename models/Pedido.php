@@ -20,6 +20,7 @@ use Yii;
  * @property Identidad $cliente
  * @property Identidad $facturador
  * @property Pedidoitem[] $pedidoitems
+ * @property date $pedido_fecha_envio fecha en la que se envía el pedido al proveedor
  */
 class Pedido extends \yii\db\ActiveRecord
 {
@@ -39,7 +40,7 @@ class Pedido extends \yii\db\ActiveRecord
         return [
             [['pedido_num', 'facturador_id', 'cliente_id', 'pedido_fecha', 'pedido_rate_descuento', 'pedido_rate_iva', 'pedido_rate_irpf'], 'required'],
             [['facturador_id', 'cliente_id'], 'integer'],
-            [['pedido_fecha', 'pedido_img'], 'safe'],
+            [['pedido_fecha', 'pedido_img', 'pedido_fecha_envio'], 'safe'],
             [['pedido_rate_descuento', 'pedido_rate_iva', 'pedido_rate_irpf'], 'number'],
             [['pedido_num'], 'string', 'max' => 20],
             [['forma_pago', 'pedido_validez', 'pedido_plazo_entrega', 'pedido_free_one', 'pedido_free_two'], 'string', 'max' => 50],
@@ -65,7 +66,8 @@ class Pedido extends \yii\db\ActiveRecord
             'pedido_validez' => 'pedido_validez',
             'pedido_plazo_entrega' => 'Pedido_plazo_entrega',
             'pedido_free_one' => 'pedido_free_one', 
-            'pedido_free_two' => 'Pedido fre two'
+            'pedido_free_two' => 'Pedido fre two',
+            'pedido_fecha_envio'=> 'Fecha mail'
         ];
     }
 

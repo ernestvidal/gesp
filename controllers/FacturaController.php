@@ -54,14 +54,25 @@ class FacturaController extends Controller {
      * Lists all Factura models.
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex($id = null) {
 
-        $model = Factura::find()
+        if (isset($id) == null) {
+            $model = Factura::find()
                 ->orderBy('facturador_id, factura_num DESC')
                 ->all();
-        return $this->render('index', [
+            return $this->render('index', [
                     'model' => $model
         ]);
+
+        } else {
+            $model = Factura::find()
+                ->where(['cliente_id' => $id])
+                ->orderBy('facturador_id, factura_num DESC')
+                ->all();
+            return $this->render('index', [
+                'model' => $model
+            ]);
+        }
     }
 
     /**
@@ -243,7 +254,7 @@ class FacturaController extends Controller {
         $this->layout = 'viewLayout';
         $mpdf = new mPDF('UTF-8', 'A4', '', '', 15, 15, 15, 40, '', 5, 'P');
         $mpdf->SetHTMLFooter($this->footer);
-        $mpdf->WriteHTML($this->render('view', ['model' => $this->findModel($id)]));
+        $mpdf->WriteHTML($this->render('view', ['model' => $this->findModel($id), 'modo_vista'=>'Imprimir']));
         //$facturaPdf = $mpdf->Output('../../../mis documentos/portucajabonita/facturas/2017/' . $num . ' ' . $name .'.pdf', 'S');
         $facturaPdf = $mpdf->Output('', 'S');
 

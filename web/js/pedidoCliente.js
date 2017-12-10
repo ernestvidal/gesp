@@ -120,6 +120,8 @@ function borrar(item){
             'id'    : 'item_referencia_' + item_order,
             'name'  : 'PedidoItem[' + item_order + '][item_referencia]',
             'class' : 'form-control',
+            'onchange': "$.get(('/gesp/web/item/featuresitem'),{ id: $(this).val() }).done(function( data ) { $('#'+id).parent().nextAll('div:has(textarea)').first().find('textarea').focus().val( data ); } );",
+    
         });
         
         

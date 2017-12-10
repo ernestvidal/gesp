@@ -25,6 +25,7 @@ use Yii;
  * @property date $item_fecha 
  * @property string $item_precio_venta
  * @property string $item_precio_compra
+ * @property integer $item_fabricante_proveedor 
  */
 class Item extends \yii\db\ActiveRecord
 {
@@ -43,7 +44,7 @@ class Item extends \yii\db\ActiveRecord
     {
         return [
             [['item_descripcion', 'item_identidad_id'], 'required'],
-            [['item_identidad_id','item_ancho','item_largo'], 'integer'],
+            [['item_identidad_id','item_ancho','item_largo','item_fabricante_proveedor'], 'integer'],
             [['item_descripcion', 'item_long_descripcion', 'item_material', 'item_acabado'], 'string', 'max' => 250],
             [['item_referencia'], 'string', 'max' => 30],
             [['item_numero_pantalla'], 'string', 'max' => 10],
@@ -78,7 +79,8 @@ class Item extends \yii\db\ActiveRecord
             'item_largo' =>'Largo mm',
             'item_numero_pantalla'=>'Núm. Pantalla',
             'item_precio_venta' => 'Precio de venta',
-            'item_precio_compra'=>'Precio de compra'
+            'item_precio_compra'=>'Precio de compra',
+            'item_fabricante_proveedor'=>'Fabricante/Proveedor'
         ];
     }
 

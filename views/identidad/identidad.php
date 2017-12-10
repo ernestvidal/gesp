@@ -178,14 +178,15 @@ use yii\helpers\Url;
                 </div>
 
                                 <?=
-                                Html::a('<i class="glyphicon glyphicon-record"></i> Facturas', '#', [
-                                                'id' => 'nuevo-cargo-link',
+                                Html::a('<i class="glyphicon glyphicon-record"></i> Facturas', ['factura/index', 'id'=>$model->identidad_id], [
+                                                'id' => 'facturas-link',
                                                 'title' => 'Nuevo cargo',
                                                // 'class' => 'btn btn-success',
-                                                'data-toggle' => 'modal',
-                                                'data-target' => '#modal',
-                                                'data-url' => Url::to(['cargo/create']),
-                                                'data-pjax' => '1',])
+                                               // 'data-toggle' => 'modal',
+                                               // 'data-target' => '#modal',
+                                               // 'data-url' => Url::to(['factura/index', 'id'=>$model->identidad_id]),
+                                               // 'data-pjax' => '1'
+                                               ])
                     ?>
                       </div>
             </div>

@@ -288,17 +288,19 @@ class PedidoController extends Controller
         $this->layout = 'viewLayout';
         $mpdf=new mPDF('UTF-8','A4','','',15,15,15,20,'',5,'P');
         $mpdf->SetHTMLFooter($this->footer);
-        $mpdf->WriteHTML($this->render('view', ['model' => $this->findModel($id)]));
-        $pedidoPdf = $mpdf->Output('../../../mis documentos/portucajabonita/pedidos/2017/' . $num .' '.$name . '.pdf','S');
+        $mpdf->WriteHTML($this->render('view', ['model' => $this->findModel($id), 'modo_vista'=>'Imprimir']));
+        //$pedidoPdf = $mpdf->Output('../../../mis documentos/portucajabonita/pedidos/2017/' . $num .' '.$name . '.pdf','S');
+        $pedidoPdf = $mpdf->Output('','S');
 
 
         $message = Yii::$app->mailer->compose()
-            ->setFrom('ernest@portucajabonita.com')
+            ->setFrom('pedidos@portucajabonita.com')
             ->setTo($mailto)
             ->setSubject($asunto)
             ->setTextBody($body)
             ->setHtmlBody($body)
-            ->attachContent($pedidoPdf, ['fileName' => 'pedido.pdf', 'contentType' => 'application/pdf']);
+            ->setReadReceiptTo('pedidos@portucajabonita.com')
+            ->attachContent($pedidoPdf, ['fileName' => $num . ' ' . $name . '.pdf', 'contentType' => 'application/pdf']);
             //->send();
                 
                 $result = Yii::$app->mailer->send($message);
@@ -313,10 +315,10 @@ class PedidoController extends Controller
         
         if ($result == TRUE){
                
-            $confirmationFrom = 'ernest@portucajabonita.com';
+            $confirmationFrom = 'pedidos@portucajabonita.com';
             $facturaPdf = $mpdf->Output('../../../mis documentos/portucajabonita/pedidos/2017/' . $num . ' ' . $name .'.pdf', 'F');
             $subject = "$asunto";
-            $stream = imap_open("{cp193.webempresa.eu/novalidate-cert}INBOX.Sent", "ernest@portucajabonita.com", "ernestprT204249");
+            $stream = imap_open("{cp193.webempresa.eu/novalidate-cert}INBOX.Sent", "pedidos@portucajabonita.com", "pedidosprT204249");
             $boundary = "------=" . md5(uniqid(rand()));
             $header = "MIME-Version: 1.0\r\n";
             $header .= "Content-Type: multipart/mixed; boundary=\"$boundary\"\r\n";
@@ -344,14 +346,14 @@ class PedidoController extends Controller
             $cuerpo .= "$body\r\n";
             $cuerpo .= "\r\n\r\n";
             $msg3 .= "--$boundary--\r\n";
-            imap_append($stream, "{cp193.webempresa.eu/novalidate-cert}INBOX.Sent", "From: ernest@portucajabonita.com\r\n" . "To: $mailto\r\n" . "Subject: $subject\r\n" . "$header\r\n" . "$cuerpo\r\n" . "$msg2\r\n" . "$msg3\r\n");
+            imap_append($stream, "{cp193.webempresa.eu/novalidate-cert}INBOX.Sent", "From: pedidos@portucajabonita.com\r\n" . "To: $mailto\r\n" . "Subject: $subject\r\n" . "$header\r\n" . "$cuerpo\r\n" . "$msg2\r\n" . "$msg3\r\n");
             imap_close($stream);
 
-            // Guardamos en la base de datos la fecha de envío
+             //Guardamos en la base de datos la fecha de envío
 
-            // $model = $this->findModel($id);
-            // $model->factura_fecha_envio = Yii::$app->formatter->asDate('now', 'yyyy-MM-dd');
-            // $model->save();
+             $model = $this->findModel($id);
+             $model->pedido_fecha_envio = Yii::$app->formatter->asDate('now', 'yyyy-MM-dd');
+            $model->save();
 
             return $this->redirect(['index']);
         } else {

@@ -111,28 +111,28 @@ if ($modo_vista == 'Imprimir') {
             <td style="width: 25%; padding: 5px">B. Imponible</td>
             <td style="width: 16%; padding: 5px" class="text-right"><?= number_format($base_imponible, 2, ',', '.') ?></td>
         </tr>
-<?php if ($model['pedido_rate_descuento'] <> 0) { ?>
+        <?php if ($model['pedido_rate_descuento'] <> 0) { ?>
             <tr>
                 <td style="border-color: white;"></td>
                 <td style="border-bottom-color: white;"></td>
                 <td style="padding: 5px">Dto.<?= " " . $model['pedido_rate_descuento'] . "%"; ?></td>
                 <td style="padding: 5px" class="text-right"><?= number_format($importe_descuento, 2, ',', '.') ?></td>
             </tr>
-<?php } ?>
+        <?php } ?>
         <tr>
             <td style="border-color: white;"></td>
             <td style="border-bottom-color: white;"></td>
             <td style="padding: 5px" >Iva<?= " " . $model['pedido_rate_iva'] . "%"; ?></td>
             <td style="padding: 5px" class="text-right"><?= number_format($importe_iva, 2, ',', '.') ?></td>
         </tr>
-<?php if ($model['pedido_rate_irpf'] <> 0) { ?>
+        <?php if ($model['pedido_rate_irpf'] <> 0) { ?>
             <tr>
                 <td style="border-color: white;"></td>
                 <td style="border-bottom-color: white;"></td>
                 <td style="padding: 5px">Irpf<?= " " . $model['pedido_rate_irpf'] . "%"; ?></td>
                 <td style="padding: 5px" class="text-right"><?= number_format($importe_irpf, 2, ',', '.') ?></td>
             </tr>
-<?php } ?>
+        <?php } ?>
         <tr>
             <td style="border-color: white;"></td>
             <td style="border-bottom-color: white;"></td>
@@ -219,7 +219,7 @@ if ($modo_vista == 'Imprimir') {
 
 if ($modo_vista == NULL) {
     echo "<div class='row'>";
-    echo "<div class='col-md-2'>";
+    echo "<div class='col-md-6'>";
     echo Html::a('<i class="glyphicon glyphicon-print"></i> Imprimir', ['printpedido',
         'id' => $id,
         'num' => $model->pedido_num,
@@ -236,10 +236,20 @@ if ($modo_vista == NULL) {
             'modo_vista' => 'Imprimir']),
         'data-pjax' => '0',
     ]);
-     echo " ";
+    echo " ";
+
+    echo Html::a('<i class="glyphicon glyphicon-file"></i> Crear pedido proveedor', '#', [
+        'id' => 'pedido-proveedor',
+        'class' => 'btn btn-sm btn-primary',
+        'title' => 'Crear pedido proveedor',
+        'data-url' => Url::to(['crearpedido', 'id' => $model->pedido_id,
+            'documento_destino' => 'pedido',
+            'modo_vista' => 'Imprimir']),
+        'data-pjax' => '1',
+    ]);
+    echo " ";
     echo Html::a('<i class="glyphicon glyphicon-pencil"></i> Editar', ['update',
-        'id' => $id],
-        ['class' => 'btn btn-sm btn-primary']);
+        'id' => $id], ['class' => 'btn btn-sm btn-primary']);
     echo "</div>";
     echo "</div>";
 }
@@ -252,7 +262,7 @@ if ($modo_vista == NULL) {
  */
 
 $this->registerJs(
-        "$(document).on('click', '#copy-pedido', (function() {
+        "$(document).on('click', '#copy-pedido, #pedido-proveedor', (function() {
                 $.get(
                     $(this).data('url'),
                     function (data) {
@@ -264,7 +274,7 @@ $this->registerJs(
 );
 
 Modal::begin([
-    'header' => '<h2>Create Albarán</h2>',
+    'header' => '<h2>Create document</h2>',
     'id' => 'modal-pedido',
 ]);
 echo "<div id='modalContent'></div>";
